@@ -1,0 +1,6 @@
+VertexLitGeneric
+{
+	"$basetexture"	"models\weapons\pot"
+	"$envmap" "env_cubemap"
+
+}

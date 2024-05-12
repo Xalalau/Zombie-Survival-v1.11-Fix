@@ -1,0 +1,12 @@
+"Gamemode"
+{
+	"name"		"Zombie Survival"
+	"version"	"v2.00"
+
+	"author_name"	"William 'JetBoom' Moodhe"
+	"author_email"	"jetboom@yahoo.com"
+	"author_url"	"http://www.noxiousnet.com/"
+
+	"info"		"Players must build barricades, kill zombies, and work together to survive. Die and you become part of the undead."
+	"hide"		"0"
+}
