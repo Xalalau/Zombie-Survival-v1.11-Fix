@@ -906,11 +906,6 @@ end
 
 function GM:PlayerNoClip(pl, on)
 	if pl:IsAdmin() and ALLOW_ADMIN_NOCLIP then
-		if on then
-			LogAction("[Admin CMD] <"..pl:SteamID().."> "..pl:Name().." TURNED ON NOCLIP")
-		else
-			LogAction("[Admin CMD] <"..pl:SteamID().."> "..pl:Name().." TURNED OFF NOCLIP")
-		end
 		return true
 	end
 

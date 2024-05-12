@@ -1,9 +1,0 @@
-"UnlitGeneric" 
-{ 
-	"$basetexture" "zombiesurvival/zs_clav2_ui_topmiddle"
-	"$vertexcolor" 1 
-	"$vertexalpha" 1 
-	"$nolod" 1
-	"$ignorez" 1
-	"$nocompress"1 
-} 

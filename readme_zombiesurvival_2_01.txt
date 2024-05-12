@@ -1,4 +1,4 @@
-Zombie Survival v2.00
+Zombie Survival v2.01
 by William "JetBoom" Moodhe
 jetboom@yahoo.com
 http://noxiousnet.com
@@ -16,3 +16,8 @@ You can also view the updates and publishes forum on http://noxiousnet.com which
 
 Three maps have been included although there are hundreds on the Internet (most of which are of very poor quality).
 This gamemode also works perfectly with any map you feed it. It will work with anything from de_dust to Counter-Strike zm_ maps and pretty much anything based on the Source engine.
+
+
+   Changelog for 2.00 and above
+[2.00 - 2.01]
+* Fixed error on player death and error on noclip.

@@ -267,11 +267,92 @@ if SERVER then
 			self:SendLua("MySelf:SetZombieClass("..cl..")")
 		end
 	end
+
+	function meta:SetJetanium(int, forcefeed, total)
+		self.UsableJetanium = int
+		if int ~= 0 or forcefeed then
+			if total then
+				self:SendLua("MySelf:SetJetanium("..self.UsableJetanium..","..total..")")
+			else
+				self:SendLua("MySelf:SetJetanium("..self.UsableJetanium..")")
+			end
+		end
+	end
+
+	function meta:RemoveAllStatus(bSilent, bInstant)
+		if bInstant then
+			for _, ent in pairs(ents.FindByClass("status_*")) do
+				if not ent.NoRemoveOnDeath and ent:GetOwner() == self then
+					ent:Remove()
+				end
+			end
+		else
+			for _, ent in pairs(ents.FindByClass("status_*")) do
+				if not ent.NoRemoveOnDeath and ent:GetOwner() == self then
+					ent.SilentRemove = bSilent
+					ent:SetDie()
+				end
+			end
+		end
+	end
+
+	function meta:RemoveStatus(sType, bSilent, bInstant)
+		local removed
+		for _, ent in pairs(ents.FindByClass("status_"..sType)) do
+			if ent:GetOwner() == self then
+				if bInstant then
+					ent:Remove()
+				else
+					ent.SilentRemove = bSilent
+					ent:SetDie()
+				end
+				removed = true
+			end
+		end
+		return removed
+	end
+
+	function meta:GetStatus(sType)
+		local ent = self["status_"..sType]
+		if ent and ent.Owner == self then return ent end
+	end
+
+	function meta:GiveStatus(sType, fDie)
+		local cur = self:GetStatus(sType)
+		if cur then
+			if fDie then
+				cur:SetDie(fDie)
+			end
+			cur:SetPlayer(self, true)
+			return cur
+		else
+			local ent = ents.Create("status_"..sType)
+			if ent:IsValid() then
+				ent:Spawn()
+				if fDie then
+					ent:SetDie(fDie)
+				end
+				ent:SetPlayer(self)
+				return ent
+			end
+		end
+	end
 end
 
 if CLIENT then
 	function meta:SetZombieClass(cl)
 		self.Class = cl
 		self.ClassTable = GAMEMODE.ZombieClasses[cl]
+	end
+
+	function meta:GetStatus(sType)
+		for _, ent in pairs(ents.FindByClass("status_"..sType)) do
+			if ent:GetOwner() == self then return ent end
+		end
+	end
+
+	function meta:SetJetanium(int, forcefeed, total)
+		self.UsableJetanium = int
+		self.Jetanium = total or self.Jetanium
 	end
 end

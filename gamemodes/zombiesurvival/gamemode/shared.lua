@@ -295,7 +295,7 @@ end
 
 -- Put down here so I know for sure that when someone has a higher version number than I released that they're definitely an idiot.
 GM.Name = "Zombie Survival"
-GM.Version = 2.0
+GM.Version = 2.01
 GM.Author = "William \"JetBoom\" Moodhe"
 GM.Email = "jetboom@yahoo.com"
 GM.Website = "http://www.noxiousnet.com"
