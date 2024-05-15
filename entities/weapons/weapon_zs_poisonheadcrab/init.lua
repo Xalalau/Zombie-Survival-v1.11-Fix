@@ -67,6 +67,7 @@ function SWEP:Think()
 
 			if ent:IsValid() then
 				local phys = ent:GetPhysicsObject()
+				local damage = 18 + 18 * math.min(GetZombieFocus(owner:GetPos(), 300, 0.001, 0) - 0.3, 1)
 
 				if phys:IsValid() and not ent:IsNPC() and phys:IsMoveable() then
 					local vel = damage * 600 * owner:EyeAngles():Forward()
