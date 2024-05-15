@@ -1,4 +1,45 @@
-Changelog:
+# Welcome to Zombie Survival v1.11 Fix!
+
+Hi! I was there in 2008 playing on the classic ZS servers and I really miss that OG feel! The simplicity, the nervousness, the lack of options...
+
+That said, my goal here is to restore Zombie Survival version 1.11 so that it works in the current version of GMod with **as few changes as possible**. I want that raw OG experience freely available to everyone again! Forget the hammer, waves, hats, GUI markers, zombies spawning nests... It's all GONE!
+
+I also want to give my HUGE appreciation and thanks to [Yushe](http://steamcommunity.com/profiles/76561198360846296) and [Soldier](http://steamcommunity.com/profiles/76561198325469923), who have kept the original files **to this day** and still maintain a classic ZS server with a proprietary fixed version. Thanks to their kindness in granting my request to reopen the original ZS to the public, I was able to begin my effort on this repository!
+
+And thank you all very much!
+
+> 4 the Devs: would you like to contribute to this base? Well, fork it!! It's very unlikely that I'll accept PRs here because they'll prabably ruin the restoration. Advances must be made elsewhere.
+
+# Original files and gameplay
+
+By [Soldier](http://steamcommunity.com/profiles/76561198325469923):
+
+https://github.com/MOHAA2002/zombiesurvival-archive
+
+https://github.com/MOHAA2002/zombiesurvival-map-archive-update
+
+https://www.youtube.com/playlist?list=PLNhZJACsuqsA1am_ZEnn91YPY9DdZo6_F
+
+You can play Yushe's classic CZ version every weekend at ToxicGaming Discord server:
+
+https://discord.gg/mK2swJUZVf
+
+Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Some-urls-and-info) for more official stuff.
+
+# WANTED DEAD OR ALIVE
+
+Do you have the bsp of zs_windmill_hut_v2? **Send it to me immediately!**
+
+# v1.11 Fix by Xalalau changelog
+
+```
+Changes from v1.11 -> v1.11 Fix by Xalalau (restoration)
+    * Fixed version number
+    * Fixed poison headcrab missing the damage variable to calculate knockback
+```
+
+# (Very inaccurate but official) Changelog
+
 ```
 Changes from v1.1 -> v1.11
     * Fixed poison headcrab having an error when hitting people.
