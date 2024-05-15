@@ -1,7 +1,7 @@
 "Gamemode"
 {
 	"name"		"Zombie Survival"
-	"version"	"1.1"
+	"version"	"1.11"
 
 	"author_name"	"JetBoom"
 	"author_email"	"jetboom@yahoo.com"
