@@ -1,15 +1,77 @@
 Changelog:
-
-New
-
 ```
-Changes from v1.05 -> v1.05 Fix (unofficial)
-    I'm not sure yet what shelkz fixed (-Xala)
-```
+Changes from v1.1 -> v1.11
+    * Fixed poison headcrab having an error when hitting people.
+    * Fixed Crossbow not firing.
+    * Fixed a client-side error that would show up when the round ended.
 
-Original 
+Changes from v1.07 -> v1.1
+    I'll release a full update to 1.1 probably tommarrow. I'll include the 'spectate' concommand protection I've been using as well.
 
-```
+    Main features:
+    - Redone HUD.
+    - Redone Scoreboard.
+    - Redone VGUI.
+    - F1 - F4 buttons all have individual functions instead of clogging up the scoreboard.
+    - F4 now has all the post process options as well as some other stuff on it.
+    - You can toggle the beats on/off.
+    - You can change the film grain opacity!
+    - Anti-overflow / pure virtual function calls for when many, many people blow up at the same time.
+    - Wraith.
+    - Configurable starting loadouts.
+    - Dynamic movement speeds.
+    - Everyone is slightly faster.
+    - Doors can come off their hinges after taking a lot of damage.
+    - So much stuff since 1.07 that I can't take the time to put them all down. Basically, everything is better. 
+
+Changes from v1.05 -> v1.07
+    - Added Fast Headcrab class. Faster and less health than the normal one.
+    - Added Poison Headcrab class. This class will deal up to 40 or so damage over time if you hit someone. It also comes with a poison spit that will do only do 10 damage but will blind and lesser poison if it hits someone's head!
+    - Added 'Ricochete' Magnum. This has the highest damage of all the pistols and has the ability to bounce off walls one time to deal half damage.
+    - Changed 'Battleaxe' Handgun to do slightly more damage and less rate of fire.
+    - Added 'Peashooter' Handgun.
+    - Added 'Shredder' SMG.
+    - Added 'Impaler' Crossbow. This has the unique ability of going through multiple enemies and it does plenty damage.
+    - All weapons have cute names.
+    - Added dynamic movement speed system. Having a weapon out that is heavy will slow you down while having a knife or a pistol out will make you faster.
+    - Custom crosshair due to above system.
+    - Added dynamic aim-cone system. Crouching and standing still reduce your aim cone while moving will greatly increase it.
+    - Added Zombie Horde system and meter. This is exactly like the human's fear meter but for zombies. The more zombies that are packed together, the bigger this bar gets. The bigger it gets, the more damage the zombies do to humans. A full bar means DOUBLE damage. The chem zombie is especially sensitive to this bar. It even has it's own set of beats.
+    - Added Zombie Feast system. Gibs are now server-side and zombies can simply walk in to them to eat them and regain 5% of their maximum health per gib.
+    - Humans who die will now drop their weapons and can be picked up by other humans. If you run over that weapon again during a reward then you simply receive ammo for it.
+    - The melee of zombies have absolutely nothing to do with bullets anymore. They now use pure TakeDamage and TraceHullAttack. Meaning you don't have to be 100% accurate when swinging your melee.
+    - Health of every zombie class was increased by about 20% each.
+    - Darkened some colors on the HUD.
+    - Added commands: zs_enablecolormod 0/1 zs_enablemotionblur 0/1 zs_enablesharpen 0/1 zs_enablefilmgrain 0/1. If you like post processing but don't like a specific feature, you can turn it off with those.
+    - First zombie is chosen randomly between the first 4 connected players instead of the 4th person to join.
+    - Reduced size of 'Arsenal Upgraded' window since it was taking up half the screen.
+    - Custom HUD for the bottom left portion of the HUD.
+    - Changed some colormod stuff to make it look more menacing as a human.
+    - Fixed reload animations on the Sweeper Shotgun and the Slug Rifle (gun held stupidly).
+    - Humans can press USE on other humans to shove them. You can not shove another human if there is no ground for them to be shoved to. Meaning you can't shove them off a roof or out a window.
+    - Suiciding will give whoever last hit you the kill, as long as they're not on the same team.
+    - Headshots to zombies do 2x damage. Anywhere else does 3/4 damage.
+    - Re-added Fast Zombie lunge damage.
+    - Fast Zombie base damage reduced from 6 to 5. Maximum of 10 due to Horde meter.
+    - Removed movement slow down when swinging as a Fast Zombie.
+    - Dying as a human has new effects.
+    - Being dead now puts your camera in your ragdoll's eyes.
+    - Upgraded blood effects drastically.
+    - Changed the way headshots are calculated. Now is distance to joint rather than distance to joint's height (more accurate calculation).
+    - Removed clientside ragdoll creation on gibs due to them being spawned infinately when you would change visleafs.
+    - Optimized HUD components and code.
+    - Fixed Torso Zombies having incorrect starts on their tracelines for melee. Meaning that the attack was starting from way too high above your camera.
+    - Fixed error on moving over a name in the scoreboard.
+    - Fixed purple checkers on most materials due to the GM update removing gmdm.
+    - Fixed black / purple screen on zombies.
+    - Fixed exploit where zombies could shoot invisible, instant-kill bullets through glass and some small props like soda cans.
+    - Fixed all client-side crashing. This means chem zombie explode overflow and other junk.
+    - Fixed all server-side crashing. The last time I checked my server it had an uptime of 5 days with 0 crashes.
+    - Fixed Regeneration powerup not working properly.
+    - Fixed 2 portions of the end-time scoreboard not showing.
+    - Fixed pain sounds not playing for humans.
+    - Fixed bug where Humans couldn't switch to weapons that had no ammo for them. 
+
 Changes from v1.04 -> v1.05
     Added Headcrab class.
     - Added powerups system.
