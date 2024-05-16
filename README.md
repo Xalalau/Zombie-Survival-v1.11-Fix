@@ -10,6 +10,12 @@ And thank you all very much!
 
 > 4 the Devs: would you like to contribute to this base? Well, fork it!! It's very unlikely that I'll accept PRs here because they'll prabably ruin the restoration. Advances must be made elsewhere.
 
+# WANTED DEAD OR ALIVE
+
+```diff
+-Do you have the bsp of zs_windmill_hut_v2? **Send it to me immediately!**
+```
+
 # Original files and gameplay
 
 By [Soldier](http://steamcommunity.com/profiles/76561198325469923):
@@ -25,10 +31,6 @@ You can play Yushe's classic ZS version every weekend at ToxicGaming Discord ser
 https://discord.gg/mK2swJUZVf
 
 Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Some-urls-and-info) for more official stuff.
-
-# WANTED DEAD OR ALIVE
-
-Do you have the bsp of zs_windmill_hut_v2? **Send it to me immediately!**
 
 # v1.11 Fix by Xalalau changelog
 
