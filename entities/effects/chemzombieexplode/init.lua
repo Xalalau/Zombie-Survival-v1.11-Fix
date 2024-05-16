@@ -13,7 +13,7 @@ function EFFECT:Init(data)
 			particle:SetEndAlpha(0)
 			particle:SetStartSize(32)
 			particle:SetEndSize(4)
-			particle:SetColor(20, 100, 20)
+			particle:SetColor(Color(20, 100, 20))
 			particle:SetRoll(math.Rand(0, 360))
 		end
 		for i=1, math.random(5, 8) do
@@ -24,7 +24,7 @@ function EFFECT:Init(data)
 			particle:SetEndAlpha(0)
 			particle:SetStartSize(16)
 			particle:SetEndSize(4)
-			particle:SetColor(0, 40, 0)
+			particle:SetColor(Color(0, 40, 0))
 			particle:SetRoll(math.Rand(0, 360))
 		end
 		for i=1, math.random(11, 16) do

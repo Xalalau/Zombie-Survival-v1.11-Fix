@@ -29,7 +29,7 @@ function ENT:PhysicsCollide(data, phys)
 end
 
 function ENT:StartTouch(ent)
-	if ent:IsPlayer() and ent:Alive() and ent:Team() == TEAM_UNDEAD and ent:Health() < ZombieClasses[ent.Class].Health then
+	if ent:IsPlayer() and ent:Alive() and ent:Team() == ZSF.TEAM_UNDEAD and ent:Health() < ZombieClasses[ent.Class].Health then
 		local maxhealth = ZombieClasses[ent.Class].Health
 		ent:SetHealth(math.min(maxhealth, ent:Health() + maxhealth * 0.05))
 

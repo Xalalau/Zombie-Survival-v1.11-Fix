@@ -58,9 +58,9 @@ function MakepHelp()
 	surface.SetFont("Default")
 	local ___, defh = surface.GetTextSize("|")
 
-	local touse = HELP_TEXT
-	if SURVIVALMODE then
-		touse = HELP_TEXT_SURVIVALMODE
+	local touse = ZSF.HELP_TEXT
+	if ZSF.SURVIVALMODE then
+		touse = ZSF.HELP_TEXT_SURVIVALMODE
 	end
 	local y = 64
 	for i, text in ipairs(touse) do
@@ -70,7 +70,7 @@ function MakepHelp()
 			local label = vgui.Create("DLabel", Window)
 			local pretext = string.sub(text, 1, 2)
 			if pretext == "^r" then
-				label:SetTextColor(COLOR_RED)
+				label:SetTextColor(COLOR_READABLERED)
 				text = string.sub(text, 3)
 			elseif pretext == "^g" then
 				label:SetTextColor(COLOR_LIMEGREEN)
@@ -85,9 +85,9 @@ function MakepHelp()
 				label:SetTextColor(color_white)
 			end
 			if i == 1 then
-				label:SetFont("HUDFontSmallAA")
+				label:SetFont("Trebuchet18")
 			else
-				label:SetFont("DefaultSmall")
+				label:SetFont("HudDefault")
 			end
 			label:SetText(text)
 			label:SetPos(16, y)
@@ -95,6 +95,9 @@ function MakepHelp()
 			y = y + defh
 		end
 	end
+
+	-- TargetIDSmall TargetIDSmall
+	-- HUDFontSmallAA DefaultSmall
 
 	local button = vgui.Create("DButton", Window)
 	button:SetPos(240, Window:GetTall() - 64)

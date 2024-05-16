@@ -8,8 +8,8 @@ SWEP.AutoSwitchTo = true
 SWEP.AutoSwitchFrom = false
 
 function SWEP:Deploy()
-	self.Owner:DrawViewModel(true)
-	self.Owner:DrawWorldModel(true)
+	self:GetOwner():DrawViewModel(true)
+	self:GetOwner():DrawWorldModel(true)
 end
 
 function SWEP:Initialize()
@@ -20,20 +20,20 @@ function SWEP:Think()
 end
 
 function SWEP:PrimaryAttack()
-	self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	if not self:CanPrimaryAttack() then return end
 
 	local create = false
-	local aimvec = self.Owner:GetAimVector()
-	local shootpos = self.Owner:GetShootPos()
-	local tr = util.TraceLine({start = shootpos, endpos = shootpos + aimvec * 32, filter = self.Owner})
+	local aimvec = self:GetOwner():GetAimVector()
+	local shootpos = self:GetOwner():GetShootPos()
+	local tr = util.TraceLine({start = shootpos, endpos = shootpos + aimvec * 32, filter = self:GetOwner()})
 
 	if tr.HitWorld then
 		create = true
 	else
 		local right = aimvec:Angle():Right()
-		local tr1 = util.TraceLine({start = tr.HitPos, endpos = tr.HitPos + right * 42, filter = self.Owner})
-		local tr2 = util.TraceLine({start = tr.HitPos, endpos = tr.HitPos + right * -42, filter = self.Owner})
+		local tr1 = util.TraceLine({start = tr.HitPos, endpos = tr.HitPos + right * 42, filter = self:GetOwner()})
+		local tr2 = util.TraceLine({start = tr.HitPos, endpos = tr.HitPos + right * -42, filter = self:GetOwner()})
 		if tr1.HitWorld or tr2.HitWorld then
 			create = true
 		end

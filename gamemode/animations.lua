@@ -8,61 +8,61 @@ PoisonZombieATT[PLAYER_JUMP] = ACT_WALK
 PoisonZombieATT[PLAYER_ATTACK1] = ACT_MELEE_ATTACK1
 PoisonZombieATT[PLAYER_SUPERJUMP] = ACT_RANGE_ATTACK2
 
-local function PoisonZombieAnim(pl, anim)
+local function PoisonZombieAnim(ply, anim)
 	local act = ACT_IDLE
 
 	if PoisonZombieATT[anim] ~= nil then
 		act = PoisonZombieATT[anim]
 	else
-		if pl:GetVelocity():Length() > 0 then
+		if ply:GetVelocity():Length() > 0 then
 			act = ACT_WALK
 		end
 	end
 
 	if act == ACT_MELEE_ATTACK1 or anim == PLAYER_SUPERJUMP then
-		pl:SetPlaybackRate(2)
-		pl:RestartGesture(act)
+		ply:SetPlaybackRate(2)
+		ply:RestartGesture(act)
 		return true
 	end
 
-	local seq = pl:SelectWeightedSequence(act)
+	local seq = ply:SelectWeightedSequence(act)
 	/*if act == ACT_WALK then
 		seq = 2
 	end*/
 
-	if pl:GetSequence() == seq then return true end
-	pl:ResetSequence(seq)
-	pl:SetPlaybackRate(1.0)
-	pl:SetCycle(0)
+	if ply:GetSequence() == seq then return true end
+	ply:ResetSequence(seq)
+	ply:SetPlaybackRate(1.0)
+	ply:SetCycle(0)
 	return true
 end
 
-local function ChemZombieAnim(pl, anim)
+local function ChemZombieAnim(ply, anim)
 	local act = ACT_IDLE
 
 	if PoisonZombieATT[anim] ~= nil then
 		act = PoisonZombieATT[anim]
 	else
-		if pl:GetVelocity():Length() > 0 then
+		if ply:GetVelocity():Length() > 0 then
 			act = ACT_WALK
 		end
 	end
 
 	if act == ACT_MELEE_ATTACK1 or anim == PLAYER_SUPERJUMP then
-		pl:SetPlaybackRate(2)
-		pl:RestartGesture(act)
+		ply:SetPlaybackRate(2)
+		ply:RestartGesture(act)
 		return true
 	end
 
-	local seq = pl:SelectWeightedSequence(act)
+	local seq = ply:SelectWeightedSequence(act)
 	if act == ACT_WALK then
 		seq = 2
 	end
 
-	if pl:GetSequence() == seq then return true end
-	pl:ResetSequence(seq)
-	pl:SetPlaybackRate(1.0)
-	pl:SetCycle(0)
+	if ply:GetSequence() == seq then return true end
+	ply:ResetSequence(seq)
+	ply:SetPlaybackRate(1.0)
+	ply:SetCycle(0)
 	return true
 end
 
@@ -72,33 +72,33 @@ WraithATT[PLAYER_WALK] = ACT_WALK
 WraithATT[PLAYER_JUMP] = ACT_WALK
 //WraithATT[PLAYER_ATTACK1] = ACT_RANGE_ATTACK1
 
-local function WraithAnim(pl, anim)
+local function WraithAnim(ply, anim)
 	local act = ACT_IDLE
 
 	if WraithATT[anim] ~= nil then
 		act = WraithATT[anim]
 	else
-		if pl:GetVelocity():Length() > 0 then
+		if ply:GetVelocity():Length() > 0 then
 			act = ACT_WALK
 		end
 	end
 
 	/*if act == ACT_RANGE_ATTACK1 then
-		pl:SetPlaybackRate(2)
-		pl:RestartGesture(act)
+		ply:SetPlaybackRate(2)
+		ply:RestartGesture(act)
 		return true
 	end*/
 
-	local seq = pl:SelectWeightedSequence(act)
+	local seq = ply:SelectWeightedSequence(act)
 	if act == ACT_IDLE then
 		seq = 1
 	end
 
-	pl:SetPlaybackRate(1.0)
+	ply:SetPlaybackRate(1.0)
 
-	if pl:GetSequence() == seq then return true end
-	pl:ResetSequence(seq)
-	pl:SetCycle(0)
+	if ply:GetSequence() == seq then return true end
+	ply:ResetSequence(seq)
+	ply:SetCycle(0)
 	return true
 end
 
@@ -109,33 +109,33 @@ FastZombieATT[PLAYER_WALK] = ACT_RUN
 FastZombieATT[PLAYER_ATTACK1] = ACT_MELEE_ATTACK1
 FastZombieATT[PLAYER_SUPERJUMP] = ACT_CLIMB_UP
 
-local function FastZombieAnim(pl, anim)
+local function FastZombieAnim(ply, anim)
 	local act = ACT_IDLE
-	local OnGround = pl:OnGround()
+	local OnGround = ply:OnGround()
 
 	if FastZombieATT[anim] then
 		act = FastZombieATT[anim]
 	else
-		if pl:GetVelocity():Length() > 0 then
+		if ply:GetVelocity():Length() > 0 then
 			act = ACT_RUN
 		end
 	end
 
 	if act == ACT_MELEE_ATTACK1 or act == ACT_CLIMB_UP then
-		pl:RestartGesture(act)
+		ply:RestartGesture(act)
 		return true
 	end
 
-	local seq = pl:SelectWeightedSequence(act)
+	local seq = ply:SelectWeightedSequence(act)
 
 	if not OnGround and act ~= ACT_CLIMB_UP then
 		seq = 3
 	end
 
-	if pl:GetSequence() == seq then return true end
-	pl:ResetSequence(seq)
-	pl:SetPlaybackRate(1.0)
-	pl:SetCycle(0)
+	if ply:GetSequence() == seq then return true end
+	ply:ResetSequence(seq)
+	ply:SetPlaybackRate(1.0)
+	ply:SetCycle(0)
 	return true
 end
 
@@ -145,37 +145,37 @@ HeadcrabATT[PLAYER_IDLE] = ACT_IDLE
 HeadcrabATT[PLAYER_WALK] = ACT_RUN
 HeadcrabATT[PLAYER_ATTACK1] = ACT_RANGE_ATTACK1
 
-local function HeadcrabAnim(pl, anim)
+local function HeadcrabAnim(ply, anim)
 	local act = ACT_IDLE
-	local OnGround = pl:OnGround()
+	local OnGround = ply:OnGround()
 
 	if HeadcrabATT[anim] then
 		act = HeadcrabATT[anim]
 	else
-		if pl:GetVelocity():Length() > 0 then
+		if ply:GetVelocity():Length() > 0 then
 			act = ACT_RUN
 		end
 	end
 
 	if act == ACT_RANGE_ATTACK1 then
-		pl:RestartGesture(act)
+		ply:RestartGesture(act)
 		return true
 	end
 
-	local seq = pl:SelectWeightedSequence(act)
+	local seq = ply:SelectWeightedSequence(act)
 
 	if not OnGround then
 	    seq = "Drown"
 	end
 
-	if pl:GetSequence() == seq then return true end
-	pl:ResetSequence(seq)
+	if ply:GetSequence() == seq then return true end
+	ply:ResetSequence(seq)
 	if seq == 5 then
-		pl:SetPlaybackRate(1.0)
+		ply:SetPlaybackRate(1.0)
 	else
-		pl:SetPlaybackRate(0.3)
+		ply:SetPlaybackRate(0.3)
 	end
-	pl:SetCycle(0)
+	ply:SetCycle(0)
 	return true
 end
 
@@ -186,24 +186,24 @@ PoisonHCATT[PLAYER_WALK] = ACT_RUN
 PoisonHCATT[PLAYER_ATTACK1] = ACT_RANGE_ATTACK1
 PoisonHCATT[PLAYER_SUPERJUMP] = "Spitattack"
 
-local function PoisonHeadcrabAnim(pl, anim)
+local function PoisonHeadcrabAnim(ply, anim)
 	local act = ACT_IDLE
-	local OnGround = pl:OnGround()
+	local OnGround = ply:OnGround()
 
 	if PoisonHCATT[anim] then
 		act = PoisonHCATT[anim]
 	else
-		if pl:GetVelocity():Length() > 0 then
+		if ply:GetVelocity():Length() > 0 then
 			act = ACT_RUN
 		end
 	end
 
 	if act == ACT_RANGE_ATTACK1 or act == "Spitattack" then
-		pl:RestartGesture(act)
+		ply:RestartGesture(act)
 		return true
 	end
 
-	local seq = pl:SelectWeightedSequence(act)
+	local seq = ply:SelectWeightedSequence(act)
 
 	if not OnGround then
 	    seq = "Drown"
@@ -213,14 +213,14 @@ local function PoisonHeadcrabAnim(pl, anim)
 		seq = 4
 	end
 
-	if pl:GetSequence() == seq then return true end
-	pl:ResetSequence(seq)
+	if ply:GetSequence() == seq then return true end
+	ply:ResetSequence(seq)
 	if seq == 4 then
-		pl:SetPlaybackRate(1.0)
+		ply:SetPlaybackRate(1.0)
 	else
-		pl:SetPlaybackRate(0.2)
+		ply:SetPlaybackRate(0.2)
 	end
-	pl:SetCycle(0)
+	ply:SetCycle(0)
 	return true
 end
 
@@ -232,36 +232,36 @@ ZombieATT[PLAYER_JUMP] = ACT_WALK
 ZombieATT[PLAYER_ATTACK1] = ACT_MELEE_ATTACK1
 ZombieATT[PLAYER_SUPERJUMP] = ACT_IDLE_ON_FIRE
 
-local function ZombieAnim(pl, anim)
+local function ZombieAnim(ply, anim)
 	local act = ACT_IDLE
 
 	if ZombieATT[anim] ~= nil then
 		act = ZombieATT[anim]
 	end
 
-	if act == ACT_IDLE_ON_FIRE and 0 < pl:GetVelocity():Length() then
+	if act == ACT_IDLE_ON_FIRE and 0 < ply:GetVelocity():Length() then
 		act = ACT_WALK_ON_FIRE
 	end
 
 	if act == ACT_MELEE_ATTACK1 or anim == PLAYER_SUPERJUMP then
-		pl:SetPlaybackRate(2)
-		pl:RestartGesture(act)
+		ply:SetPlaybackRate(2)
+		ply:RestartGesture(act)
 		return true
 	end
 
-	local seq = pl:SelectWeightedSequence(act)
+	local seq = ply:SelectWeightedSequence(act)
 	if act == ACT_WALK then
-		seq = pl.ZomAnim
+		seq = ply.ZomAnim
 	end
 
-	if seq == pl.ZomAnim then
-		pl:SetPlaybackRate(1.5)
+	if seq == ply.ZomAnim then
+		ply:SetPlaybackRate(1.5)
 	else
-		pl:SetPlaybackRate(1.0)
+		ply:SetPlaybackRate(1.0)
 	end
-	if pl:GetSequence() == seq then return true end
-	pl:ResetSequence(seq)
-	pl:SetCycle(0)
+	if ply:GetSequence() == seq then return true end
+	ply:ResetSequence(seq)
+	ply:SetCycle(0)
 	return true
 end
 
@@ -272,32 +272,32 @@ ZombieTorsoATT[PLAYER_WALK] = ACT_WALK
 ZombieTorsoATT[PLAYER_JUMP] = ACT_WALK
 ZombieTorsoATT[PLAYER_ATTACK1] = ACT_MELEE_ATTACK1
 
-local function ZombieTorsoAnim(pl, anim)
+local function ZombieTorsoAnim(ply, anim)
 	local act = ACT_IDLE
 
 	if ZombieTorsoATT[anim] then
 		act = ZombieTorsoATT[anim]
 	else
-		if pl:GetVelocity():Length() > 0 then
+		if ply:GetVelocity():Length() > 0 then
 			act = ACT_WALK
 		end
 	end
 
 	if act == ACT_MELEE_ATTACK1 then
-		pl:SetPlaybackRate(2)
-		pl:RestartGesture(act)
+		ply:SetPlaybackRate(2)
+		ply:RestartGesture(act)
 		return true
 	end
 
-	local seq = pl:SelectWeightedSequence(act)
+	local seq = ply:SelectWeightedSequence(act)
 	if act == ACT_WALK then
 		seq = 2
 	end
 
-	if pl:GetSequence() == seq then return true end
-	pl:ResetSequence(seq)
-	pl:SetPlaybackRate(1.0)
-	pl:SetCycle(0)
+	if ply:GetSequence() == seq then return true end
+	ply:ResetSequence(seq)
+	ply:SetPlaybackRate(1.0)
+	ply:SetCycle(0)
 	return true
 end
 
@@ -306,20 +306,20 @@ ATT[PLAYER_RELOAD] = ACT_HL2MP_GESTURE_RELOAD
 ATT[PLAYER_JUMP] = ACT_HL2MP_JUMP
 ATT[PLAYER_ATTACK1] = ACT_HL2MP_GESTURE_RANGE_ATTACK
 
-function GM:SetPlayerAnimation(pl, anim)
-	if pl:Team() == TEAM_UNDEAD then
-		SpecialAnims[pl.Class](pl, anim)
+function GM:SetPlayerAnimation(ply, anim)
+	if ply:Team() == ZSF.TEAM_UNDEAD then
+		SpecialAnims[ply.Class](ply, anim)
 		return
 	end
 
 	local act = ACT_HL2MP_IDLE
-	local OnGround = pl:OnGround()
+	local OnGround = ply:OnGround()
 
 	if ATT[anim] then
 		act = ATT[anim]
 	else
-		local Speed = pl:GetVelocity():Length()
-		if OnGround and pl:Crouching() then
+		local Speed = ply:GetVelocity():Length()
+		if OnGround and ply:Crouching() then
 			act = ACT_HL2MP_IDLE_CROUCH
 			if Speed > 0 then
 				act = ACT_HL2MP_WALK_CROUCH
@@ -330,9 +330,9 @@ function GM:SetPlayerAnimation(pl, anim)
 	end
 
 	if act == ACT_HL2MP_GESTURE_RANGE_ATTACK or act == ACT_HL2MP_GESTURE_RELOAD then
-		pl:RestartGesture(pl:Weapon_TranslateActivity(act))
+		ply:RestartGesture(ply:Weapon_TranslateActivity(act))
 		if act == ACT_HL2MP_GESTURE_RANGE_ATTACK then
-			pl:Weapon_SetActivity(pl:Weapon_TranslateActivity(ACT_RANGE_ATTACK1), 0)
+			ply:Weapon_SetActivity(ply:Weapon_TranslateActivity(ACT_RANGE_ATTACK1), 0)
 		end
 		return
 	end
@@ -341,14 +341,14 @@ function GM:SetPlayerAnimation(pl, anim)
 		act = ACT_HL2MP_JUMP
 	end
 
-	local seq = pl:SelectWeightedSequence(pl:Weapon_TranslateActivity(act))
+	local seq = ply:SelectWeightedSequence(ply:Weapon_TranslateActivity(act))
 
 	// Let's assume that no admins spawn any vehicles and that we always have a weapon.
 
-	if pl:GetSequence() == seq then return end
-	pl:SetPlaybackRate(1.0)
-	pl:ResetSequence(seq)
-	pl:SetCycle(0)
+	if ply:GetSequence() == seq then return end
+	ply:SetPlaybackRate(1.0)
+	ply:ResetSequence(seq)
+	ply:SetCycle(0)
 end
 
 // These index numbers are related to the class numbers in zs_options.lua

@@ -33,9 +33,36 @@ Do you have the bsp of zs_windmill_hut_v2? **Send it to me immediately!**
 # v1.11 Fix by Xalalau changelog
 
 ```
-Changes from v1.11 -> v1.11 Fix by Xalalau (restoration)
-    * Fixed version number
-    * Fixed poison headcrab missing the damage variable to calculate knockback
+Changes from v1.11 -> v1.11 Fix
+    * Added missing config SURVIVALMODE to zs_options.lua
+    * Added ZS gamemode icon
+    * Removed all the stupid SteamID bans from 2008
+    * Changed many pairs() to ipairs() to improve performance
+    * Changed some uppercase global variaves to be stored in another global var called ZSF
+    * Changed some function and variable names to improve standardization
+    * Changed version to "v1.11 Fix by Xalalau - For GMod March 2024 Update+""
+    * Changed some game.ConsoleCommand to RunConsoleCommand
+    * Changed kickid command to game.KickID() func
+    * Changed player.GetAll() to player.GetHumans()
+    * Changed timer.Destroy() to timer.Remove()
+    * Fixed poison headcrab was missing the damage variable to calculate the attack knockback
+    * Fixed the path 'effects/zombiefireworks/init.lua' was invalid on Linux
+    * Fixed GM:CalcView() in cl_init.lua was trying to access a nil phys obj for no reason at all
+    * Fixed F4 menu failing to calc its dimensions
+    * Fixed the font was too small to read on the menus
+    * Fixed renamed variables like sound that were locally overriding global functions
+    * Fixed game.BroadcastLua was updated to RunBroadcastLua
+    * Fixed self.GetOwner was updated to self:GetOwner()
+    * Fixed info.txt was updated to zombiesurvival.txt
+    * Fixed SinglePlayer() was updated to game.SinglePlayer()
+    * Fixed file lib calls like file.Find was updated to use a second argument
+    * Fixed MaxPlayers() was updated to game.MaxPlayers()
+    * Fixed Entity:SetColor() calls were updated to receive the RGB inside a Color() object
+    * Fixed surface.CreateFont was updated to the current syntax
+    * Fixed timer.Simple() and timer.Create() were updated to use anonymous functions instead of passing arguments
+    * Fixed variable number of parameters syntax in GM:SplitMessage(y, ...)
+    * Fixed util.tobool() was updated to tobool()
+    * Fixed GetConVarNumber() was updated to GetConvar() or to vars directly calling ConVar methods
 ```
 
 # (Very inaccurate but official) Changelog

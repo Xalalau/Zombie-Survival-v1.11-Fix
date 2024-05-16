@@ -6,12 +6,12 @@ include('shared.lua')
 function ENT:Initialize()
 	self.DieTime = CurTime() + 7
 
-	local pl = self.Entity:GetOwner()
-	local aimvec = pl:GetAimVector()
-	pl:DeleteOnRemove(self.Entity)
-	self.Entity.Team = pl:Team()
-	self.Entity:SetPos(pl:GetShootPos() + pl:GetAimVector() * 30)
-	self.Entity:SetAngles(pl:GetAimVector():Angle())
+	local ply = self.Entity:GetOwner()
+	local aimvec = ply:GetAimVector()
+	ply:DeleteOnRemove(self.Entity)
+	self.Entity.Team = ply:Team()
+	self.Entity:SetPos(ply:GetShootPos() + ply:GetAimVector() * 30)
+	self.Entity:SetAngles(ply:GetAimVector():Angle())
 	self.Entity:SetModel("models/Items/CrossbowRounds.mdl")
 	self.Entity:PhysicsInit(SOLID_VPHYSICS)
 	self.Entity:SetCollisionGroup(COLLISION_GROUP_WEAPON)
@@ -25,7 +25,7 @@ function ENT:Initialize()
 	end
 	self.Touched = {}
 	self.OriginalAngles = self.Entity:GetAngles()
-	pl:EmitSound("weapons/crossbow/bolt_fly4.wav")
+	ply:EmitSound("weapons/crossbow/bolt_fly4.wav")
 end
 
 function ENT:Think()

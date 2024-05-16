@@ -2,14 +2,14 @@
 
 hook.Add("InitPostEntity", "DestroyDoor", function()
 	hook.Remove("InitPostEntity", "DestroyDoor")
-	DESTROY_PROP_DOORS = false
-	DESTROY_DOORS = false
+	ZSF.DESTROY_PROP_DOORS = false
+	ZSF.DESTROY_DOORS = false
 	local doors = ents.FindByClass("prop_door_rotating")
 	if doors[2] then
 		doors[2]:Remove()
 	end
 
-	for _, ent in pairs(ents.FindByClass("gmod_player_start")) do
+	for _, ent in ipairs(ents.FindByClass("gmod_player_start")) do
 		if ent:GetPos().z > -440 then
 			ent:Remove()
 		end

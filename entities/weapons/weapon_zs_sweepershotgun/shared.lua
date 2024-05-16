@@ -41,32 +41,34 @@ function SWEP:Reload()
 	if CurTime() < self.NextReload then return end
 	self.NextReload = CurTime() + self.Primary.Delay * 2
 	
-	if self.Weapon:Clip1() < self.Primary.ClipSize and self.Owner:GetAmmoCount(self.Primary.Ammo) > 0 then
-		self.Weapon:SetNetworkedBool( "reloading", true )
-		self.Weapon:DefaultReload( ACT_VM_RELOAD )
-		timer.Simple(0.25, self.Weapon.SendWeaponAnim, self.Weapon, ACT_SHOTGUN_RELOAD_FINISH)
-		self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	if self:Clip1() < self.Primary.ClipSize and self:GetOwner():GetAmmoCount(self.Primary.Ammo) > 0 then
+		self:SetNetworkedBool( "reloading", true )
+		self:DefaultReload( ACT_VM_RELOAD )
+		timer.Simple(0.25, function()
+			self:SendWeaponAnim(ACT_SHOTGUN_RELOAD_FINISH)
+		end)
+		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	end
 end
 
 function SWEP:PrimaryAttack()
-	self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	if not self:CanPrimaryAttack() then return end
 
-	self.Weapon:EmitSound(self.Primary.Sound)
-	if self.Owner:GetVelocity():Length() > 25 then
+	self:EmitSound(self.Primary.Sound)
+	if self:GetOwner():GetVelocity():Length() > 25 then
 		self:ZSShootBullet(self.Primary.Damage, self.Primary.NumShots, self.ConeMoving)
 	else
-		if self.Owner:Crouching() then
+		if self:GetOwner():Crouching() then
 			self:ZSShootBullet(self.Primary.Damage, self.Primary.NumShots, self.ConeCrouching)
 		else
 			self:ZSShootBullet(self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone)
 		end
 	end
 	self:TakePrimaryAmmo(1)
-	self.Owner:ViewPunch(Angle(math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0))
+	self:GetOwner():ViewPunch(Angle(math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0))
 
 	if CLIENT then
-		self.Weapon:SetNetworkedFloat("LastShootTime", CurTime())
+		self:SetNetworkedFloat("LastShootTime", CurTime())
 	end
 end

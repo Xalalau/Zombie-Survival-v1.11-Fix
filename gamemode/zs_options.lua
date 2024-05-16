@@ -1,7 +1,19 @@
+--[[
+	Zombie Survival 1.11 Fix
+
+	"author_name"	"JetBoom"
+	"author_email"	"jetboom@yahoo.com"
+	"author_url"	"http://www.noxiousnet.com/"
+
+	"maintainer_name"	"Xalalau"
+
+	"info"		"Humans must survive for a set amount of time against the growing hordes of player zombies. From the maker of ZS for GMod9. Ported to GMod March 2024 Update+ by Xalalau."
+]]
+
 -- Don't change this. If you change this then you're an IDIOT.
-GM.Version  = "v1.11"
+GM.Version  = "v1.11 Fix"
 -- Change this if you're not going to use the default install and/or settings. If you edit this file then it will automatically set it to Unofficial.
-GM.SubVersion = "Official"
+GM.SubVersion = "Unofficial"
 
 function ToMinutesSeconds(TimeInSeconds)
 	local iMinutes = math.floor(TimeInSeconds / 60.0)
@@ -70,157 +82,192 @@ GM.AmmoRegeneration["helicoptergun"] = 100
 ------------------------------
 
 -- If you like NPC's. NPC's will only spawn in maps that actually were built to have them in the first place. This gamemode won't create it's own.
-USE_NPCS = false
+ZSF.USE_NPCS = false
 
 -- Set this to true if you want people to get 'kills' from killing NPC's.
 -- IT IS STRONGLY SUGGESTED THAT YOU EDIT THE REWARDS TABLE TO
--- MAKE THE REWARDS REQUIRE MORE KILLS AND/OR MAKE THE DIFFICULTY HIGHER IF YOU DO THIS!!!
+-- MAKE THE REWARDS REQUIRE MORE KILLS AND/OR MAKE THE ZSF.DIFFICULTY HIGHER IF YOU DO THIS!!!
 -- Example, change Rewards[6] to Rewards[15]. The number represents the kills.
-NPCS_COUNT_AS_KILLS = false
+ZSF.NPCS_COUNT_AS_KILLS = false
 
 -- Good values are 1 to 3. 0.5 is about the same as the default HL2. 1 is about ZS difficulty. This is mainly for NPC healths and damages.
-DIFFICULTY = 1.5
+ZSF.DIFFICULTY = 1.5
 
-if SinglePlayer() then
-	USE_NPCS = true
-	NPCS_COUNT_AS_KILLS = true
+if game.SinglePlayer() then
+	ZSF.USE_NPCS = true
+	ZSF.NPCS_COUNT_AS_KILLS = true
 end
 
 -- Use Zombie Survival's custom footstep sounds? I'm not sure how bad it might lag considering you're potentially sending a lot of data on heavily packed servers.
-CUSTOM_FOOTSTEPS = true
+ZSF.CUSTOM_FOOTSTEPS = true
 
 -- In seconds, repeatatively, the gamemode gives all humans get a box of whatever ammo of the weapon they use.
 -- if you set this number to something stupid like 0, you'll have some lag issues.
 -- Changing this means you're an idiot.
-AMMO_REGENERATE_RATE = 100
+ZSF.AMMO_REGENERATE_RATE = 100
 
 -- In seconds, how long humans need to survive.
-ROUNDTIME = 1200 -- 20 minutes
+ZSF.ROUNDTIME = 1200 -- 20 minutes
 
 -- Time in seconds between end round and next map.
-INTERMISSION_TIME = 35
+ZSF.INTERMISSION_TIME = 35
 
 -- New joining players will be put on the Undead team if the round is half over.
-HUMAN_DEADLINE = true
+ZSF.HUMAN_DEADLINE = true
 
 -- Set this to true to destroy all brush-based doors that aren't based on phys_hinge and func_physbox or whatever. For door campers.
-DESTROY_DOORS = true
+ZSF.DESTROY_DOORS = true
 
 -- Set this to true to destroy all prop-based doors. Not recommended since some doors have boards on them and what-not. Only for true door camping whores.
-DESTROY_PROP_DOORS = false
+ZSF.DESTROY_PROP_DOORS = false
 
 -- Set this to true to force players to have mat_monitorgamma set to 2.2. This could cause problems with non-calibrated screens so, whatever.
 -- It forces people to use flashlights instead of whoring the video settings to make it brighter.
-FORCE_NORMAL_GAMMA = false
+ZSF.FORCE_NORMAL_GAMMA = false
 
 -- Turn this to true if you don't want humans to be able to camp inside of vents and other hard to reach areas. They will die
 -- if they are in a vent for 60 seconds or more.
 -- Changing this means you're an idiot.
-ANTI_VENT_CAMP = true
+ZSF.ANTI_VENT_CAMP = true
 
 -- Set this to true to allow humans to shove other humans by pressing USE. Great for door blocking tards.
 -- Changing this means you're an idiot.
-ALLOW_SHOVE = true
+ZSF.ALLOW_SHOVE = true
 
 -- Set this to true if you want your admins to be able to use the 'noclip' concommand.
 -- If they already have rcon then it's pointless to set this to false.
-ALLOW_ADMIN_NOCLIP = true
+ZSF.ALLOW_ADMIN_NOCLIP = true
 
 -- Sound to play for last human.
-LASTHUMANSOUND = "lasthuman.mp3"
+ZSF.LASTHUMANSOUND = "lasthuman.mp3"
 
 -- In seconds, the length of the above file. It's important to have this correct or you may get delayed or overlapping music.
-LASTHUMANSOUNDLENGTH = 119
+ZSF.LASTHUMANSOUNDLENGTH = 119
 
 -- Sound to play for ambient Un-Life music.
-UNLIFESOUND = "unlife1.mp3"
-UNLIFESOUNDLENGTH = 210
+ZSF.UNLIFESOUND = "unlife1.mp3"
+ZSF.UNLIFESOUNDLENGTH = 210
 
 -- Sound played to a person when they lose.
-ALLLOSESOUND = "lose_test.mp3"
+ZSF.ALLLOSESOUND = "lose_test.mp3"
 
 -- Sound played to a person when they win.
-HUMANWINSOUND = "humanwin.mp3"
+ZSF.HUMANWINSOUND = "humanwin.mp3"
 
 -- Sound played to a person when they die as a human.
-DEATHSOUND = "music/stingers/HL1_stinger_song28.mp3"
+ZSF.DEATHSOUND = "music/stingers/HL1_stinger_song28.mp3"
 
 -- Human kills needed for a zombie player to redeem (resurrect). Do not set this to 0. If you want to turn this
--- system off, set AUTOREDEEM to false.
-REDEEM_KILLS = 4
+-- system off, set ZSF.AUTOREDEEM to false.
+ZSF.REDEEM_KILLS = 4
 
 -- Turn off/on the redeeming system.
-REDEEM = true
+ZSF.REDEEM = true
 
 -- Players don't have a choice if they want to redeem or not. Setting to false makes them press F2.
-AUTOREDEEM = true
+ZSF.AUTOREDEEM = true
 
-WARMUP_THRESHOLD = 4
+ZSF.WARMUP_THRESHOLD = 4
 -- If a person dies when there are less than the above amount of people, don't set them on the undead team if this is true. This should generally be true on public / big servers.
-WARMUP_MODE = true
+ZSF.WARMUP_MODE = true
 
-if MaxPlayers() < 4 then
-	WARMUP_MODE = false
+-- Missing config - Xala
+ZSF.SURVIVALMODE = false
+
+
+if game.MaxPlayers() < 4 then
+	ZSF.WARMUP_MODE = false
 end
 
 if CLIENT then
-	util.PrecacheSound(LASTHUMANSOUND)
-	util.PrecacheSound(UNLIFESOUND)
+	util.PrecacheSound(ZSF.LASTHUMANSOUND)
+	util.PrecacheSound(ZSF.UNLIFESOUND)
 end
 
 local shit = ""
-if REDEEM then
-	shit = [[You must hurry and redeem yourself before the round ends!@
-To redeem yourself, kill ]]..REDEEM_KILLS..[[ humans and you will respawn as a human.]]
+if ZSF.REDEEM then
+	shit = [[You must hurry and redeem yourself before the round ends!]] ..
+	[[@To redeem yourself, kill ]]..ZSF.REDEEM_KILLS..[[ humans and you will respawn as a human.]]
 end
 
 if CLIENT then
-local weapon_table_text = ""
-for i=1, table.maxn(GM.Rewards) do
-	if GM.Rewards[i] then
-		if #GM.Rewards[i] > 1 then
-			local printnames = {}
-			for _, wep in pairs(GM.Rewards[i]) do
-				if string.sub(wep, 1, 1) ~= "_" then
-					if weapons.GetStored(wep) then
-						table.insert(printnames, weapons.GetStored(wep).PrintName)
+	local weapon_table_text = ""
+	for i=1, table.maxn(GM.Rewards) do
+		if GM.Rewards[i] then
+			if #GM.Rewards[i] > 1 then
+				local printnames = {}
+				for _, wep in ipairs(GM.Rewards[i]) do
+					if string.sub(wep, 1, 1) ~= "_" then
+						if weapons.GetStored(wep) then
+							table.insert(printnames, weapons.GetStored(wep).PrintName)
+						else
+							table.insert(printnames, wep)
+						end
 					else
 						table.insert(printnames, wep)
 					end
-				else
-					table.insert(printnames, wep)
 				end
-			end
-			weapon_table_text = weapon_table_text..[[^r          ]]..i..[[ kills: Chance of ]]..table.concat(printnames, " or ")..[[@]]
-		elseif string.sub(GM.Rewards[i][1], 1, 1) ~= "_" then
-			if weapons.GetStored(GM.Rewards[i][1]) then
-				weapon_table_text = weapon_table_text..[[^r          ]]..i..[[ kills: ]]..(weapons.GetStored(GM.Rewards[i][1]).PrintName or GM.Rewards[i][1])..[[@]]
+				weapon_table_text = weapon_table_text..[[^r    ]]..i..[[ kills: Chance of ]]..table.concat(printnames, " or ")..[[@]]
+			elseif string.sub(GM.Rewards[i][1], 1, 1) ~= "_" then
+				if weapons.GetStored(GM.Rewards[i][1]) then
+					weapon_table_text = weapon_table_text..[[^r    ]]..i..[[ kills: ]]..(weapons.GetStored(GM.Rewards[i][1]).PrintName or GM.Rewards[i][1])..[[@]]
+				else
+					weapon_table_text = weapon_table_text..[[^r    ]]..i..[[ kills: ]]..GM.Rewards[i][1]..[[@]]
+				end
 			else
-				weapon_table_text = weapon_table_text..[[^r          ]]..i..[[ kills: ]]..GM.Rewards[i][1]..[[@]]
+				weapon_table_text = weapon_table_text..[[^r    ]]..i..[[ kills: ]]..string.sub(GM.Rewards[i][1], 2)..[[@]]
 			end
-		else
-			weapon_table_text = weapon_table_text..[[^r          ]]..i..[[ kills: ]]..string.sub(GM.Rewards[i][1], 2)..[[@]]
 		end
 	end
-end
 
--- This is what is displayed on the scoreboard, in the help menu. Seperate lines with "@"
--- Don't put @'s right next to eachother.
--- Use ^r ^g ^b ^y  when the line starts to change color of the line
+	-- This is what is displayed on the scoreboard, in the help menu. Seperate lines with "@"
+	-- Don't put @'s right next to eachother.
+	-- Use ^r ^g ^b ^y  when the line starts to change color of the line
 
-HELP_TEXT = [[^gWelcome to Zombie Survival, for GMod10.@ @^b          -- HUMANS --@^bSurvive for ]]..ToMinutesSeconds(ROUNDTIME)..[[ to win the match.@If you get killed by a zombie, you become one! ]]..shit..[[@ @Watch the infliction bar. The bigger it is, the more humans are dead!@The bar at the bottom of the screen represents your fear and how many zombies are in your immediate area.@^bA blue bar means only 1 - 3 are near you.@^yA yellow or red bar means anywhere from 5 - 9 are near you.@^rA full bar means that zombies are right near you, and in mass numbers!@ @If you lose enough health, your vision will start to blur to signify your upcoming death.@Killing zombies will grant you more weapons but your main objective is to survive!@If you stay together and defend your entrances then you are sure to win.@If you seperate or don't push back the zombies then you're sure to join them.@ @^rRewards for killing zombies:@ @]]..weapon_table_text..[[ @ @^g          -- ZOMBIES --@You can change your class as a zombie by pressing F3.@Classes in red mean that more humans need to be killed to get that class unlocked.@ @^rYou lose the match if all humans die or you're a zombie at the end of the round.@If redeeming is allowed then you can kill a certain amount of humans to ressurect yourself.@ @^yVisit www.noxiousnet.com or forums.facepunchstudios.com for updates to the game!]]
+	ZSF.HELP_TEXT =
+		[[^gWelcome to Zombie Survival v1.11 Fix by Xalalau @^gFor GMod March 2024 Update+.@ @^b          -- HUMANS --@^bSurvive for ]] ..
+		ToMinutesSeconds(ZSF.ROUNDTIME) ..
+		[[ to win the match.@If you get killed by a zombie, you become one! ]] ..
+		shit .. 
+		[[@ @Watch the infliction bar. The bigger it is, the more humans are dead!@The bar at the bottom ]] ..
+		[[of the screen represents your fear and how many zombies are in your immediate area.@^bA blue bar ]] ..
+		[[means only 1 - 3 are near you.@^yA yellow or red bar means anywhere from 5 - 9 are near you.@^rA full ]] ..
+		[[bar means that zombies are right near you, and in mass numbers!@ @If you lose enough health, your ]] ..
+		[[vision will start to blur to signify your upcoming death.@Killing zombies will grant you more weapons ]] ..
+		[[but your main objective is to survive!@If you stay together and defend your entrances then you are sure ]] ..
+		[[to win.@If you seperate or don't push back the zombies then you're sure to join them.@ @^rRewards for killing zombies:@ @]] ..
+		weapon_table_text ..
+		[[ @ @^g          -- ZOMBIES --@You can change your class as a zombie by pressing F3.@Classes in red mean ]] .. 
+		[[that more humans need to be killed to get that class unlocked.@ @^rYou lose the match if all humans die ]] ..
+		[[or you're a zombie at the end of the round.@If redeeming is allowed then you can kill a certain amount of ]] .. 
+		[[humans to ressurect yourself.@ @^yVisit github.com/Xalalau/Zombie-Survival-v1.11-Fix for updates to the game!]]
 
-HELP_TEXT_SURVIVALMODE = [[^rWelcome to Zombie Survival, for GMod10.@ @^b          -- HUMANS --@^bSurvive for ]]..ToMinutesSeconds(ROUNDTIME)..[[ to win the match.@If you get killed by a zombie, you become one! ]]..shit..[[@ @Watch the infliction bar. The bigger it is, the more humans are dead!@The bar at the bottom of the screen represents your fear and how many zombies are in your immediate area.@^bA blue bar means only 1 - 3 are near you.@^yA yellow or red bar means anywhere from 5 - 9 are near you.@^rA full bar means that zombies are right near you, and in mass numbers!@ @If you lose enough health, your vision will start to blur to signify your upcoming death.@Killing zombies will grant you more weapons but your main objective is to survive!@If you stay together and defend your entrances then you are sure to win.@If you seperate or don't push back the zombies then you're sure to join them.@ @^rYou can scavenge for weapons and ammo by looking around the map for them.@ @^g          -- ZOMBIES --@You can change your class as a zombie by pressing F3.@Classes in red mean that more humans need to be killed to get that class unlocked.@ @^rYou lose the match if all humans die or you're a zombie at the end of the round.@If redeeming is allowed then you can kill a certain amount of humans to ressurect yourself.@ @^yVisit www.noxiousnet.com or forums.facepunchstudios.com for updates to the game!]]
+	ZSF.HELP_TEXT_SURVIVALMODE =
+		[[^rWelcome to Zombie Survival v1.11 Fix by Xalalau @^rFor GMod March 2024 Update+.@ @^b          -- HUMANS --@^bSurvive for ]] ..
+		ToMinutesSeconds(ZSF.ROUNDTIME) ..
+		[[ to win the match.@If you get killed by a zombie, you become one! ]] ..
+		shit ..
+		[[@ @Watch the infliction bar. The bigger it is, the more humans are dead!@The bar at the bottom of the screen ]] ..
+		[[represents your fear and how many zombies are in your immediate area.@^bA blue bar means only 1 - 3 are near you]] ..
+		[[.@^yA yellow or red bar means anywhere from 5 - 9 are near you.@^rA full bar means that zombies are right near you, ]] ..
+		[[and in mass numbers!@ @If you lose enough health, your vision will start to blur to signify your upcoming ]] ..
+		[[death.@Killing zombies will grant you more weapons but your main objective is to survive!@If you stay together and ]] ..
+		[[defend your entrances then you are sure to win.@If you seperate or don't push back the zombies then you're sure to ]] ..
+		[[join them.@ @^rYou can scavenge for weapons and ammo by looking around the map for them.@ @^g          -- ZOMBIES --@You ]] ..
+		[[can change your class as a zombie by pressing F3.@Classes in red mean that more humans need to be killed to get that ]] ..
+		[[class unlocked.@ @^rYou lose the match if all humans die or you're a zombie at the end of the round.@If redeeming is ]] ..
+		[[allowed then you can kill a certain amount of humans to ressurect yourself.@ @^yVisit github.com/Xalalau/Zombie-Survival-v1.11-Fix ]] ..
+		[[for updates to the game!]]
 
-HELP_TEXT = string.Explode("@", HELP_TEXT)
-for _, text in pairs(HELP_TEXT) do
-	text = string.gsub(text, "@", "")
-end
+	ZSF.HELP_TEXT = string.Explode("@", ZSF.HELP_TEXT)
+	for _, text in ipairs(ZSF.HELP_TEXT) do
+		text = string.gsub(text, "@", "")
+	end
 
-HELP_TEXT_SURVIVALMODE = string.Explode("@", HELP_TEXT_SURVIVALMODE)
-for _, text in pairs(HELP_TEXT_SURVIVALMODE) do
-	text = string.gsub(text, "@", "")
-end
+	ZSF.HELP_TEXT_SURVIVALMODE = string.Explode("@", ZSF.HELP_TEXT_SURVIVALMODE)
+	for _, text in ipairs(ZSF.HELP_TEXT_SURVIVALMODE) do
+		text = string.gsub(text, "@", "")
+	end
 end
 
 ----------------------------
@@ -235,6 +282,7 @@ util.PrecacheSound("npc/zombie/foot3.wav")
 util.PrecacheSound("npc/zombie/foot_slide1.wav")
 util.PrecacheSound("npc/zombie/foot_slide2.wav")
 util.PrecacheSound("npc/zombie/foot_slide3.wav")
+
 ZombieClasses[1] =						-- The number should not be the same as any other class. You can't skip numbers.
 {
 	Name = "Zombie",					-- Display name.
@@ -246,18 +294,18 @@ ZombieClasses[1] =						-- The number should not be the same as any other class.
 	Speed = 150,						-- Speed moving on the ground.
 	Description="The slow, sulking bag of flesh. This is your basic zombie.@Unique abilities: Can claw at objects to send them flying.", -- Description to display at class selection. Seperate lines by the @ character.
 	PainSounds = {
-				Sound("npc/zombie/zombie_pain1.wav"),
-				Sound("npc/zombie/zombie_pain2.wav"),
-				Sound("npc/zombie/zombie_pain3.wav"),
-				Sound("npc/zombie/zombie_pain4.wav"),
-				Sound("npc/zombie/zombie_pain5.wav"),
-				Sound("npc/zombie/zombie_pain6.wav")
-				}, -- Played when the zombie is hurt by something (bullet ect). You must use the Sound() function so it precaches!
+		Sound("npc/zombie/zombie_pain1.wav"),
+		Sound("npc/zombie/zombie_pain2.wav"),
+		Sound("npc/zombie/zombie_pain3.wav"),
+		Sound("npc/zombie/zombie_pain4.wav"),
+		Sound("npc/zombie/zombie_pain5.wav"),
+		Sound("npc/zombie/zombie_pain6.wav")
+	}, -- Played when the zombie is hurt by something (bullet ect). You must use the Sound() function so it precaches!
 	DeathSounds = {
-				Sound("npc/zombie/zombie_die1.wav"),
-				Sound("npc/zombie/zombie_die2.wav"),
-				Sound("npc/zombie/zombie_die3.wav")
-				}, -- Played when the zombie is killed.
+		Sound("npc/zombie/zombie_die1.wav"),
+		Sound("npc/zombie/zombie_die2.wav"),
+		Sound("npc/zombie/zombie_die3.wav")
+	}, -- Played when the zombie is killed.
 	PlayerFootstep = true, -- Custom footstep callback.
 	Unlocked = true -- Don't change this. This is only for 0.0 infliction classes.
 }
@@ -272,12 +320,12 @@ ZombieClasses[2] =
 	Speed = 245,
 	Description = "The faster, more decomposed, boney zombie. This is your fast attack zombie.@Unique abilities: Can climb walls and leap long distances.",
 	PainSounds = {
-				Sound("npc/fast_zombie/leap1.wav"),
-				Sound("npc/fast_zombie/wake1.wav")
-				},
+		Sound("npc/fast_zombie/leap1.wav"),
+		Sound("npc/fast_zombie/wake1.wav")
+	},
 	DeathSounds = {
-				Sound("npc/fast_zombie/fz_alert_close1.wav")
-				},
+		Sound("npc/fast_zombie/fz_alert_close1.wav")
+	},
 	PlayerFootstep = true
 }
 
@@ -291,14 +339,14 @@ ZombieClasses[3] =
 	Speed = 135,
 	Description="A giant mass of decaying flesh.@Unique abilities: Massive melee damage and can throw headcrabs.",
 	PainSounds = {
-				Sound("npc/zombie_poison/pz_pain1.wav"),
-				Sound("npc/zombie_poison/pz_pain2.wav"),
-				Sound("npc/zombie_poison/pz_pain3.wav")
-				},
+		Sound("npc/zombie_poison/pz_pain1.wav"),
+		Sound("npc/zombie_poison/pz_pain2.wav"),
+		Sound("npc/zombie_poison/pz_pain3.wav")
+	},
 	DeathSounds = {
-				Sound("npc/zombie_poison/pz_die1.wav"),
-				Sound("npc/zombie_poison/pz_die2.wav")
-				}
+		Sound("npc/zombie_poison/pz_die1.wav"),
+		Sound("npc/zombie_poison/pz_die2.wav")
+	}
 }
 
 ZombieClasses[4] =
@@ -311,15 +359,15 @@ ZombieClasses[4] =
 	Speed = 170,
 	Description="Mutated zombie full of volatile chemicals.@Unique abilities: Explodes when killed.",
 	PainSounds = {
-				Sound("npc/metropolice/pain1.wav"),
-				Sound("npc/metropolice/pain2.wav"),
-				Sound("npc/metropolice/pain3.wav"),
-				Sound("npc/metropolice/pain4.wav"),
-				Sound("npc/metropolice/knockout2.wav")
-				},
+		Sound("npc/metropolice/pain1.wav"),
+		Sound("npc/metropolice/pain2.wav"),
+		Sound("npc/metropolice/pain3.wav"),
+		Sound("npc/metropolice/pain4.wav"),
+		Sound("npc/metropolice/knockout2.wav")
+	},
 	DeathSounds = {
-				Sound("ambient/fire/gascan_ignite1.wav")
-				}
+		Sound("ambient/fire/gascan_ignite1.wav")
+	}
 }
 
 ZombieClasses[5] =
@@ -332,14 +380,14 @@ ZombieClasses[5] =
 	Speed = 205,
 	Description="An apparition that does large amounts of damage.@Unique abilities: Heavy damage. Completely invisible while standing still.",
 	PainSounds = {
-				Sound("npc/barnacle/barnacle_pull1.wav"),
-				Sound("npc/barnacle/barnacle_pull2.wav"),
-				Sound("npc/barnacle/barnacle_pull3.wav"),
-				Sound("npc/barnacle/barnacle_pull4.wav")
-				},
+		Sound("npc/barnacle/barnacle_pull1.wav"),
+		Sound("npc/barnacle/barnacle_pull2.wav"),
+		Sound("npc/barnacle/barnacle_pull3.wav"),
+		Sound("npc/barnacle/barnacle_pull4.wav")
+	},
 	DeathSounds = {
-				Sound("npc/stalker/go_alert2.wav")
-				}
+		Sound("npc/stalker/go_alert2.wav")
+	}
 }
 
 ZombieClasses[6] =
@@ -352,14 +400,14 @@ ZombieClasses[6] =
 	Speed = 175,
 	Description="A headcrab.@Unique abilities: humps heads.",
 	PainSounds = {
-				Sound("npc/headcrab/pain1.wav"),
-				Sound("npc/headcrab/pain2.wav"),
-				Sound("npc/headcrab/pain3.wav")
-				},
+		Sound("npc/headcrab/pain1.wav"),
+		Sound("npc/headcrab/pain2.wav"),
+		Sound("npc/headcrab/pain3.wav")
+	},
 	DeathSounds = {
-				Sound("npc/headcrab/die1.wav"),
-				Sound("npc/headcrab/die2.wav")
-				}
+		Sound("npc/headcrab/die1.wav"),
+		Sound("npc/headcrab/die2.wav")
+	}
 }
 
 ZombieClasses[7] =
@@ -372,14 +420,14 @@ ZombieClasses[7] =
 	Speed = 245,
 	Description="A faster headcrab.@Unique abilities: humps heads.",
 	PainSounds = {
-				Sound("npc/headcrab_fast/pain1.wav"),
-				Sound("npc/headcrab_fast/pain2.wav"),
-				Sound("npc/headcrab_fast/pain3.wav")
-				},
+		Sound("npc/headcrab_fast/pain1.wav"),
+		Sound("npc/headcrab_fast/pain2.wav"),
+		Sound("npc/headcrab_fast/pain3.wav")
+	},
 	DeathSounds = {
-				Sound("npc/headcrab_fast/die1.wav"),
-				Sound("npc/headcrab_fast/die2.wav")
-				}
+		Sound("npc/headcrab_fast/die1.wav"),
+		Sound("npc/headcrab_fast/die2.wav")
+	}
 }
 
 ZombieClasses[8] =
@@ -392,15 +440,15 @@ ZombieClasses[8] =
 	Speed = 140,
 	Description="A poison headcrab. The bane of all encampments.@Unique abilities: poisons players and poison spit!",
 	PainSounds = {
-				Sound("npc/headcrab_poison/ph_pain1.wav"),
-				Sound("npc/headcrab_poison/ph_pain2.wav"),
-				Sound("npc/headcrab_poison/ph_pain3.wav")
-				},
+		Sound("npc/headcrab_poison/ph_pain1.wav"),
+		Sound("npc/headcrab_poison/ph_pain2.wav"),
+		Sound("npc/headcrab_poison/ph_pain3.wav")
+	},
 	DeathSounds = {
-				Sound("npc/headcrab_poison/ph_rattle1.wav"),
-				Sound("npc/headcrab_poison/ph_rattle2.wav"),
-				Sound("npc/headcrab_poison/ph_rattle3.wav")
-				}
+		Sound("npc/headcrab_poison/ph_rattle1.wav"),
+		Sound("npc/headcrab_poison/ph_rattle2.wav"),
+		Sound("npc/headcrab_poison/ph_rattle3.wav")
+	}
 }
 
 ZombieClasses[9] =
@@ -413,18 +461,18 @@ ZombieClasses[9] =
 	Speed = 120,
 	Description = "You shouldn't even be seeing this.",
 	PainSounds = {
-				Sound("npc/zombie/zombie_pain1.wav"),
-				Sound("npc/zombie/zombie_pain2.wav"),
-				Sound("npc/zombie/zombie_pain3.wav"),
-				Sound("npc/zombie/zombie_pain4.wav"),
-				Sound("npc/zombie/zombie_pain5.wav"),
-				Sound("npc/zombie/zombie_pain6.wav")
-				},
+		Sound("npc/zombie/zombie_pain1.wav"),
+		Sound("npc/zombie/zombie_pain2.wav"),
+		Sound("npc/zombie/zombie_pain3.wav"),
+		Sound("npc/zombie/zombie_pain4.wav"),
+		Sound("npc/zombie/zombie_pain5.wav"),
+		Sound("npc/zombie/zombie_pain6.wav")
+	},
 	DeathSounds = {
-				Sound("npc/zombie/zombie_die1.wav"),
-				Sound("npc/zombie/zombie_die2.wav"),
-				Sound("npc/zombie/zombie_die3.wav")
-				},
+		Sound("npc/zombie/zombie_die1.wav"),
+		Sound("npc/zombie/zombie_die2.wav"),
+		Sound("npc/zombie/zombie_die3.wav")
+	},
 	Unlocked = true,
 	Hidden = true -- The class won't show up in any menus and can't be switched to unless the script is told to switch to it.
 }

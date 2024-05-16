@@ -8,15 +8,15 @@ SWEP.AutoSwitchTo = true
 SWEP.AutoSwitchFrom = false
 
 function SWEP:Deploy()
-	self.Owner:DrawViewModel(false)
-	self.Owner:DrawWorldModel(false)
+	self:GetOwner():DrawViewModel(false)
+	self:GetOwner():DrawWorldModel(false)
 	umsg.Start("RcHCScale")
-		umsg.Entity(self.Owner)
+		umsg.Entity(self:GetOwner())
 	umsg.End()
 end
 
 function SWEP:Think()
-	local owner = self.Owner
+	local owner = self:GetOwner()
 	if self.GoingToSpit and CurTime() > self.GoingToSpit then
 		owner:Freeze(false)
 		self.GoingToSpit = nil
@@ -36,8 +36,8 @@ function SWEP:Think()
 			eyeangles.pitch = -0.15
 			eyeangles.z = -0.1
 			local ang = owner:GetAimVector() ang.z = 0
-			self.OwnerAngles = ang * 45
-			self.OwnerOffset = Vector(0,0,6)
+			self:GetOwner():GetViewOffset(ang * 45)
+			self:GetOwner():GetAngles(Vector(0,0,6))
 			owner:SetGroundEntity(NULL)
 			owner:SetLocalVelocity(vel)
 
@@ -50,15 +50,15 @@ function SWEP:Think()
 			self.Leaping = false
 			self.NextLeap = CurTime() + 0.8
 		else
-			local vStart = self.OwnerOffset + owner:GetPos()
+			local vStart = self:GetOwner():GetViewOffset() + owner:GetPos()
 			local tr = {}
 			tr.start = vStart
-			tr.endpos = vStart + self.OwnerAngles
+			tr.endpos = vStart + self:GetOwner():GetAngles()
 			tr.filter = owner
 			local trace = util.TraceLine(tr)
 			local ent = trace.Entity
 
-			for _, fin in pairs(ents.FindInSphere(owner:GetShootPos() + owner:GetAimVector() * 15, 25)) do
+			for _, fin in ipairs(ents.FindInSphere(owner:GetShootPos() + owner:GetAimVector() * 15, 25)) do
 				if fin:IsPlayer() and fin:Team() ~= owner:Team() and fin:Alive() then
 					ent = fin
 					break
@@ -83,7 +83,9 @@ function SWEP:Think()
 				if ent:IsPlayer() and ent:Team() ~= owner:Team() then
 					ent:TakeDamage(5, owner)
 					local timername = tostring(ent).."poisonedby"..tostring(owner)
-					timer.Create(timername, 2, math.random(7, 10), DoPoisoned, ent, owner, timername)
+					timer.Create(timername, 2, math.random(7, 10), function()
+						DoPoisoned(ent, owner, timername)
+					end)
 					ent:SendLua("PoisEff()")
 				else
 					ent:TakeDamage(25, owner)
@@ -101,19 +103,19 @@ SWEP.NextLeap = 0
 
 function SWEP:PrimaryAttack()
 	if self.Leaping or self.GoingToSpit then return end
-	self.Owner:Fire("IgnoreFallDamage", "", 0)
+	self:GetOwner():Fire("IgnoreFallDamage", "", 0)
 
 	if CurTime() < self.NextLeap then return end
 
-	if not self.Owner:OnGround() then return end
+	if not self:GetOwner():OnGround() then return end
 
 	self.GoingToLeap = CurTime() + 1.25
-	self.Owner:SetAnimation(PLAYER_ATTACK1)
-	self.Owner:EmitSound("npc/headcrab_poison/ph_scream"..math.random(1,3)..".wav")
+	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
+	self:GetOwner():EmitSound("npc/headcrab_poison/ph_scream"..math.random(1,3)..".wav")
 
-	self.RememberAngles = self.Owner:GetAngles()
+	self.RememberAngles = self:GetOwner():GetAngles()
 
-	self.Owner:Freeze(true)
+	self:GetOwner():Freeze(true)
 end
 
 SWEP.NextSpit = 0
@@ -124,10 +126,10 @@ function SWEP:SecondaryAttack()
 	if CurTime() < self.NextSpit then return end
 
 	self.GoingToSpit = CurTime() + 1.25
-	self.Owner:SetAnimation(PLAYER_ATTACK1)
-	self.Owner:EmitSound("npc/headcrab_poison/ph_scream"..math.random(1,3)..".wav")
+	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
+	self:GetOwner():EmitSound("npc/headcrab_poison/ph_scream"..math.random(1,3)..".wav")
 
-	self.Owner:Freeze(true)
+	self:GetOwner():Freeze(true)
 end
 
 function SWEP:Reload()

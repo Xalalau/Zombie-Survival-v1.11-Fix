@@ -1,6 +1,6 @@
 local function CheckChanged(obj, strNewValue)
 	strNewValue = tostring(strNewValue)
-	if obj.m_strConVar and strNewValue ~= tostring(GetConVarNumber(obj.m_strConVar)) then
+	if obj.m_strConVar and strNewValue ~= GetConVar(obj.m_strConVar):GetString() then
 		RunConsoleCommand(string.sub(obj.m_strConVar, 2), strNewValue)
 	end
 end
@@ -13,12 +13,14 @@ function MakepOptions()
 	end
 
 	local Window = vgui.Create("DFrame")
-	local wide = h * 0.75
-	local tall = h * 0.5
+	local wide = 500
+	local tall = 360
 	Window:SetSize(wide, tall)
-	local wide = (w - wide) * 0.5
-	local tall = (h - tall) * 0.5
-	Window:SetPos(wide, tall)
+	local wide = (wide) * 0.5
+	local tall = (tall) * 0.5
+
+	Window:CenterVertical()
+	Window:CenterHorizontal()
 	Window:SetTitle(" ")
 	Window:SetVisible(true)
 	Window:SetDraggable(false)
@@ -95,7 +97,7 @@ function MakepOptions()
 	slider:SetConVar("_zs_filmgrainopacity")
 	slider:SetText("Film Grain Opacity")
 	slider.OnValueChanged = function(slid, val)
-		RunConsoleCommand("zs_filmgrainopacity", val)
+		RunConsoleCommand("_zs_filmgrainopacity", val)
 	end
 
 

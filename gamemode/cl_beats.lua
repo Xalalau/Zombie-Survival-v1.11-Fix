@@ -132,7 +132,7 @@ function GM:ResetWaterAndCramps()
 	CRAMP_METER_TIME = 0
 end
 
-local NextAmmoDropOff = AMMO_REGENERATE_RATE
+local NextAmmoDropOff = ZSF.AMMO_REGENERATE_RATE
 
 local COLOR_HUD_OK = Color(0, 150, 0, 255)
 local COLOR_HUD_SCRATCHED = Color(35, 130, 0, 255)
@@ -140,7 +140,7 @@ local COLOR_HUD_HURT = Color(160, 160, 0, 255)
 local COLOR_HUD_CRITICAL = Color(220, 0, 0, 255)
 
 function GM:InitPostEntity()
-	NextAmmoDropOff = math.ceil(CurTime() / AMMO_REGENERATE_RATE) * AMMO_REGENERATE_RATE
+	NextAmmoDropOff = math.ceil(CurTime() / ZSF.AMMO_REGENERATE_RATE) * ZSF.AMMO_REGENERATE_RATE
 end
 
 local NextHordeCalculate = 0
@@ -149,7 +149,7 @@ local ActualHorde = 0
 local NextThump = 0
 
 function GM:SetLastHumanText()
-	if LASTHUMAN then
+	if ZSF.LASTHUMAN then
 		BeatText[10] = "LAST HUMAN!"
 		ZombieHordeText[10] = "LAST HUMAN!"
 		NextHordeCalculate = 999999
@@ -160,7 +160,7 @@ function GM:SetLastHumanText()
 end
 
 function GM:SetUnlifeText()
-	if UNLIFE then
+	if ZSF.UNLIFE then
 		//BeatText[10] = "Un-Life"
 		//ZombieHordeText[10] = "Un-Life"
 		NearZombies = 10
@@ -168,37 +168,37 @@ function GM:SetUnlifeText()
 end
 
 function GM:SetHalflifeText()
-	if HALFLIFE then
+	if ZSF.HALFLIFE then
 		//BeatText[5] = "Half-Life"
 		//ZombieHordeText[5] = "Half-Life"
 		NearZombies = 5
 	end
 end
 
-CreateClientConVar("_zs_enablebeats", 1, true, false)
-local ENABLE_BEATS = util.tobool(GetConVarNumber("_zs_enablebeats"))
-local function EnableBeats(sender, command, arguments)
-	ENABLE_BEATS = util.tobool(arguments[1])
 
-	if ENABLE_BEATS then
+local ENABLE_BEATS = CreateClientConVar("_zs_enablebeats", 1, true, false)
+local function EnableBeats(sender, command, arguments)
+	local ply = LocalPlayer()
+
+	if tobool(arguments[1]) then
 		RunConsoleCommand("_zs_enablebeats", "1")
-		MySelf:ChatPrint("Beats enabled.")
+		ply:ChatPrint("Beats enabled.")
 	else
 		RunConsoleCommand("_zs_enablebeats", "0")
-		MySelf:ChatPrint("Beats disabled.")
+		ply:ChatPrint("Beats disabled.")
 	end
 end
 concommand.Add("zs_enablebeats", EnableBeats)
 
 function GM:Think()
-	MySelf = LocalPlayer()
-	if not MySelf:IsValid() then return end
+	local ply = LocalPlayer()
+	if not ply:IsValid() then return end
 
 	local curtime = CurTime()
 	local realtime = RealTime()
 
-	if MySelf:Team() == TEAM_UNDEAD then
-		if DisplayHorde ~= ActualHorde and not LASTHUMAN then
+	if ply:Team() == ZSF.TEAM_UNDEAD then
+		if DisplayHorde ~= ActualHorde and not ZSF.LASTHUMAN then
 			if ActualHorde <= 0 then
 				DisplayHorde = math.min(math.Approach(DisplayHorde, ActualHorde, FrameTime() * 10), 10)
 			else
@@ -206,19 +206,19 @@ function GM:Think()
 			end
 		end
 
-		if not LASTHUMAN and NextHordeCalculate < curtime then
-			ActualHorde = math.min((GetZombieFocus2(MySelf:GetPos(), 300, 0.001, 0) - 0.0001) * 10, 10)
+		if not ZSF.LASTHUMAN and NextHordeCalculate < curtime then
+			ActualHorde = math.min((GetZombieFocus2(ply:GetPos(), 300, 0.001, 0) - 0.0001) * 10, 10)
 			local rounded = math.Round(DisplayHorde)
 			NextHordeCalculate = curtime + ZBeatLength[rounded]
-			if ENABLE_BEATS and not UNLIFE then
+			if ENABLE_BEATS:GetBool() and not ZSF.UNLIFE then
 				for i, beat in pairs(ZBeats[rounded]) do
 					surface.PlaySound(beat)
 				end
 			end
 		end
 	else
-		local mypos = MySelf:GetPos()
-		if NearZombies ~= ActualNearZombies and not LASTHUMAN then
+		local mypos = ply:GetPos()
+		if NearZombies ~= ActualNearZombies and not ZSF.LASTHUMAN then
 			if ActualNearZombies <= 0 then
 				NearZombies = math.min(math.Approach(NearZombies, ActualNearZombies, FrameTime() * 10), 10)
 			else
@@ -226,19 +226,19 @@ function GM:Think()
 			end
 		end
 
-		if not LASTHUMAN and NextThump <= realtime then
-			ActualNearZombies = math.min(GetZombieFocus2(MySelf:GetPos(), 300, 0.001, 0) * 10, 10)
+		if not ZSF.LASTHUMAN and NextThump <= realtime then
+			ActualNearZombies = math.min(GetZombieFocus2(ply:GetPos(), 300, 0.001, 0) * 10, 10)
 			local rounded = math.Round(NearZombies)
 			NextThump = realtime + BeatLength[rounded]
-			if ENABLE_BEATS and not UNLIFE then
+			if ENABLE_BEATS:GetBool() and not ZSF.UNLIFE then
 				for i, beat in pairs(Beats[rounded]) do
 					surface.PlaySound(beat)
 				end
 			end
 		end
 
-		if ANTI_VENT_CAMP then
-			local cramped = util.TraceLine({start = mypos, endpos = mypos + Vector(0,0,64), filter = MySelf, mask=COLLISION_GROUP_DEBRIS}).HitWorld
+		if ZSF.ANTI_VENT_CAMP then
+			local cramped = util.TraceLine({start = mypos, endpos = mypos + Vector(0,0,64), filter = ply, mask=COLLISION_GROUP_DEBRIS}).HitWorld
 			if cramped then
 				CRAMP_METER_TIME = math.min(CRAMP_METER_TIME + FrameTime(), 60)
 				if 60 <= CRAMP_METER_TIME then
@@ -252,11 +252,11 @@ function GM:Think()
 	end
 end
 
-function GM:HumanHUD(MySelf)
+function GM:HumanHUD(ply)
 	local rounded = math.Round(NearZombies)
 
 	// Health
-	local entityhealth = math.max(MySelf:Health(), 0)
+	local entityhealth = math.max(ply:Health(), 0)
 	local colortouse
 
 	if 80 < entityhealth then
@@ -289,22 +289,22 @@ function GM:HumanHUD(MySelf)
 	draw.SimpleText(BeatText[rounded], "HUDFontTinyAA", 128, h - 42, COLOR_GRAY_HUD, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 	// Kill display
-	draw.DrawText("Kills: "..MySelf:Frags(), "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED_HUD, TEXT_ALIGN_LEFT)
+	draw.DrawText("Kills: "..ply:Frags(), "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED_HUD, TEXT_ALIGN_LEFT)
 
-	if not ENDROUND then
-		if SURVIVALMODE then
+	if not ZSF.ENDROUND then
+		if ZSF.SURVIVALMODE then
 			draw.DrawText("Survival Mode", "DefaultSmall", 248, h - 90, COLOR_GRAY, TEXT_ALIGN_LEFT)
 		else
 			local curtime = CurTime()
 			local TimeLeft = NextAmmoDropOff - curtime
 
 			if TimeLeft < 0 then
-				NextAmmoDropOff = math.ceil(curtime / AMMO_REGENERATE_RATE) * AMMO_REGENERATE_RATE
+				NextAmmoDropOff = math.ceil(curtime / ZSF.AMMO_REGENERATE_RATE) * ZSF.AMMO_REGENERATE_RATE
 			end
 			draw.DrawText("Ammo Regeneration: "..ToMinutesSeconds(TimeLeft), "HUDFontTinyAA", 8, h - 90, COLOR_GRAY, TEXT_ALIGN_LEFT)
 		end
 
-		if 2 < MySelf:WaterLevel() then
+		if 2 < ply:WaterLevel() then
 			WATER_DROWNTIME = math.min(WATER_DROWNTIME + FrameTime(), 30)
 			if 30 <= WATER_DROWNTIME then
 				RunConsoleCommand("water_death")
@@ -346,9 +346,9 @@ end
 
 local NextAura = 0
 
-function GM:ZombieHUD(MySelf)
-	local entityhealth = math.max(MySelf:Health(), 0)
-	local maxhealth = ZombieClasses[MySelf.Class].Health
+function GM:ZombieHUD(ply)
+	local entityhealth = math.max(ply:Health(), 0)
+	local maxhealth = ZombieClasses[ply.Class].Health
 	local percenthealth = entityhealth / maxhealth
 
 	local colortouse
@@ -383,34 +383,34 @@ function GM:ZombieHUD(MySelf)
 	surface.DrawTexturedRect(10, h - 36, DisplayHorde * 23.6, 24)
 	draw.SimpleText(ZombieHordeText[rounded], "HUDFontTinyAA", 128, h - 42, COLOR_GRAY, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
-	local killz = MySelf:Frags()
+	local killz = ply:Frags()
 	if SMALL_HUD then
-		draw.DrawText("Feed: "..ToMinutesSeconds(ROUNDTIME - CurTime()), "HUDFontSmall", w*0.09, 0, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+		draw.DrawText("Feed: "..ToMinutesSeconds(ZSF.ROUNDTIME - CurTime()), "HUDFontSmall", w*0.09, 0, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 
-		if REDEEM then
-			if AUTOREDEEM then
-				draw.DrawText("Redemption: " .. REDEEM_KILLS - killz, "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+		if ZSF.REDEEM then
+			if ZSF.AUTOREDEEM then
+				draw.DrawText("Redemption: " .. ZSF.REDEEM_KILLS - killz, "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 			else
-				if REDEEM_KILLS <= killz then
+				if ZSF.REDEEM_KILLS <= killz then
 					draw.DrawText("Redeem: F2!", "HUDFontSmall", w*0.09, h*0.04, COLOR_WHITE, TEXT_ALIGN_LEFT)
 				else
-					draw.DrawText("Redemption: " .. REDEEM_KILLS - killz, "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+					draw.DrawText("Redemption: " .. ZSF.REDEEM_KILLS - killz, "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 				end
 			end
 		else
 			draw.DrawText("Brains: "..killz, "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 		end
 	else
-		draw.DrawText("Feed: "..ToMinutesSeconds(ROUNDTIME - CurTime()), "HUDFontSmall", w*0.09, 0, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+		draw.DrawText("Feed: "..ToMinutesSeconds(ZSF.ROUNDTIME - CurTime()), "HUDFontSmall", w*0.09, 0, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 
-		if REDEEM then
-			if AUTOREDEEM then
-				draw.DrawText("Redemption: " .. REDEEM_KILLS - killz, "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+		if ZSF.REDEEM then
+			if ZSF.AUTOREDEEM then
+				draw.DrawText("Redemption: " .. ZSF.REDEEM_KILLS - killz, "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 			else
-				if REDEEM_KILLS <= killz then
+				if ZSF.REDEEM_KILLS <= killz then
 					draw.DrawText("Redeem: F2!", "HUDFontSmall", w*0.09, h*0.04, COLOR_WHITE, TEXT_ALIGN_LEFT)
 				else
-					draw.DrawText("Redemption: " .. REDEEM_KILLS - killz, "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+					draw.DrawText("Redemption: " .. ZSF.REDEEM_KILLS - killz, "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 				end
 			end
 		else
@@ -420,16 +420,16 @@ function GM:ZombieHUD(MySelf)
 
 	if NextAura < realtime then
 		NextAura = realtime + 1.25 - DisplayHorde * 0.1
-		local mypos = MySelf:GetPos()
+		local mypos = ply:GetPos()
 		local cap = 0
 		local auras = {}
-		for _, pl in pairs(player.GetAll()) do
+		for _, curPly in ipairs(player.GetHumans()) do
 			if 10 <= cap then break end
 
-			if pl:Team() == TEAM_HUMAN and pl:Alive() then
-				local pos = pl:GetPos()
+			if curPly:Team() == ZSF.TEAM_HUMAN and curPly:Alive() then
+				local pos = curPly:GetPos()
 				if pos:Distance(mypos) < 1024 and pos:ToScreen().visible then
-					auras[pl] = pos
+					auras[curPly] = pos
 					cap = cap + 1
 				end
 			end
@@ -438,12 +438,12 @@ function GM:ZombieHUD(MySelf)
 		if 0 < cap then
 			local emitter = ParticleEmitter(EyePos())
 
-			for pl, pos in pairs(auras) do
-				local vel = pl:GetVelocity() * 0.95
-				local health = pl:Health()
-				local attach = pl:GetAttachment(pl:LookupAttachment("chest"))
+			for curPly, pos in pairs(auras) do
+				local vel = curPly:GetVelocity() * 0.95
+				local health = curPly:Health()
+				local attach = curPly:GetAttachment(curPly:LookupAttachment("chest"))
 				if not attach then
-					attach = {Pos=pl:GetPos() + Vector(0,0,48)}
+					attach = {Pos=curPly:GetPos() + Vector(0,0,48)}
 				end
 
 				local particle = emitter:Add("Sprites/light_glow02_add_noz", attach.Pos)
@@ -452,7 +452,7 @@ function GM:ZombieHUD(MySelf)
 				particle:SetStartAlpha(255)
 				particle:SetStartSize(math.Rand(14, 18))
 				particle:SetEndSize(4)
-				particle:SetColor(255 - health * 2, health * 2.1, 30)
+				particle:SetColor(Color(255 - health * 2, health * 2.1, 30))
 				particle:SetRoll(math.Rand(0, 359))
 				particle:SetRollDelta(math.Rand(-2, 2))
 
@@ -463,7 +463,7 @@ function GM:ZombieHUD(MySelf)
 					particle:SetStartAlpha(255)
 					particle:SetStartSize(math.Rand(10, 14))
 					particle:SetEndSize(0)
-					particle:SetColor(255 - health * 2, health * 2.1, 30)
+					particle:SetColor(Color(255 - health * 2, health * 2.1, 30))
 					particle:SetRoll(math.Rand(0, 359))
 					particle:SetRollDelta(math.Rand(-2, 2))
 				end

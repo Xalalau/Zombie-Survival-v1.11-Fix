@@ -42,8 +42,9 @@ end
 
 function GM:SplitMessage(y, ...)
 	local Cached = true
+	local arg = {...}
 
-	for i=1, arg.n do
+	for i=1, #arg do
 		local str = arg[i]
 		if not CachedMarkups[str] then
 			CachedMarkups[str] = markup.Parse(str)
@@ -55,7 +56,7 @@ function GM:SplitMessage(y, ...)
 	DrawTime = CurTime() + 4
 	DrawY = y
 
-	for i=1, arg.n do
+	for i=1, #arg do
 		table.insert(ToDraw, CachedMarkups[ arg[i] ])
 	end
 

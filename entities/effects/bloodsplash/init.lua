@@ -13,7 +13,7 @@ function EFFECT:Init(data)
 			particle:SetStartSize(math.Rand( 16, 32))
 			particle:SetEndSize(math.Rand( 32, 64))
 			particle:SetRoll(math.Rand( 0, 360))
-			particle:SetColor(LightColor.r*0.5, 0, 0)	
+			particle:SetColor(Color(LightColor.r*0.5, 0, 0))
 	emitter:Finish()
 
 	util.Decal("Blood", Pos + Norm*10, Pos - Norm*10)
@@ -53,7 +53,7 @@ function EFFECT:Think()
 			particle:SetEndAlpha(255)
 			particle:SetStartSize(2)
 			particle:SetEndSize(0)
-			particle:SetColor( LightColor.r*0.5, 0, 0 )
+			particle:SetColor(Color(LightColor.r*0.5, 0, 0 ))
 		end
 	emitter:Finish()
 

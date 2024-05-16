@@ -23,16 +23,17 @@ function SWEP:Deploy()
 end
 
 function SWEP:Holster()
-	local vm = MySelf:GetViewModel()
+	local vm = LocalPlayer():GetViewModel()
 	if vm and vm:IsValid() then
-		vm:SetColor(255, 255, 255, 255)
+		vm:SetColor(Color(255, 255, 255, 255))
 	end
 end
 
 function SWEP:Think()
-	local vm = MySelf:GetViewModel()
+	local ply = LocalPlayer()
+	local vm = ply:GetViewModel()
 	if vm and vm:IsValid() then
-		vm:SetColor(20, 20, 20, math.max(15, math.min(MySelf:GetVelocity():Length(), 200)))
+		vm:SetColor(Color(20, 20, 20, math.max(15, math.min(ply:GetVelocity():Length(), 200))))
 	end
 end
 

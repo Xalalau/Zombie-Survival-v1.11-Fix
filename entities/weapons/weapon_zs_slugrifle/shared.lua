@@ -43,10 +43,12 @@ function SWEP:Reload()
 	if CurTime() < self.NextReload then return end
 	self.NextReload = CurTime() + self.Primary.Delay * 2
 	
-	if self.Weapon:Clip1() < self.Primary.ClipSize and self.Owner:GetAmmoCount(self.Primary.Ammo) > 0 then
-		self.Weapon:SetNetworkedBool( "reloading", true )
-		self.Weapon:DefaultReload( ACT_VM_RELOAD )
-		timer.Simple(0.25, self.Weapon.SendWeaponAnim, self.Weapon, ACT_SHOTGUN_RELOAD_FINISH)
-		self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	if self:Clip1() < self.Primary.ClipSize and self:GetOwner():GetAmmoCount(self.Primary.Ammo) > 0 then
+		self:SetNetworkedBool( "reloading", true )
+		self:DefaultReload( ACT_VM_RELOAD )
+		timer.Simple(0.25, function()
+			self:SendWeaponAnim(ACT_SHOTGUN_RELOAD_FINISH)
+		end)
+		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	end
 end

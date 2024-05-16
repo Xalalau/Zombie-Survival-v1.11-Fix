@@ -6,11 +6,11 @@ function EFFECT:Init(data)
 	if CurTime() < NextEffect then return end -- This is to stop crashing when lots of people get gibbed at once.
 	NextEffect = CurTime() + 0.5
 
-	local player = data:GetEntity()
+	local ply = data:GetEntity()
 
-	if player and player:IsValid() then
-		local pos = player:GetPos()
-		player:EmitSound("physics/flesh/flesh_bloody_break.wav")
+	if ply and ply:IsValid() then
+		local pos = ply:GetPos()
+		ply:EmitSound("physics/flesh/flesh_bloody_break.wav")
 
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pos + Vector(0,0,25))

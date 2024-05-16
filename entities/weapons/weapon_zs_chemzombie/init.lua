@@ -10,14 +10,14 @@ SWEP.AutoSwitchFrom = false
 SWEP.Deployed = false
 
 function SWEP:Deploy()
-	self.Owner:DrawViewModel(false)
-	self.Owner:DrawWorldModel(false)
+	self:GetOwner():DrawViewModel(false)
+	self:GetOwner():DrawWorldModel(false)
 
 	if self.Deployed then return end
 	self.Deployed = true
 
 	/*local effectdata = EffectData()
-		effectdata:SetEntity(self.Owner)
+		effectdata:SetEntity(self:GetOwner())
 	util.Effect("chemzombieambient", effectdata)*/
 end
 

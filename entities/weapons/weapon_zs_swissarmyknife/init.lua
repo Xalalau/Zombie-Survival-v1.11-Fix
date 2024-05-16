@@ -8,12 +8,14 @@ SWEP.AutoSwitchTo = false
 SWEP.AutoSwitchFrom = false
 
 function SWEP:Deploy()
-	if self.WalkSpeed < self.Owner.WalkSpeed then
-		GAMEMODE:SetPlayerSpeed(self.Owner, self.WalkSpeed)
-	elseif self.WalkSpeed > self.Owner.WalkSpeed then
-		local timername = tostring(self.Owner).."speedchange"
-		timer.Destroy(timername)
-		timer.Create(timername, 1, 1, GAMEMODE.SetPlayerSpeed, GAMEMODE, self.Owner, self.WalkSpeed)
+	if self.WalkSpeed < self:GetOwner().WalkSpeed then
+		GAMEMODE:SetPlayerSpeed(self:GetOwner(), self.WalkSpeed)
+	elseif self.WalkSpeed > self:GetOwner().WalkSpeed then
+		local timername = tostring(self:GetOwner()).."speedchange"
+		timer.Remove(timername)
+		timer.Create(timername, 1, 1, function()
+			GAMEMODE:SetPlayerSpeed(self:GetOwner(), self.WalkSpeed)
+		end)
 	end
 
 	return true
@@ -27,10 +29,10 @@ function SWEP:Initialize()
 end
 
 function SWEP:PrimaryAttack()
-	self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
-	if CurTime() < self.Weapon:GetNetworkedFloat("LastShootTime", -100) + self.Primary.Delay then return end
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	if CurTime() < self:GetNetworkedFloat("LastShootTime", -100) + self.Primary.Delay then return end
 
-	local trace = self.Owner:TraceLine(62)
+	local trace = self:GetOwner():TraceLine(62)
 	local ent
 
 	if trace.HitNonWorld then
@@ -39,29 +41,29 @@ function SWEP:PrimaryAttack()
 
 	if trace.Hit then
 		if trace.MatType == MAT_FLESH or trace.MatType == MAT_BLOODYFLESH or trace.MatType == MAT_ANTLION or trace.MatType == MAT_ALIENFLESH then
-			self.Owner:EmitSound("weapons/knife/knife_hit"..math.random(1,4)..".wav")
+			self:GetOwner():EmitSound("weapons/knife/knife_hit"..math.random(1,4)..".wav")
 			util.Decal("Blood", trace.HitPos + trace.HitNormal * 8, trace.HitPos - trace.HitNormal * 8)
 		else
-			self.Owner:EmitSound("weapons/knife/knife_hitwall1.wav")
+			self:GetOwner():EmitSound("weapons/knife/knife_hitwall1.wav")
 			util.Decal("ManhackCut", trace.HitPos + trace.HitNormal * 8, trace.HitPos - trace.HitNormal * 8)
 		end
 	end
 
 	if self.Alternate then
-		self.Weapon:SendWeaponAnim(ACT_VM_MISSCENTER)
+		self:SendWeaponAnim(ACT_VM_MISSCENTER)
 	else
-		self.Weapon:SendWeaponAnim(ACT_VM_HITCENTER)
+		self:SendWeaponAnim(ACT_VM_HITCENTER)
 	end
 	self.Alternate = not self.Alternate
 
-	self.Owner:EmitSound("weapons/knife/knife_slash"..math.random(1,2)..".wav")
-	self.Owner:SetAnimation(PLAYER_ATTACK1)
+	self:GetOwner():EmitSound("weapons/knife/knife_slash"..math.random(1,2)..".wav")
+	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
 
 	if ent and ent:IsValid() then
 		if ent:GetClass() == "func_breakable_surf" then
 			ent:Fire("break", "", 0)
 		else
-			ent:TakeDamage(self.Primary.Damage, self.Owner)
+			ent:TakeDamage(self.Primary.Damage, self:GetOwner())
 		end
 	end
 end

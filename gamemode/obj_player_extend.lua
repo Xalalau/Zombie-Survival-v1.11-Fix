@@ -7,7 +7,7 @@ end
 
 function meta:SetZombieClass(cl)
 	self.Class = cl
-	self:SendLua("MySelf.Class="..cl)
+	self:SendLua("LocalPlayer().Class="..cl)
 end
 
 function meta:TraceLine(distance, _mask)
@@ -30,8 +30,8 @@ function meta:LegsGib()
 end
 
 function meta:Redeem()
-	for _, a in pairs(player.GetAll()) do
-		a:PrintMessage(3, self:Name().." redeemed themself.")
+	for _, ply in ipairs(player.GetHumans()) do
+		ply:PrintMessage(3, self:Name().." redeemed themself.")
 	end
 
 	local effectdata = EffectData()
@@ -43,7 +43,7 @@ function meta:Redeem()
 	umsg.End()
 
 	self:StripWeapons()
-	self:SetTeam(TEAM_HUMAN)
+	self:SetTeam(ZSF.TEAM_HUMAN)
 	self:Spawn()
 	self:DrawViewModel(true)
 	self:DrawWorldModel(true)
@@ -111,80 +111,80 @@ local VoiceSets = {}
 
 VoiceSets["male"] = {}
 VoiceSets["male"]["PainSoundsLight"] = {
-Sound("vo/npc/male01/ow01.wav"),
-Sound("vo/npc/male01/ow02.wav"),
-Sound("vo/npc/male01/pain01.wav"),
-Sound("vo/npc/male01/pain02.wav"),
-Sound("vo/npc/male01/pain03.wav")
+	Sound("vo/npc/male01/ow01.wav"),
+	Sound("vo/npc/male01/ow02.wav"),
+	Sound("vo/npc/male01/pain01.wav"),
+	Sound("vo/npc/male01/pain02.wav"),
+	Sound("vo/npc/male01/pain03.wav")
 }
 
 VoiceSets["male"]["PainSoundsMed"] = {
-Sound("vo/npc/male01/pain04.wav"),
-Sound("vo/npc/male01/pain05.wav"),
-Sound("vo/npc/male01/pain06.wav")
+	Sound("vo/npc/male01/pain04.wav"),
+	Sound("vo/npc/male01/pain05.wav"),
+	Sound("vo/npc/male01/pain06.wav")
 }
 
 VoiceSets["male"]["PainSoundsHeavy"] = {
-Sound("vo/npc/male01/pain07.wav"),
-Sound("vo/npc/male01/pain08.wav"),
-Sound("vo/npc/male01/pain09.wav")
+	Sound("vo/npc/male01/pain07.wav"),
+	Sound("vo/npc/male01/pain08.wav"),
+	Sound("vo/npc/male01/pain09.wav")
 }
 
 VoiceSets["male"]["DeathSounds"] = {
-Sound("vo/npc/male01/no02.wav"),
-Sound("vo/npc/Barney/ba_ohshit03.wav"),
-Sound("vo/npc/Barney/ba_ohshit03.wav"),
-Sound("vo/npc/Barney/ba_no01.wav"),
-Sound("vo/npc/Barney/ba_no02.wav")
+	Sound("vo/npc/male01/no02.wav"),
+	Sound("vo/npc/Barney/ba_ohshit03.wav"),
+	Sound("vo/npc/Barney/ba_ohshit03.wav"),
+	Sound("vo/npc/Barney/ba_no01.wav"),
+	Sound("vo/npc/Barney/ba_no02.wav")
 }
 
 -- Female pain / death sounds
 VoiceSets["female"] = {}
 VoiceSets["female"]["PainSoundsLight"] = {
-Sound("vo/npc/female01/pain01.wav"),
-Sound("vo/npc/female01/pain02.wav"),
-Sound("vo/npc/female01/pain03.wav")
+	Sound("vo/npc/female01/pain01.wav"),
+	Sound("vo/npc/female01/pain02.wav"),
+	Sound("vo/npc/female01/pain03.wav")
 }
 
 VoiceSets["female"]["PainSoundsMed"] = {
-Sound("vo/npc/female01/pain04.wav"),
-Sound("vo/npc/female01/pain05.wav"),
-Sound("vo/npc/female01/pain06.wav")
+	Sound("vo/npc/female01/pain04.wav"),
+	Sound("vo/npc/female01/pain05.wav"),
+	Sound("vo/npc/female01/pain06.wav")
 }
 
 VoiceSets["female"]["PainSoundsHeavy"] = {
-Sound("vo/npc/female01/pain07.wav"),
-Sound("vo/npc/female01/pain08.wav"),
-Sound("vo/npc/female01/pain09.wav")
+	Sound("vo/npc/female01/pain07.wav"),
+	Sound("vo/npc/female01/pain08.wav"),
+	Sound("vo/npc/female01/pain09.wav")
 }
 
 VoiceSets["female"]["DeathSounds"] = {
-Sound("vo/npc/female01/no01.wav"),
-Sound("vo/npc/female01/ow01.wav"),
-Sound("vo/npc/female01/ow02.wav")
+	Sound("vo/npc/female01/no01.wav"),
+	Sound("vo/npc/female01/ow01.wav"),
+	Sound("vo/npc/female01/ow02.wav")
 }
 
 VoiceSets["combine"] = {}
 VoiceSets["combine"].PainSoundsLight = {
-Sound("npc/combine_soldier/pain1.wav"),
-Sound("npc/combine_soldier/pain2.wav"),
-Sound("npc/combine_soldier/pain3.wav")
+	Sound("npc/combine_soldier/pain1.wav"),
+	Sound("npc/combine_soldier/pain2.wav"),
+	Sound("npc/combine_soldier/pain3.wav")
 }
 
 VoiceSets["combine"].PainSoundsMed = {
-Sound("npc/metropolice/pain1.wav"),
-Sound("npc/metropolice/pain2.wav")
+	Sound("npc/metropolice/pain1.wav"),
+	Sound("npc/metropolice/pain2.wav")
 }
 
 VoiceSets["combine"].PainSoundsHeavy = {
-Sound("npc/metropolice/pain3.wav"),
-Sound("npc/metropolice/pain4.wav")
+	Sound("npc/metropolice/pain3.wav"),
+	Sound("npc/metropolice/pain4.wav")
 }
 
 VoiceSets["combine"].DeathSounds = {
-Sound("npc/combine_soldier/die1.wav"),
-Sound("npc/combine_soldier/die2.wav"),
-Sound("npc/combine_soldier/die3.wav")
+	Sound("npc/combine_soldier/die1.wav"),
+	Sound("npc/combine_soldier/die2.wav"),
+	Sound("npc/combine_soldier/die3.wav")
 }
 
 function meta:PlayDeathSound()
@@ -201,7 +201,7 @@ function meta:PlayPainSound()
 	if CurTime() < self.NextPainSound then return end
 	self.NextPainSound = CurTime() + 0.2
 
-	if self:Team() == TEAM_UNDEAD then
+	if self:Team() == ZSF.TEAM_UNDEAD then
 		local snds = ZombieClasses[self.Class].PainSounds
 		self:EmitSound(snds[math.random(1, #snds)])
 	else

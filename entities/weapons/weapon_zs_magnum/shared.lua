@@ -60,23 +60,25 @@ local function RicochetCallback(bouncenum, attacker, tr, dmginfo)
 		Damage		= dm
 	}
 
-	timer.Simple( 0.02 * bouncenum, attacker.FireBullets, attacker, bullet)
+	timer.Simple( 0.02 * bouncenum, function()
+		attacker:FireBullets(bullet)
+	end)
 end
 
 function SWEP:ZSShootBullet(dmg, numbul, cone)
 	local bullet = {}
 	bullet.Num = numbul
-	bullet.Src = self.Owner:GetShootPos()
-	bullet.Dir = self.Owner:GetAimVector()
+	bullet.Src = self:GetOwner():GetShootPos()
+	bullet.Dir = self:GetOwner():GetAimVector()
 	bullet.Spread = Vector(cone, cone, 0)
 	bullet.Tracer = 1
 	bullet.Force = dmg * 0.5
 	bullet.Damage = dmg
 	bullet.Callback = function(a, b, c) RicochetCallback(0, a, b, c) end
 
-	self.Owner:FireBullets(bullet)
+	self:GetOwner():FireBullets(bullet)
 
-	self.Weapon:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
-	self.Owner:MuzzleFlash()
-	self.Owner:SetAnimation(PLAYER_ATTACK1)
+	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
+	self:GetOwner():MuzzleFlash()
+	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
 end

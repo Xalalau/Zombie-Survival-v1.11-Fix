@@ -12,7 +12,7 @@ hook.Add("InitPostEntity", "Adding", function()
 	end
 
 	// Remove virtually impossible barricade in basement.
-	for _, ent in pairs(ents.FindByClass("prop_physics*")) do
+	for _, ent in ipairs(ents.FindByClass("prop_physics*")) do
 		if ent:GetPos().z < 100 then
 			ent:Remove()
 		end

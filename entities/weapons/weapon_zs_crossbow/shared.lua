@@ -39,46 +39,46 @@ SWEP.Secondary.Delay = 0.5
 SWEP.WalkSpeed = 150
 
 function SWEP:PrimaryAttack()
-	self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	if not self:CanPrimaryAttack() then return end
 
 	if SERVER then
-		local pl = self.Owner
+		local ply = self:GetOwner()
 		local ent = ents.Create("projectile_arrow")
 		if ent:IsValid() then
-			ent:SetOwner(pl)
-			ent:SetPos(pl:GetShootPos() + pl:GetAimVector() * 40)
+			ent:SetOwner(ply)
+			ent:SetPos(ply:GetShootPos() + ply:GetAimVector() * 40)
 			ent:Spawn()
 		end
-		self.Weapon:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
+		self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 	end
 
 	self:TakePrimaryAmmo(1)
 
 	if CLIENT then
-		self.Weapon:SetNetworkedFloat("LastShootTime", CurTime())
+		self:SetNetworkedFloat("LastShootTime", CurTime())
 	end
 end
 
 function SWEP:SecondaryAttack()
-	self.Weapon.NextZoom = self.Weapon.NextZoom or CurTime()
-	if CurTime() < self.Weapon.NextZoom then return end
-	self.Weapon.NextZoom = CurTime() + self.Secondary.Delay
+	self.NextZoom = self.NextZoom or CurTime()
+	if CurTime() < self.NextZoom then return end
+	self.NextZoom = CurTime() + self.Secondary.Delay
 
-	local zoomed = self.Weapon:GetNetworkedBool("Zoomed", false)
-	self.Weapon:SetNetworkedBool("Zoomed", not zoomed)
+	local zoomed = self:GetNetworkedBool("Zoomed", false)
+	self:SetNetworkedBool("Zoomed", not zoomed)
 	if zoomed then
 		if SERVER then
-			self.Owner:SetFOV(90, 0.5)
-			self.Weapon:EmitSound("weapons/sniper/sniper_zoomout.wav", 50, 100)
+			self:GetOwner():SetFOV(90, 0.5)
+			self:EmitSound("weapons/sniper/sniper_zoomout.wav", 50, 100)
 		else
 			self.DrawCrosshair = true
 			surface.PlaySound("weapons/sniper/sniper_zoomout.wav")
 		end
 	else
 		if SERVER then
-			self.Owner:SetFOV(30, 0.5)
-			self.Weapon:EmitSound("weapons/sniper/sniper_zoomin.wav", 50, 100)
+			self:GetOwner():SetFOV(30, 0.5)
+			self:EmitSound("weapons/sniper/sniper_zoomin.wav", 50, 100)
 		else
 			self.DrawCrosshair = false
 			surface.PlaySound("weapons/sniper/sniper_zoomin.wav")
@@ -87,13 +87,13 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:Holster()
-	self.Weapon:SetNetworkedBool("Zoomed", false)
+	self:SetNetworkedBool("Zoomed", false)
 	return true
 end
 
 if CLIENT then
 	function SWEP:DrawHUD()
-		if self.Weapon:GetNetworkedBool("Zoomed", false) then
+		if self:GetNetworkedBool("Zoomed", false) then
 			local hw = w * 0.5
 			local hh = h * 0.5
 
@@ -122,16 +122,16 @@ end
 
 if SERVER then
 	function SWEP:Reload()
-		if self.Weapon:Clip1() == 0 and self.Owner:GetAmmoCount("XBowBolt") > 0 then
-			self.Weapon:EmitSound("weapons/crossbow/bolt_load"..math.random(1,2)..".wav", 50, 100)
-			self.Weapon:DefaultReload(ACT_VM_RELOAD)
+		if self:Clip1() == 0 and self:GetOwner():GetAmmoCount("XBowBolt") > 0 then
+			self:EmitSound("weapons/crossbow/bolt_load"..math.random(1,2)..".wav", 50, 100)
+			self:DefaultReload(ACT_VM_RELOAD)
 		end
 	end
 else
 	function SWEP:Reload()
-		if self.Weapon:Clip1() == 0 and self.Owner:GetAmmoCount("XBowBolt") > 0 then
+		if self:Clip1() == 0 and self:GetOwner():GetAmmoCount("XBowBolt") > 0 then
 			surface.PlaySound("weapons/crossbow/bolt_load"..math.random(1,2)..".wav")
-			self.Weapon:DefaultReload(ACT_VM_RELOAD)
+			self:DefaultReload(ACT_VM_RELOAD)
 		end
 	end
 end

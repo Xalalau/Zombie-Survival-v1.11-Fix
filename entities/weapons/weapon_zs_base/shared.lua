@@ -12,8 +12,25 @@ if CLIENT then
 	SWEP.ViewModelFlip		= true
 	SWEP.CSMuzzleFlashes	= true
 
-	surface.CreateFont("csd", ScreenScale(30), 500, true, true, "CSKillIcons")
-	surface.CreateFont("csd", ScreenScale(60), 500, true, true, "CSSelectIcons")
+	surface.CreateFont("CSKillIcons", { 
+		font = "csd",
+		size = ScreenScale(30),
+		weight = 500,
+		antialias = true,
+		blursize = 0,
+		scanlines = 0,
+		shadow = true
+	})
+
+	surface.CreateFont("CSSelectIcons", { 
+		font = "csd",
+		size = ScreenScale(60),
+		weight = 500,
+		antialias = true,
+		blursize = 0,
+		scanlines = 0,
+		shadow = true
+	})
 end
 
 SWEP.Author			= "JetBoom"
@@ -47,12 +64,14 @@ SWEP.WalkSpeed = 200
 
 if SERVER then
 	function SWEP:Deploy()
-		local timername = tostring(self.Owner).."speedchange"
-		timer.Destroy(timername)
-		if self.WalkSpeed < self.Owner.WalkSpeed then
-			GAMEMODE:SetPlayerSpeed(self.Owner, self.WalkSpeed)
-		elseif self.WalkSpeed > self.Owner.WalkSpeed then
-			timer.Create(timername, 1, 1, GAMEMODE.SetPlayerSpeed, GAMEMODE, self.Owner, self.WalkSpeed)
+		local timername = tostring(self:GetOwner()).."speedchange"
+		timer.Remove(timername)
+		if self.WalkSpeed < self:GetOwner().WalkSpeed then
+			GAMEMODE:SetPlayerSpeed(self:GetOwner(), self.WalkSpeed)
+		elseif self.WalkSpeed > self:GetOwner().WalkSpeed then
+			timer.Create(timername, 1, 1, function()
+				GAMEMODE:SetPlayerSpeed(self:GetOwner(), self.WalkSpeed)
+			end)
 		end
 		return true
 	end
@@ -68,21 +87,21 @@ if CLIENT then
 end
 
 function SWEP:Reload()
-	self.Weapon:DefaultReload(ACT_VM_RELOAD)
+	self:DefaultReload(ACT_VM_RELOAD)
 end
 
 function SWEP:Think()
 end
 
 function SWEP:PrimaryAttack()
-	self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	if not self:CanPrimaryAttack() then return end
 
-	self.Weapon:EmitSound(self.Primary.Sound)
-	if self.Owner:GetVelocity():Length() > 25 then
+	self:EmitSound(self.Primary.Sound)
+	if self:GetOwner():GetVelocity():Length() > 25 then
 		self:ZSShootBullet(self.Primary.Damage, self.Primary.NumShots, self.ConeMoving)
 	else
-		if self.Owner:Crouching() then
+		if self:GetOwner():Crouching() then
 			self:ZSShootBullet(self.Primary.Damage, self.Primary.NumShots, self.ConeCrouching)
 		else
 			self:ZSShootBullet(self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone)
@@ -90,15 +109,15 @@ function SWEP:PrimaryAttack()
 	end
 	
 	self:TakePrimaryAmmo(1)
-	self.Owner:ViewPunch(Angle(math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0))
+	self:GetOwner():ViewPunch(Angle(math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0))
 
 	if CLIENT then
-		self.Weapon:SetNetworkedFloat("LastShootTime", CurTime())
+		self:SetNetworkedFloat("LastShootTime", CurTime())
 	end
 end
 
 function SWEP:ZSShootBullet(dmg, numbul, cone)
-	local owner = self.Owner
+	local owner = self:GetOwner()
 
 	local bullet = {}
 	bullet.Num = numbul
@@ -115,7 +134,7 @@ function SWEP:ZSShootBullet(dmg, numbul, cone)
 	end
 
 	owner:FireBullets(bullet)
-	self.Weapon:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
+	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 	owner:MuzzleFlash()
 	owner:SetAnimation(PLAYER_ATTACK1)
 end
@@ -130,24 +149,25 @@ if CLIENT then
 	local scalebywidth = (ScrW() / 1024) * 10
 	SWEP.CrossHairScale = 1
 	function SWEP:DrawHUD()
-		if not MySelf:IsValid() then return end
+		local ply = LocalPlayer()
+		if not ply:IsValid() then return end
 
 		local x = w * 0.5
 		local y = h * 0.5
 
 		local scale
 
-		if MySelf:GetVelocity():Length() > 25 then
+		if ply:GetVelocity():Length() > 25 then
 			scale = scalebywidth * self.ConeMoving
 		else
-			if MySelf:Crouching() then
+			if ply:Crouching() then
 				scale = scalebywidth * self.ConeCrouching
 			else
 				scale = scalebywidth * self.Primary.Cone
 			end
 		end
 
-		if MySelf:KeyDown(IN_ZOOM) then
+		if ply:KeyDown(IN_ZOOM) then
 			scale = scale * 5
 		end
 
@@ -175,10 +195,10 @@ function SWEP:GetViewModelPosition(pos, ang)
 end
 
 function SWEP:CanPrimaryAttack()
-	if self.Weapon:Clip1() <= 0 then
-		self.Weapon:EmitSound("Weapon_Pistol.Empty")
-		self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
-		//self.Weapon:DefaultReload( ACT_VM_RELOAD )
+	if self:Clip1() <= 0 then
+		self:EmitSound("Weapon_Pistol.Empty")
+		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+		//self:DefaultReload( ACT_VM_RELOAD )
 		return false
 	end
 	return true

@@ -8,6 +8,6 @@ hook.Add("InitPostEntity", "Adding", function()
 		ent2:SetKeyValue("solid", "6")
 		ent2:SetModel(Model("models/props_lab/blastdoor001c.mdl"))
 		ent2:Spawn()
-		ent2:SetColor(0, 0, 0, 0)
+		ent2:SetColor(Color(0, 0, 0, 0))
 	end
 end)

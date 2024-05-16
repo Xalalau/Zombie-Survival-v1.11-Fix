@@ -13,10 +13,10 @@ SWEP.SlotPos = 2
 killicon.AddAlias("weapon_rpcrowbar", "weapon_crowbar")
 
 function SWEP:PrimaryAttack()
-	self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
-	if CurTime() < self.Weapon:GetNetworkedFloat("LastShootTime", -100) + self.Primary.Delay then return end
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	if CurTime() < self:GetNetworkedFloat("LastShootTime", -100) + self.Primary.Delay then return end
 
-	local trace = self.Owner:TraceLine(70)
+	local trace = self:GetOwner():TraceLine(70)
 
 	if trace.Hit then
 		local mat = trace.MatType
@@ -66,7 +66,7 @@ function SWEP:PrimaryAttack()
 		end
 	end
 
-	self.Weapon:SetNetworkedFloat("LastShootTime", CurTime())
+	self:SetNetworkedFloat("LastShootTime", CurTime())
 end
 
 function SWEP:CanPrimaryAttack()

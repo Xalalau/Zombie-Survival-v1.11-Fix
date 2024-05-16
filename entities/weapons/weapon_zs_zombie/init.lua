@@ -11,9 +11,9 @@ SWEP.AutoSwitchFrom = false
 SWEP.SwapAnims = false
 
 function SWEP:Deploy()
-	self.Owner:DrawViewModel(true)
-	self.Owner:DrawWorldModel(false)
-	self.Owner.ZomAnim = math.random(1, 3)
+	self:GetOwner():DrawViewModel(true)
+	self:GetOwner():DrawWorldModel(false)
+	self:GetOwner().ZomAnim = math.random(1, 3)
 end
 
 -- This is kind of unique. It does a trace on the pre swing to see if it hits anything
@@ -25,19 +25,19 @@ function SWEP:Think()
 	if CurTime() < self.NextHit then return end
 	self.NextHit = nil
 
-	local pl = self.Owner
+	local ply = self:GetOwner()
 
-	local trace = pl:TraceLine(85, MASK_SHOT)
+	local trace = ply:TraceLine(85, MASK_SHOT)
 
 	local ent = nil
 	if trace.HitNonWorld then
 		ent = trace.Entity
-	elseif self.PreHit and self.PreHit:IsValid() and self.PreHit:GetPos():Distance(pl:GetShootPos()) < 125 then
+	elseif self.PreHit and self.PreHit:IsValid() and self.PreHit:GetPos():Distance(ply:GetShootPos()) < 125 then
 		ent = self.PreHit
 		trace.Hit = true
 	end
 
-	local damage = 30 + 30 * math.min(GetZombieFocus(pl:GetPos(), 300, 0.001, 0) - 0.3, 1)
+	local damage = 30 + 30 * math.min(GetZombieFocus(ply:GetPos(), 300, 0.001, 0) - 0.3, 1)
 
 	if ent and ent:IsValid() then
 		if ent:GetClass() == "func_breakable_surf" then
@@ -45,39 +45,39 @@ function SWEP:Think()
 		else
 			local phys = ent:GetPhysicsObject()
 			if ent:IsPlayer() then
-				if ent:Team() == TEAM_UNDEAD then
-					local vel = pl:GetAimVector() * 400
+				if ent:Team() == ZSF.TEAM_UNDEAD then
+					local vel = ply:GetAimVector() * 400
 					vel.z = 100
 					ent:SetVelocity(vel)
 				end
 			elseif phys:IsValid() and not ent:IsNPC() and phys:IsMoveable() then
-				local vel = damage * 650 * pl:GetAimVector()
+				local vel = damage * 650 * ply:GetAimVector()
 
-				phys:ApplyForceOffset(vel, (ent:NearestPoint(pl:GetShootPos()) + ent:GetPos() * 2) / 3)
-				ent:SetPhysicsAttacker(pl)
+				phys:ApplyForceOffset(vel, (ent:NearestPoint(ply:GetShootPos()) + ent:GetPos() * 2) / 3)
+				ent:SetPhysicsAttacker(ply)
 			end
-			ent:TakeDamage(damage, pl)
+			ent:TakeDamage(damage, ply)
 		end
 	end
 
 	if trace.Hit then
-		pl:EmitSound("npc/zombie/claw_strike"..math.random(1, 3)..".wav")
+		ply:EmitSound("npc/zombie/claw_strike"..math.random(1, 3)..".wav")
 	end
 
-	pl:EmitSound("npc/zombie/claw_miss"..math.random(1, 2)..".wav")
+	ply:EmitSound("npc/zombie/claw_miss"..math.random(1, 2)..".wav")
 	self.PreHit = nil
 end
 
 SWEP.NextSwing = 0
 function SWEP:PrimaryAttack()
 	if CurTime() < self.NextSwing then return end
-	if self.SwapAnims then self.Weapon:SendWeaponAnim(ACT_VM_HITCENTER) else self.Weapon:SendWeaponAnim(ACT_VM_SECONDARYATTACK) end
+	if self.SwapAnims then self:SendWeaponAnim(ACT_VM_HITCENTER) else self:SendWeaponAnim(ACT_VM_SECONDARYATTACK) end
 	self.SwapAnims = not self.SwapAnims
-	self.Owner:SetAnimation(PLAYER_ATTACK1)
-	self.Owner:EmitSound("npc/zombie/zo_attack"..math.random(1, 2)..".wav")
+	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
+	self:GetOwner():EmitSound("npc/zombie/zo_attack"..math.random(1, 2)..".wav")
 	self.NextSwing = CurTime() + self.Primary.Delay
 	self.NextHit = CurTime() + 0.6
-	local trace = self.Owner:TraceLine(85, MASK_SHOT)
+	local trace = self:GetOwner():TraceLine(85, MASK_SHOT)
 	if trace.HitNonWorld then
 		self.PreHit = trace.Entity
 	end
@@ -86,9 +86,9 @@ end
 SWEP.NextYell = 0
 function SWEP:SecondaryAttack()
 	if CurTime() < self.NextYell then return end
-	self.Owner:SetAnimation(PLAYER_SUPERJUMP)
+	self:GetOwner():SetAnimation(PLAYER_SUPERJUMP)
 
-	self.Owner:EmitSound("npc/zombie/zombie_voice_idle"..math.random(1, 14)..".wav")
+	self:GetOwner():EmitSound("npc/zombie/zombie_voice_idle"..math.random(1, 14)..".wav")
 	self.NextYell = CurTime() + 2
 end
 

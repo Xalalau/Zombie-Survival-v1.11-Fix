@@ -1,8 +1,8 @@
-COLOR_FRIENDLY = COLOR_GREEN
-COLOR_HEALTHY = COLOR_GREEN
-COLOR_HURT = COLOR_YELLOW
-COLOR_CRITICAL = COLOR_RED
-COLOR_SCRATCHED = Color(100, 255, 0)
+local COLOR_FRIENDLY = COLOR_GREEN
+local COLOR_HEALTHY = COLOR_GREEN
+local COLOR_HURT = COLOR_YELLOW
+local COLOR_CRITICAL = COLOR_RED
+local COLOR_SCRATCHED = Color(100, 255, 0)
 
 XNameBlur = 0
 XNameBlur2 = 0
@@ -12,8 +12,8 @@ YNameBlur2 = 0
 local color_blur1 = Color(100, 20, 0, 220)
 local color_blur2 = Color(100, 20, 0, 140)
 
-function GM:HUDDrawTargetID(MySelf, team)
-	local trace = MySelf:GetEyeTrace()
+function GM:HUDDrawTargetID(ply, team)
+	local trace = ply:GetEyeTrace()
 
 	local entity = trace.Entity
 	if not (entity:IsValid() and entity:IsPlayer()) then return end

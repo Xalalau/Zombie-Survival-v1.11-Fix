@@ -1,0 +1,16 @@
+"zombiesurvival"
+{
+	"base"				"base"
+	"title"				"Zombie Survival v1.11 Fix"
+	"maps"				"^zs_"
+	"category"			"pvp"
+	"menusystem"		"1"
+
+	"author_name"		"William 'JetBoom' Moodhe - Restoration by Xalalau Xubilozo"
+	"author_email"		"williammoodhe@gmail.com"
+	"author_url"		"http://www.noxiousnet.com/"
+
+	"settings"
+	{
+	}
+}

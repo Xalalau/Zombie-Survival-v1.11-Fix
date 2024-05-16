@@ -32,7 +32,7 @@ function EFFECT:Render()
 		particle:SetEndAlpha(40)
 		particle:SetStartSize(12)
 		particle:SetEndSize(10)
-		particle:SetColor(20, 100, 20)
+		particle:SetColor(Color(20, 100, 20))
 		particle:SetRoll(math.Rand(0, 360))
 	end
 	emitter:Finish()	

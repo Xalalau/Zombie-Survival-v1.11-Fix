@@ -10,7 +10,7 @@ hook.Add("InitPostEntity", "Adding", function()
 		ent2:Spawn()
 	end
 
-	for _, ent in pairs(ents.FindInSphere(Vector(280.2706, 1271.7953, 0), 400)) do
+	for _, ent in ipairs(ents.FindInSphere(Vector(280.2706, 1271.7953, 0), 400)) do
 		if string.find(ent:GetClass(), "info_player") then
 			ent:Remove()
 		end

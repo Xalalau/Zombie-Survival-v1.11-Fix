@@ -37,18 +37,18 @@ function PANEL:Paint()
 		local x3 = x + self:GetWide() * 0.7
 
 		local PlayerSorted = {}
-		for _, pl in pairs(player.GetAll()) do
-			if pl:Team() == TEAM_HUMAN then
-				table.insert(PlayerSorted, pl)
+		for _, ply in ipairs(player.GetHumans()) do
+			if ply:Team() == ZSF.TEAM_HUMAN then
+				table.insert(PlayerSorted, ply)
 			end
 		end
 
 		table.sort(PlayerSorted, function (a, b) return a:Frags() > b:Frags() end)
 
 		local PlayerSorted2 = {}
-		for _, pl in pairs(player.GetAll()) do
-			if pl:Team() == TEAM_UNDEAD then
-				table.insert(PlayerSorted2, pl)
+		for _, ply in ipairs(player.GetHumans()) do
+			if ply:Team() == ZSF.TEAM_UNDEAD then
+				table.insert(PlayerSorted2, ply)
 			end
 		end
 
@@ -69,8 +69,8 @@ function PANEL:Paint()
 		y = y + yadding
 		surface.DrawLine(0, y, self:GetWide(), y)
 		y = y + yadding
-		for i, pl in pairs(PlayerSorted) do
-			local colortouse = team.GetColor(pl:Team())
+		for i, ply in ipairs(PlayerSorted) do
+			local colortouse = team.GetColor(ply:Team())
 			if gui.MouseX() < w * 0.4 and gui.MouseX() > w * 0.2 then
 				local mousey = gui.MouseY() - h*0.032
 				if mousey < y + w*0.004 and mousey > y - w*0.004 then
@@ -80,13 +80,13 @@ function PANEL:Paint()
 					end
 					draw.SimpleText(stt, "DefaultBold", gui.MouseX() - self.PosX + 24, gui.MouseY() - self.PosY, COLOR_RED, TEXT_ALIGN_LEFT)
 					colortouse = color_white
-					if self.HoldingPlayer ~= pl then
-						self.HoldingPlayer = pl
+					if self.HoldingPlayer ~= ply then
+						self.HoldingPlayer = ply
 						self.HoldingTime = 0
 					end
 					self.HoldingTime = self.HoldingTime + FrameTime()
 					if self.HoldingTime > 1.1 then
-						self.ViewPlayer = pl
+						self.ViewPlayer = ply
 						self:SetMode(714)
 						surface.PlaySound("buttons/button4.wav")
 						self.HoldingPlayer = Entity(0)
@@ -94,9 +94,9 @@ function PANEL:Paint()
 					end
 				end
 			end
-			draw.SimpleText(pl:Name(), "Default", x, y, colortouse, TEXT_ALIGN_LEFT)
-			draw.SimpleText(pl:Frags().." / "..pl:Deaths(), "Default", x2, y, colortouse, TEXT_ALIGN_CENTER)
-			draw.SimpleText(pl:Ping(), "Default", x3, y, colortouse, TEXT_ALIGN_CENTER)
+			draw.SimpleText(ply:Name(), "Default", x, y, colortouse, TEXT_ALIGN_LEFT)
+			draw.SimpleText(ply:Frags().." / "..ply:Deaths(), "Default", x2, y, colortouse, TEXT_ALIGN_CENTER)
+			draw.SimpleText(ply:Ping(), "Default", x3, y, colortouse, TEXT_ALIGN_CENTER)
 			y = y + yadding
 		end
 	elseif self.Mode == 2 then
@@ -116,7 +116,7 @@ function PANEL:Paint()
 			if not ZombieClasses[i].Hidden then
 				local colortouse = Color(255, 0, 0, 255)
 				local canuse = false
-				if INFLICTION >= ZombieClasses[i].Threshold or ZombieClasses[i].Unlocked then
+				if ZSF.INFLICTION >= ZombieClasses[i].Threshold or ZombieClasses[i].Unlocked then
 					colortouse = Color(0, 255, 0)
 					canuse = true
 				end
@@ -144,9 +144,9 @@ function PANEL:Paint()
 		local x = self:GetWide() * 0.1
 		local tall = self:GetTall()
 		local y = tall * 0.12
-		local touse = HELP_TEXT
-		if SURVIVALMODE then
-			touse = HELP_TEXT_SURVIVALMODE
+		local touse = ZSF.HELP_TEXT
+		if ZSF.SURVIVALMODE then
+			touse = ZSF.HELP_TEXT_SURVIVALMODE
 		end
 
 		for _, text in ipairs(touse) do
@@ -337,13 +337,14 @@ vgui.Register("ScoreboardTab", PANEL, "Button")
 
 PANEL = {}
 function PANEL:DoClick()
-	if (INFLICTION < ZombieClasses[self.Class].Threshold and not ZombieClasses[self.Class].Unlocked)or MySelf:Team() ~= TEAM_UNDEAD then return end
-	MySelf:ConCommand("zs_class "..ZombieClasses[self.Class].Name.."\n")
+	local ply = LocalPlayer()
+	if (ZSF.INFLICTION < ZombieClasses[self.Class].Threshold and not ZombieClasses[self.Class].Unlocked)or ply:Team() ~= ZSF.TEAM_UNDEAD then return end
+	ply:ConCommand("zs_class "..ZombieClasses[self.Class].Name.."\n")
 	surface.PlaySound("buttons/button1.wav")
 end
 function PANEL:Paint()
 	local bgColor = Color(255, 0, 0, 200)
-	if INFLICTION >= ZombieClasses[self.Class].Threshold or ZombieClasses[self.Class].Unlocked then
+	if ZSF.INFLICTION >= ZombieClasses[self.Class].Threshold or ZombieClasses[self.Class].Unlocked then
 		bgColor = Color(0, 255, 0, 200)
 		if self.Selected or self.Armed then
 			bgColor = color_white
@@ -359,7 +360,7 @@ function PANEL:DoClick()
 	self.LastPress = self.LastPress or CurTime() - 15
 	if CurTime() < self.LastPress + 15 then return end
 	self.LastPress = CurTime()
-	MySelf:ConCommand("~~~REQUEST_BAN_LIST\n")
+	LocalPlayer():ConCommand("~~~REQUEST_BAN_LIST\n")
 	surface.PlaySound("buttons/button1.wav")
 end
 function PANEL:Paint()

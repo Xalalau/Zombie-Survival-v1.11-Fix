@@ -10,21 +10,21 @@ SWEP.AutoSwitchFrom = false
 SWEP.SwapAnims = false
 
 function SWEP:Deploy()
-	self.Owner:DrawViewModel(true)
-	self.Owner:DrawWorldModel(false)
+	self:GetOwner():DrawViewModel(true)
+	self:GetOwner():DrawWorldModel(false)
 end
 
 function SWEP:Think()
-	local owner = self.Owner
+	local owner = self:GetOwner()
 	if self.Leaping then
 		if owner:OnGround() or owner:WaterLevel() > 0 then
 			self.Leaping = false
 			self.NextLeap = CurTime() + 1
 		else
-			local vStart = self.OwnerOffset + owner:GetPos()
+			local vStart = self:GetOwner():GetViewOffset() + owner:GetPos()
 			local tr = {}
 			tr.start = vStart
-			tr.endpos = vStart + self.OwnerAngles
+			tr.endpos = vStart + self:GetOwner():GetAngles()
 			tr.filter = owner
 			local trace = util.TraceLine(tr)
 			local ent = trace.Entity
@@ -95,7 +95,7 @@ function SWEP:Think()
 	end
 
 	owner:SetAnimation(PLAYER_ATTACK1)
-	if self.SwapAnims then self.Weapon:SendWeaponAnim(ACT_VM_HITCENTER) else self.Weapon:SendWeaponAnim(ACT_VM_SECONDARYATTACK) end
+	if self.SwapAnims then self:SendWeaponAnim(ACT_VM_HITCENTER) else self:SendWeaponAnim(ACT_VM_SECONDARYATTACK) end
 	self.SwapAnims = not self.SwapAnims
 	self.NextSwing = CurTime() + self.Primary.Delay
 	owner:Fire("IgnoreFallDamage", "", 0)
@@ -104,7 +104,7 @@ end
 SWEP.NextSwing = 0
 function SWEP:PrimaryAttack()
 	if self.Swinging or self.Leaping then return end
-	//GAMEMODE:SetPlayerSpeed(self.Owner, ZombieClasses[self.Owner:GetZombieClass()].Speed * 0.5)
+	//GAMEMODE:SetPlayerSpeed(self:GetOwner(), ZombieClasses[self:GetOwner():GetZombieClass()].Speed * 0.5)
 	self.NextSwing = CurTime()
 	self.Swinging = true
 end
@@ -113,42 +113,42 @@ SWEP.NextLeap = 0
 SWEP.NextClimb = 0
 function SWEP:SecondaryAttack()
 	if self.Leaping or self.Swinging then return end
-	local onground = self.Owner:OnGround()
+	local onground = self:GetOwner():OnGround()
 	if CurTime() >= self.NextClimb and not onground then
-		local vStart = self.Owner:GetShootPos()
-		local aimvec = self.Owner:GetAimVector() aimvec.z = 0
+		local vStart = self:GetOwner():GetShootPos()
+		local aimvec = self:GetOwner():GetAimVector() aimvec.z = 0
 		local tr = {}
 		tr.start = vStart
 		tr.endpos = vStart + (aimvec * 35)
-		tr.filter = self.Owner
+		tr.filter = self:GetOwner()
 		local Hit = util.TraceLine(tr).Hit
 		tr.start = tr.endpos
 		tr.endpos = tr.endpos + Vector(0,0,-52)
 		local Hit2 = util.TraceLine(tr).Hit
 		if Hit or Hit2 then
-			self.Owner:SetLocalVelocity(Vector(0,0,150))
-			self.Owner:SetAnimation(PLAYER_SUPERJUMP)
+			self:GetOwner():SetLocalVelocity(Vector(0,0,150))
+			self:GetOwner():SetAnimation(PLAYER_SUPERJUMP)
 			self.NextClimb = CurTime() + self.Secondary.Delay
-			self.Owner:EmitSound("player/footsteps/metalgrate"..math.random(1,4)..".wav")
-			self.Weapon:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
+			self:GetOwner():EmitSound("player/footsteps/metalgrate"..math.random(1,4)..".wav")
+			self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
 			return
 		end
 	end
 	if CurTime() < self.NextLeap then return end
 	if not onground then return end
-	local vel = self.Owner:GetAngles():Forward() * 800
+	local vel = self:GetOwner():GetAngles():Forward() * 800
 	if vel.z < 200 then vel.z = 200 end
-	local eyeangles = self.Owner:GetAngles():Forward()
+	local eyeangles = self:GetOwner():GetAngles():Forward()
 	eyeangles.pitch = -0.15
 	eyeangles.z = -0.1
-	local ang = self.Owner:GetAimVector() ang.z = 0
-	self.OwnerAngles = ang * 85
-	self.OwnerOffset = Vector(0,0,7)
-	self.Owner:SetGroundEntity(NULL)
-	self.Owner:SetLocalVelocity(vel)
+	local ang = self:GetOwner():GetAimVector() ang.z = 0
+	self:GetOwner():SetViewOffset(ang * 85)
+	self:GetOwner():SetAngles(Vector(0,0,7))
+	self:GetOwner():SetGroundEntity(NULL)
+	self:GetOwner():SetLocalVelocity(vel)
 	self.Leaping = true
-	self.Owner:EmitSound("npc/fast_zombie/fz_scream1.wav")
-	self.Owner:Fire("IgnoreFallDamage", "", 0)
+	self:GetOwner():EmitSound("npc/fast_zombie/fz_scream1.wav")
+	self:GetOwner():Fire("IgnoreFallDamage", "", 0)
 end
 
 function SWEP:Reload()

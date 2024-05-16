@@ -13,10 +13,10 @@ SWEP.IconLetter = "j"
 killicon.AddFont("weapon_zs_swissarmyknife", "CSKillIcons", SWEP.IconLetter, Color(255, 80, 0, 255))
 
 function SWEP:PrimaryAttack()
-	self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
-	if CurTime() < self.Weapon:GetNetworkedFloat("LastShootTime", -100) + self.Primary.Delay then return end
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	if CurTime() < self:GetNetworkedFloat("LastShootTime", -100) + self.Primary.Delay then return end
 
-	local trace = self.Owner:TraceLine(62)
+	local trace = self:GetOwner():TraceLine(62)
 
 	if trace.Hit then
 		if trace.MatType == MAT_FLESH or trace.MatType == MAT_BLOODYFLESH or trace.MatType == MAT_ANTLION or trace.MatType == MAT_ALIENFLESH then
@@ -26,7 +26,7 @@ function SWEP:PrimaryAttack()
 		end
 	end
 
-	self.Weapon:SetNetworkedFloat("LastShootTime", CurTime())
+	self:SetNetworkedFloat("LastShootTime", CurTime())
 end
 
 function SWEP:CanPrimaryAttack()

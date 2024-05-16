@@ -8,12 +8,14 @@ SWEP.AutoSwitchTo = false
 SWEP.AutoSwitchFrom = false
 
 function SWEP:Deploy()
-	local timername = tostring(self.Owner).."speedchange"
-	timer.Destroy(timername)
-	if self.WalkSpeed < self.Owner.WalkSpeed then
-		GAMEMODE:SetPlayerSpeed(self.Owner, self.WalkSpeed)
-	elseif self.WalkSpeed > self.Owner.WalkSpeed then
-		timer.Create(timername, 1, 1, GAMEMODE.SetPlayerSpeed, GAMEMODE, self.Owner, self.WalkSpeed)
+	local timername = tostring(self:GetOwner()).."speedchange"
+	timer.Remove(timername)
+	if self.WalkSpeed < self:GetOwner().WalkSpeed then
+		GAMEMODE:SetPlayerSpeed(self:GetOwner(), self.WalkSpeed)
+	elseif self.WalkSpeed > self:GetOwner().WalkSpeed then
+		timer.Create(timername, 1, 1, function()
+			GAMEMODE:SetPlayerSpeed(self:GetOwner(), self.WalkSpeed)
+		end)
 	end
 	return true
 end
@@ -26,13 +28,13 @@ function SWEP:Initialize()
 end
 
 function SWEP:PrimaryAttack()
-	self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
-	if CurTime() < self.Weapon:GetNetworkedFloat("LastShootTime", -100) + self.Primary.Delay then return end
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	if CurTime() < self:GetNetworkedFloat("LastShootTime", -100) + self.Primary.Delay then return end
 
-	local hurt = self.Owner:TraceHullAttack(self.Owner:EyePos(), self.Owner:EyePos() + self.Owner:GetAimVector() * 70, 
+	local hurt = self:GetOwner():TraceHullAttack(self:GetOwner():EyePos(), self:GetOwner():EyePos() + self:GetOwner():GetAimVector() * 70, 
 		Vector(-16,-16,-16), Vector(36, 36, 36), 1, DMG_CLUB, 45)
 
-	local trace = self.Owner:TraceLine(70)
+	local trace = self:GetOwner():TraceLine(70)
 
 	if hurt and hurt:IsValid() then
 		trace.Hit = true
@@ -100,7 +102,7 @@ function SWEP:PrimaryAttack()
 		end
 
 		if soundname then
-			self.Owner:EmitSound(soundname)
+			self:GetOwner():EmitSound(soundname)
 		end
 
 		if decal then
@@ -109,20 +111,20 @@ function SWEP:PrimaryAttack()
 
 		/*local ent = trace.Entity
 		if ent and ent:IsValid() then
-			ent:TakeDamage(45, self.Owner)
+			ent:TakeDamage(45, self:GetOwner())
 		end*/
 	else
-		self.Owner:EmitSound("weapons/iceaxe/iceaxe_swing1.wav")
+		self:GetOwner():EmitSound("weapons/iceaxe/iceaxe_swing1.wav")
 	end
 
 	if self.Alternate then
-		self.Weapon:SendWeaponAnim(ACT_VM_MISSCENTER)
+		self:SendWeaponAnim(ACT_VM_MISSCENTER)
 	else
-		self.Weapon:SendWeaponAnim(ACT_VM_HITCENTER)
+		self:SendWeaponAnim(ACT_VM_HITCENTER)
 	end
 	self.Alternate = not self.Alternate
 
-	self.Owner:SetAnimation(PLAYER_ATTACK1)
+	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
 end
 
 function SWEP:SecondaryAttack()

@@ -25,8 +25,8 @@ end
 function SWEP:Think()
 	if 0 < self:Clip1() then
 		local effectdata = EffectData()
-			effectdata:SetOrigin(self.Owner:GetShootPos() + self.Owner:GetAimVector() * 32)
-			effectdata:SetNormal(self.Owner:GetAimVector())
+			effectdata:SetOrigin(self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 32)
+			effectdata:SetNormal(self:GetOwner():GetAimVector())
 		util.Effect("barricadeghost", effectdata, true, true)
 	end
 end

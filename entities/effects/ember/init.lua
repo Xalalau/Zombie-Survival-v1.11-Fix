@@ -31,7 +31,7 @@ function EFFECT:Think()
 			particle:SetStartSize(13)
 			particle:SetEndSize(2)
 			particle:SetRoll(180)
-			particle:SetColor(255, 255, 255)
+			particle:SetColor(Color(255, 255, 255))
 		emitter:Finish()
 	end
 	return RealTime() < self.Living
@@ -46,6 +46,6 @@ function EFFECT:Render()
 		particle:SetStartSize(5)
 		particle:SetEndSize(1)
 		particle:SetRoll(180)
-		particle:SetColor(255, 220, 100)
+		particle:SetColor(Color(255, 220, 100))
 	emitter:Finish()
 end

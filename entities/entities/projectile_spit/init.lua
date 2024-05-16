@@ -6,12 +6,12 @@ include('shared.lua')
 function ENT:Initialize()
 	self.DieTime = CurTime() + 7
 
-	local pl = self:GetOwner()
-	local aimvec = pl:GetAimVector()
+	local ply = self:GetOwner()
+	local aimvec = ply:GetAimVector()
 	aimvec.z = math.max(aimvec.z, 0.2)
 	aimvec = aimvec:Normalize()
-	local vStart = pl:GetShootPos() + Vector(0,0,-48)
-	local tr = util.TraceLine({start=vStart, endpos=vStart + pl:GetAimVector() * 30, filter=pl})
+	local vStart = ply:GetShootPos() + Vector(0,0,-48)
+	local tr = util.TraceLine({start=vStart, endpos=vStart + ply:GetAimVector() * 30, filter=ply})
 	if tr.Hit then
 		self:SetPos(tr.HitPos + tr.HitNormal * 4)
 	else
@@ -29,7 +29,7 @@ function ENT:Initialize()
 		phys:SetMass(4)
 		phys:SetMaterial("metal")
 	end
-	pl:EmitSound("weapons/crossbow/bolt_fly4.wav", 90, 150)
+	ply:EmitSound("weapons/crossbow/bolt_fly4.wav", 90, 150)
 end
 
 function ENT:Think()
@@ -41,9 +41,9 @@ end
 function ENT:PhysicsCollide(data, phys)
 	local hitent = data.HitEntity
 
-	if hitent and hitent.SendLua and hitent:Team() ~= TEAM_UNDEAD then
+	if hitent and hitent.SendLua and hitent:Team() ~= ZSF.TEAM_UNDEAD then
 		local owner = self:GetOwner()
-		if owner and owner:IsValid() and owner:Team() == TEAM_UNDEAD then
+		if owner and owner:IsValid() and owner:Team() == ZSF.TEAM_UNDEAD then
 			hitent:TakeDamage(10, owner)
 		else
 			hitent:TakeDamage(10, self)
@@ -59,7 +59,9 @@ function ENT:PhysicsCollide(data, phys)
 					hitent:EmitSound("vo/ravenholm/monk_death07.wav")
 				end
 				local timername = tostring(hitent).."poisonedby"..tostring(self)
-				timer.Create(timername, 1, math.random(3, 5), DoPoisoned, hitent, owner, timername)
+				timer.Create(timername, 1, math.random(3, 5), function()
+					DoPoisoned(hitent, owner, timername)
+				end)
 				hitent:SendLua("PoisEff()")
 			end
 		end
