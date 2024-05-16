@@ -20,7 +20,7 @@ https://github.com/MOHAA2002/zombiesurvival-map-archive-update
 
 https://www.youtube.com/playlist?list=PLNhZJACsuqsA1am_ZEnn91YPY9DdZo6_F
 
-You can play Yushe's classic CZ version every weekend at ToxicGaming Discord server:
+You can play Yushe's classic ZS version every weekend at ToxicGaming Discord server:
 
 https://discord.gg/mK2swJUZVf
 
