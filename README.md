@@ -13,7 +13,7 @@ And thank you all very much!
 # WANTED DEAD OR ALIVE
 
 ```diff
--Do you have the bsp of zs_windmill_hut_v2? **Send it to me immediately!**
+-Do you have the map zs_windmill_hut_v2? **Send it to me immediately!**
 ```
 
 # Original files and gameplay
