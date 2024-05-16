@@ -8,7 +8,7 @@ I also want to give my HUGE appreciation and thanks to [Yushe](http://steamcommu
 
 And thank you all very much!
 
-> 4 the Devs: would you like to contribute to this base? Well, fork it!! It's very unlikely that I'll accept PRs here because they'll prabably ruin the restoration. Advances must be made elsewhere.
+> 4 the Devs: would you like to contribute to this base with new features? Well, fork it and create your own ZS!! It's very unlikely that I'll accept PRs here because they'll prabably ruin the restoration. Advances must be made elsewhere! The golden rules for commits in this repo are: 1) they cannot change the original experience, even if you want to fix bugs like moonwalk; 2) We can fix bugs that prevent the game from running; 3) We must port deprecated code from GMod 11 to the current GMod; 4) We may change internal code to make our lives easier, but don't try to fix the spaghetti because I won't accept it.
 
 # WANTED DEAD OR ALIVE
 
