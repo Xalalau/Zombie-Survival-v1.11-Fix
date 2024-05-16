@@ -53,6 +53,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed F4 menu failing to calc its dimensions
     * Fixed the font was too small to read on the menus
     * Fixed renamed variables like sound and player that were locally overriding global functions
+    * Fixed the film grain slider was not working
     * Fixed game.BroadcastLua was updated to RunBroadcastLua
     * Fixed self.GetOwner was updated to self:GetOwner()
     * Fixed info.txt was updated to zombiesurvival.txt
