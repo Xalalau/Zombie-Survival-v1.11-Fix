@@ -24,7 +24,7 @@ PowerupFunctions["_Regeneration"] = function(ply)
 end
 
 function RegenerationTimer(ply, uid)
-	if ply:IsValid() and ply:Team() == ZSF.TEAM_HUMAN then
+	if ply:IsValid() and ply:Team() == TEAM_HUMAN then
 		ply:SetHealth(math.min(ply:Health() + 1, 100))
 	else
 		timer.Remove("regeneration"..uid)

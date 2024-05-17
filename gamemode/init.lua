@@ -41,15 +41,15 @@ GM.AmmoTranslations["weapon_slam"] = "pistol"
 GM.AmmoTranslations["weapon_crowbar"] = "pistol"
 GM.AmmoTranslations["weapon_stunstick"] = "pistol"
 
-ZSF.LASTHUMAN = false
-ZSF.CAPPED_INFLICTION = 0
-ZSF.HEAD_NPC_SCALE = math.Clamp(3 - ZSF.DIFFICULTY, 1.5, 4)
-ZSF.ROUNDWINNER = NULL
+LASTHUMAN = false
+CAPPED_INFLICTION = 0
+HEAD_NPC_SCALE = math.Clamp(3 - DIFFICULTY, 1.5, 4)
+ROUNDWINNER = NULL
 
 local LastHumanSpawnPoint = NULL
 local LastZombieSpawnPoint = NULL
 local DeadSteamIDs = {}
-local NextAmmoDropOff = ZSF.AMMO_REGENERATE_RATE
+local NextAmmoDropOff = AMMO_REGENERATE_RATE
 
 if file.Exists("gamemodes/zombiesurvival/gamemode/maps/"..game.GetMap()..".lua", "GAME") then
 	include("maps/"..game.GetMap()..".lua")
@@ -104,10 +104,10 @@ function GM:Initialize()
 	resource.AddFile("materials/models/weapons/v_fza/fast_zombie_sheet.vmt")
 	resource.AddFile("materials/models/weapons/v_fza/fast_zombie_sheet.vtf")
 	resource.AddFile("materials/models/weapons/v_fza/fast_zombie_sheet_normal.vtf")
-	resource.AddFile("sound/"..ZSF.LASTHUMANSOUND)
-	resource.AddFile("sound/"..ZSF.ALLLOSESOUND)
-	resource.AddFile("sound/"..ZSF.HUMANWINSOUND)
-	resource.AddFile("sound/"..ZSF.DEATHSOUND)
+	resource.AddFile("sound/"..LASTHUMANSOUND)
+	resource.AddFile("sound/"..ALLLOSESOUND)
+	resource.AddFile("sound/"..HUMANWINSOUND)
+	resource.AddFile("sound/"..DEATHSOUND)
 	resource.AddFile("sound/unlife1.mp3")
 	//resource.AddFile("sound/unlife2.mp3")
 	//resource.AddFile("sound/unlife3.mp3")
@@ -126,13 +126,13 @@ end
 concommand.Add("gm_help", function(sender, command, arguments) GAMEMODE:ShowHelp(sender) end)
 
 function GM:ShowTeam(ply)
-	if ZSF.REDEEM and not ZSF.AUTOREDEEM and ply:Team() == ZSF.TEAM_UNDEAD and ply:Frags() >= ZSF.REDEEM_KILLS then
+	if REDEEM and not AUTOREDEEM and ply:Team() == TEAM_UNDEAD and ply:Frags() >= REDEEM_KILLS then
 		ply:Redeem()
 	end
 end
 
 function GM:ShowSpare1(ply)
-	if ply:Team() == ZSF.TEAM_UNDEAD then
+	if ply:Team() == TEAM_UNDEAD then
 		ply:SendLua("MakepClasses()")
 	end
 end
@@ -178,22 +178,22 @@ function GM:InitPostEntity()
 		self.UndeadSpawnPoints = ents.FindByClass("info_player_start")
 	end
 
-	RunConsoleCommand("sk_zombie_health", math.ceil(50 + 50 * ZSF.DIFFICULTY))
-	RunConsoleCommand("sk_zombie_dmg_one_slash", math.ceil(20 + ZSF.DIFFICULTY * 10))
-	RunConsoleCommand("sk_zombie_dmg_both_slash", math.ceil(30 + ZSF.DIFFICULTY * 12))
+	RunConsoleCommand("sk_zombie_health", math.ceil(50 + 50 * DIFFICULTY))
+	RunConsoleCommand("sk_zombie_dmg_one_slash", math.ceil(20 + DIFFICULTY * 10))
+	RunConsoleCommand("sk_zombie_dmg_both_slash", math.ceil(30 + DIFFICULTY * 12))
 
 	local destroying = ents.FindByClass("prop_ragdoll") // These seem to cause server crashes if a zombie attacks them. They cause pointless lag, too.
-	if not ZSF.USE_NPCS then
+	if not USE_NPCS then
 		destroying = table.Add(destroying, ents.FindByClass("npc_zombie"))
 		destroying = table.Add(destroying, ents.FindByClass("npc_maker"))
 		destroying = table.Add(destroying, ents.FindByClass("npc_template_maker"))
 		destroying = table.Add(destroying, ents.FindByClass("npc_maker_template"))
 	end
-	if ZSF.DESTROY_DOORS then
+	if DESTROY_DOORS then
 		destroying = table.Add(destroying, ents.FindByClass("func_door_rotating"))
 		destroying = table.Add(destroying, ents.FindByClass("func_door"))
 	end
-	if ZSF.DESTROY_PROP_DOORS then
+	if DESTROY_PROP_DOORS then
 		destroying = table.Add(destroying, ents.FindByClass("prop_door_rotating"))
 	end
 	destroying = table.Add(destroying, ents.FindByClass("weapon_physicscannon"))
@@ -265,7 +265,7 @@ function GM:InitPostEntity()
 end
 
 function GM:PlayerSelectSpawn(ply)
-	if ply:Team() == ZSF.TEAM_UNDEAD then
+	if ply:Team() == TEAM_UNDEAD then
 		local Count = #self.UndeadSpawnPoints
 		if Count == 0 then return ply end
 		for i=0, 20 do
@@ -309,38 +309,38 @@ end
 
 function GM:SendInfliction(to)
 	umsg.Start("SetInf", to)
-		umsg.Float(ZSF.INFLICTION)
+		umsg.Float(INFLICTION)
 	umsg.End()
 end
 
 function GM:SendInflictionInit(to)
 	umsg.Start("SetInfInit", to)
-		umsg.Float(ZSF.INFLICTION)
+		umsg.Float(INFLICTION)
 	umsg.End()
 end
 
 function GM:Think()
 	local tim = CurTime()
 
-	if ZSF.ROUNDTIME < tim then
-		self:EndRound(ZSF.TEAM_HUMAN)
+	if ROUNDTIME < tim then
+		self:EndRound(TEAM_HUMAN)
 	elseif NextAmmoDropOff < tim then
-		if ZSF.SURVIVALMODE then
+		if SURVIVALMODE then
 			NextAmmoDropOff = 99999
 			return
 		end
 
-		NextAmmoDropOff = CurTime() + ZSF.AMMO_REGENERATE_RATE
-		ZSF.INFLICTION = math.max(ZSF.INFLICTION, CurTime() / ZSF.ROUNDTIME)
-		ZSF.CAPPED_INFLICTION = ZSF.INFLICTION
+		NextAmmoDropOff = CurTime() + AMMO_REGENERATE_RATE
+		INFLICTION = math.max(INFLICTION, CurTime() / ROUNDTIME)
+		CAPPED_INFLICTION = INFLICTION
 
 		self:SendInfliction()
 
 		local plays = player.GetAll()
-		if 0.75 <= ZSF.INFLICTION then plays = table.Add(plays, player.GetAll()) end -- Double ammo on horde conditions
+		if 0.75 <= INFLICTION then plays = table.Add(plays, player.GetAll()) end -- Double ammo on horde conditions
 
 		for _, ply in pairs(plays) do
-			if ply:Team() == ZSF.TEAM_HUMAN then
+			if ply:Team() == TEAM_HUMAN then
 				local wep = ply:GetActiveWeapon()
 				if wep:IsValid() and wep:IsWeapon() then
 					local typ = wep:GetPrimaryAmmoTypeString()
@@ -365,44 +365,44 @@ function GM:ShutDown()
 end
 
 function GM:CalculateInfliction()
-	if ZSF.ENDROUND then return end
+	if ENDROUND then return end
 
 	local players = 0
 	local zombies = 0
 	for _, ply in ipairs(player.GetHumans()) do
-		if ply:Team() == ZSF.TEAM_UNDEAD then
+		if ply:Team() == TEAM_UNDEAD then
 			zombies = zombies + 1
 		end
 		players = players + 1
 	end
-	ZSF.INFLICTION = math.max(math.Clamp(zombies / players, 0.001, 1), ZSF.CAPPED_INFLICTION)
-	ZSF.CAPPED_INFLICTION = ZSF.INFLICTION
+	INFLICTION = math.max(math.Clamp(zombies / players, 0.001, 1), CAPPED_INFLICTION)
+	CAPPED_INFLICTION = INFLICTION
 
-	if team.NumPlayers(ZSF.TEAM_HUMAN) == 1 and team.NumPlayers(ZSF.TEAM_UNDEAD) > 2 then
+	if team.NumPlayers(TEAM_HUMAN) == 1 and team.NumPlayers(TEAM_UNDEAD) > 2 then
 		self:LastHuman()
-	elseif ZSF.INFLICTION >= 1 then
-		self:EndRound(ZSF.TEAM_UNDEAD)
-	elseif ZSF.INFLICTION >= 0.75 then
-		ZSF.UNLIFE = true
-	elseif ZSF.INFLICTION >= 0.5 then
-		ZSF.HALFLIFE = true
+	elseif INFLICTION >= 1 then
+		self:EndRound(TEAM_UNDEAD)
+	elseif INFLICTION >= 0.75 then
+		UNLIFE = true
+	elseif INFLICTION >= 0.5 then
+		HALFLIFE = true
 	end
 
 	self:SendInfliction()
 end
 
 function GM:OnNPCKilled(ent, attacker, inflictor)
-	if ZSF.NPCS_COUNT_AS_KILLS and attacker:IsPlayer() and attacker:Team() == ZSF.TEAM_HUMAN then
+	if NPCS_COUNT_AS_KILLS and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
 		attacker:AddFrags(1)
 		self:CheckPlayerScore(attacker)
 	end
 end
 
 function GM:LastHuman()
-	if ZSF.LASTHUMAN then return end
+	if LASTHUMAN then return end
 
 	BroadcastLua("GAMEMODE:LastHuman()")
-	ZSF.LASTHUMAN = true
+	LASTHUMAN = true
 end
 
 function GM:SendTopTimes(to)
@@ -466,7 +466,7 @@ function GM:SendTopHumanDamages(to)
 	local PlayerSorted = {}
 
 	for _, ply in ipairs(player.GetHumans()) do
-		if ply.DamageDealt and ply.DamageDealt[ZSF.TEAM_HUMAN] and ply.DamageDealt[ZSF.TEAM_HUMAN] > 0 then
+		if ply.DamageDealt and ply.DamageDealt[TEAM_HUMAN] and ply.DamageDealt[TEAM_HUMAN] > 0 then
 			table.insert(PlayerSorted, ply)
 		end
 	end
@@ -474,10 +474,10 @@ function GM:SendTopHumanDamages(to)
 	if #PlayerSorted <= 0 then return end
 	table.sort(PlayerSorted,
 	function(a, b)
-		if a.DamageDealt[ZSF.TEAM_HUMAN] == b.DamageDealt[ZSF.TEAM_HUMAN] then
+		if a.DamageDealt[TEAM_HUMAN] == b.DamageDealt[TEAM_HUMAN] then
 			return a:UserID() > b:UserID()
 		end
-		return a.DamageDealt[ZSF.TEAM_HUMAN] > b.DamageDealt[ZSF.TEAM_HUMAN]
+		return a.DamageDealt[TEAM_HUMAN] > b.DamageDealt[TEAM_HUMAN]
 	end
 	)
 
@@ -487,7 +487,7 @@ function GM:SendTopHumanDamages(to)
 			x = x + 1
 			umsg.Start("RcTopHumanDamages", to)
 				umsg.Short(x)
-				umsg.String(ply:Name()..": "..math.ceil(ply.DamageDealt[ZSF.TEAM_HUMAN]))
+				umsg.String(ply:Name()..": "..math.ceil(ply.DamageDealt[TEAM_HUMAN]))
 			umsg.End()
 		end
 	end
@@ -497,7 +497,7 @@ function GM:SendTopZombieDamages(to)
 	local PlayerSorted = {}
 
 	for _, ply in ipairs(player.GetHumans()) do
-		if ply.DamageDealt and ply.DamageDealt[ZSF.TEAM_UNDEAD] and ply.DamageDealt[ZSF.TEAM_UNDEAD] > 0 then
+		if ply.DamageDealt and ply.DamageDealt[TEAM_UNDEAD] and ply.DamageDealt[TEAM_UNDEAD] > 0 then
 			table.insert(PlayerSorted, ply)
 		end
 	end
@@ -505,10 +505,10 @@ function GM:SendTopZombieDamages(to)
 	if #PlayerSorted <= 0 then return end
 	table.sort(PlayerSorted,
 	function(a, b)
-		if a.DamageDealt[ZSF.TEAM_UNDEAD] == b.DamageDealt[ZSF.TEAM_UNDEAD] then
+		if a.DamageDealt[TEAM_UNDEAD] == b.DamageDealt[TEAM_UNDEAD] then
 			return a:UserID() > b:UserID()
 		end
-		return a.DamageDealt[ZSF.TEAM_UNDEAD] > b.DamageDealt[ZSF.TEAM_UNDEAD]
+		return a.DamageDealt[TEAM_UNDEAD] > b.DamageDealt[TEAM_UNDEAD]
 	end)
 
 	local x = 0
@@ -517,16 +517,16 @@ function GM:SendTopZombieDamages(to)
 			x = x + 1
 			umsg.Start("RcTopZombieDamages", to)
 				umsg.Short(x)
-				umsg.String(ply:Name()..": "..math.ceil(ply.DamageDealt[ZSF.TEAM_UNDEAD]))
+				umsg.String(ply:Name()..": "..math.ceil(ply.DamageDealt[TEAM_UNDEAD]))
 			umsg.End()
 		end
 	end
 end
 
 function GM:EndRound(winner)
-	if ZSF.ENDROUND then return end
-	ZSF.ENDROUND = true
-	timer.Simple(ZSF.INTERMISSION_TIME, game.LoadNextMap)
+	if ENDROUND then return end
+	ENDROUND = true
+	timer.Simple(INTERMISSION_TIME, game.LoadNextMap)
 	local nextmap = game.GetMapNext()
 
 	timer.Simple(1, function()
@@ -537,7 +537,7 @@ function GM:EndRound(winner)
 	end)
 
 	hook.Add("PlayerReady", "LateJoin", function(ply)
-		ply:SendLua("Intermission('"..game.GetMapNext().."', "..ZSF.ROUNDWINNER..")")
+		ply:SendLua("Intermission('"..game.GetMapNext().."', "..ROUNDWINNER..")")
 		GAMEMODE:SendTopTimes(ply)
 		GAMEMODE:SendTopZombies(ply)
 		GAMEMODE:SendTopHumanDamages(ply)
@@ -550,10 +550,10 @@ function GM:EndRound(winner)
 
 	function self:PlayerDeathThink(ply)
 	end
-	ZSF.ROUNDWINNER = winner
-	if winner == ZSF.TEAM_HUMAN then
+	ROUNDWINNER = winner
+	if winner == TEAM_HUMAN then
 		for _, ply in ipairs(player.GetHumans()) do
-			if ply.SpawnedTime and ply:Team() == ZSF.TEAM_HUMAN then
+			if ply.SpawnedTime and ply:Team() == TEAM_HUMAN then
 				ply.SurvivalTime = CurTime() - ply.SpawnedTime
 			end
 		end
@@ -562,11 +562,11 @@ function GM:EndRound(winner)
 	local damtohumans = 0
 	for _, ply in ipairs(player.GetHumans()) do
 		if ply.DamageDealt then
-			if ply.DamageDealt[ZSF.TEAM_HUMAN] then
-				damtoundead = damtoundead + ply.DamageDealt[ZSF.TEAM_HUMAN]
+			if ply.DamageDealt[TEAM_HUMAN] then
+				damtoundead = damtoundead + ply.DamageDealt[TEAM_HUMAN]
 			end
-			if ply.DamageDealt[ZSF.TEAM_UNDEAD] then
-				damtohumans = damtohumans + ply.DamageDealt[ZSF.TEAM_UNDEAD]
+			if ply.DamageDealt[TEAM_UNDEAD] then
+				damtohumans = damtohumans + ply.DamageDealt[TEAM_UNDEAD]
 			end
 		end
 	end
@@ -579,7 +579,7 @@ end
 
 function GM:PlayerReady(ply)
 	if ply:IsValid() then
-		ply:SendLua("LocalPlayer().Class="..ply.Class.." ZSF.SURVIVALMODE="..tostring(ZSF.SURVIVALMODE))
+		ply:SendLua("LocalPlayer().Class="..ply.Class.." SURVIVALMODE="..tostring(SURVIVALMODE))
 		GAMEMODE:SendInflictionInit(ply)
 	end
 end
@@ -602,27 +602,27 @@ function GM:PlayerInitialSpawn(ply)
 	ply.ZomAnim = 2
 	ply.HighestAmmoType = "pistol"
 	ply.DamageDealt = {}
-	ply.DamageDealt[ZSF.TEAM_UNDEAD] = 0
-	ply.DamageDealt[ZSF.TEAM_HUMAN] = 0
+	ply.DamageDealt[TEAM_UNDEAD] = 0
+	ply.DamageDealt[TEAM_HUMAN] = 0
 
 	if DeadSteamIDs[ply:SteamID()] then
-		ply:SetTeam(ZSF.TEAM_UNDEAD)
-	elseif team.NumPlayers(ZSF.TEAM_UNDEAD) < 1 and team.NumPlayers(ZSF.TEAM_HUMAN) >= 3 then
+		ply:SetTeam(TEAM_UNDEAD)
+	elseif team.NumPlayers(TEAM_UNDEAD) < 1 and team.NumPlayers(TEAM_HUMAN) >= 3 then
 		local plays = player.GetAll()
 		local newply = plays[math.random(1, #plays)]
-		newply:SetTeam(ZSF.TEAM_UNDEAD)
+		newply:SetTeam(TEAM_UNDEAD)
 		DeadSteamIDs[newply:SteamID()] = true
 		newply:PrintMessage(4, "You've been randomly selected\nto lead the Undead army.")
 		newply:StripWeapons()
 		newply:Spawn()
 		if ply ~= newply then
-			ply:SetTeam(ZSF.TEAM_HUMAN)
+			ply:SetTeam(TEAM_HUMAN)
 		end
-	elseif ZSF.INFLICTION >= 0.5 or (CurTime() > ZSF.ROUNDTIME*0.5 and ZSF.HUMAN_DEADLINE) or ZSF.LASTHUMAN then
-		ply:SetTeam(ZSF.TEAM_UNDEAD)
+	elseif INFLICTION >= 0.5 or (CurTime() > ROUNDTIME*0.5 and HUMAN_DEADLINE) or LASTHUMAN then
+		ply:SetTeam(TEAM_UNDEAD)
 		DeadSteamIDs[ply:SteamID()] = true
 	else
-		ply:SetTeam(ZSF.TEAM_HUMAN)
+		ply:SetTeam(TEAM_HUMAN)
 		ply.SpawnedTime = CurTime()
 	end
 	self:CalculateInfliction()
@@ -652,7 +652,7 @@ function GM:CheckPlayerScore(ply)
 end
 
 function GM:PlayerNoClip(ply, on)
-	return ply:IsAdmin() and ZSF.ALLOW_ADMIN_NOCLIP
+	return ply:IsAdmin() and ALLOW_ADMIN_NOCLIP
 end
 
 function GM:OnPhysgunFreeze(weapon, phys, ent, ply)
@@ -675,7 +675,7 @@ end
 
 function GM:PlayerDeathThink(ply)
 	if CurTime() > ply.NextSpawnTime then
-		if ply:Team() == ZSF.TEAM_UNDEAD then
+		if ply:Team() == TEAM_UNDEAD then
 			if ply:KeyDown(IN_ATTACK) then
 				ply:Spawn()
 			end
@@ -692,7 +692,7 @@ function GM:EntityTakeDamage(ent, attacker, inflictor, damage)
 			local myteam = attacker:Team()
 			attacker.DamageDealt[myteam] = attacker.DamageDealt[myteam] + damage
 
-			/*if entteam == ZSF.TEAM_HUMAN then
+			/*if entteam == TEAM_HUMAN then
 				for i=1, math.ceil(math.min(3, damage * 0.05)) do
 					local effectdata = EffectData()
 						effectdata:SetOrigin(ent:GetPos() + Vector(0,0,48))
@@ -751,7 +751,7 @@ end
 function GM:PlayerUse(ply, entity)
 	if not entity then return end
 	if not entity:IsValid() then return end
-	if ply:Team() == ZSF.TEAM_UNDEAD then
+	if ply:Team() == TEAM_UNDEAD then
 		if entity:GetName() == "gib" then
 			entity:Remove()
 		end
@@ -769,7 +769,7 @@ end
 
 function SecondWind(ply)
 	if ply and ply:IsValid() and ply:IsPlayer() then
-		if ply.Gibbed or ply:Alive() or ply:Team() ~= ZSF.TEAM_UNDEAD then return end
+		if ply.Gibbed or ply:Alive() or ply:Team() ~= TEAM_UNDEAD then return end
 		local pos = ply:GetPos()
 		local angles = ply:EyeAngles()
 		local lastattacker = ply.LastAttacker
@@ -795,7 +795,7 @@ function GM:PlayerDeathSound()
 end
 
 function GM:CanPlayerSuicide(ply)
-	if ply:Team() == ZSF.TEAM_HUMAN and CurTime() < ZSF.ROUNDTIME * 0.1 then
+	if ply:Team() == TEAM_HUMAN and CurTime() < ROUNDTIME * 0.1 then
 		ply:PrintMessage(4, "Give others time to spawn before suiciding.")
 		return false
 	end
@@ -813,8 +813,8 @@ local function ChemBomb(ply, refrag)
 	if refrag then
 		ply:AddFrags(100)
 	end
-	if ZSF.REDEEM and ZSF.AUTOREDEEM then
-		if ply:Frags() >= ZSF.REDEEM_KILLS then
+	if REDEEM and AUTOREDEEM then
+		if ply:Frags() >= REDEEM_KILLS then
 			ply:Redeem()
 			timer.Remove("Survivalist")
 		end
@@ -849,7 +849,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	elseif attacker and attacker:IsValid() then
 		if attacker:IsPlayer() then
 			local attackerteam = attacker:Team()
-			if attackerteam ~= ZSF.TEAM_UNDEAD and attackerteam ~= ZSF.TEAM_HUMAN then
+			if attackerteam ~= TEAM_UNDEAD and attackerteam ~= TEAM_HUMAN then
 				timer.Simple(1, function()
 					BanIdiot(attacker)
 				end)
@@ -876,10 +876,10 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 
 	ply.NextSpawnTime = CurTime() + 4
 	ply:AddDeaths(1)
-	if ZombieClasses[ply.Class].Name == "Chem-Zombie" and ply:Team() == ZSF.TEAM_UNDEAD and attacker ~= ply and not suicide then
+	if ZombieClasses[ply.Class].Name == "Chem-Zombie" and ply:Team() == TEAM_UNDEAD and attacker ~= ply and not suicide then
 		ply:Gib(dmginfo)
 		ply.Gibbed = true
-		if ZSF.LASTHUMAN then
+		if LASTHUMAN then
 			timer.Simple(0, function()
 				ChemBomb(ply, false)
 			end)
@@ -896,7 +896,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		ply:CreateRagdoll()
 	end
 
-	if ply:Team() == ZSF.TEAM_UNDEAD then
+	if ply:Team() == TEAM_UNDEAD then
 		if attacker:IsValid() and attacker:IsPlayer() and attacker ~= ply then
 			if ZombieClasses[ply.Class].Revives then
 				if not ply.Gibbed and not headshot and math.random(1, 4) ~= 1 then
@@ -939,8 +939,8 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		if attacker:IsPlayer() and attacker ~= ply then
 			attacker:AddFrags(1)
 			attacker.BrainsEaten = attacker.BrainsEaten + 1
-			if ZSF.REDEEM and ZSF.AUTOREDEEM then
-				if attacker:Frags() >= ZSF.REDEEM_KILLS or INFINITEREDEEMS then
+			if REDEEM and AUTOREDEEM then
+				if attacker:Frags() >= REDEEM_KILLS or INFINITEREDEEMS then
 					if INFINITEREDEEMS then
 						BroadcastLua([[InfRed("]]..attacker:Name()..[[")]])
 					end
@@ -955,10 +955,10 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 				end)
 			end
 		end
-		if ZSF.WARMUP_MODE and #player.GetAll() < ZSF.WARMUP_THRESHOLD then
-			ply:PrintMessage(HUD_PRINTTALK, "There are not enough people playing for you to change to the Undead. Set ZSF.WARMUP_MODE in zs_options.lua to false to change this.")
+		if WARMUP_MODE and #player.GetAll() < WARMUP_THRESHOLD then
+			ply:PrintMessage(HUD_PRINTTALK, "There are not enough people playing for you to change to the Undead. Set WARMUP_MODE in zs_options.lua to false to change this.")
 		else
-			ply:SetTeam(ZSF.TEAM_UNDEAD)
+			ply:SetTeam(TEAM_UNDEAD)
 			DeadSteamIDs[ply:SteamID()] = true
 		end
 		ply:SendLua("Died()")
@@ -1011,7 +1011,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 end
 
 function GM:PlayerCanPickupWeapon(ply, entity)
-	if ply:Team() == ZSF.TEAM_UNDEAD then return entity:GetClass() == ZombieClasses[ply.Class].SWEP end
+	if ply:Team() == TEAM_UNDEAD then return entity:GetClass() == ZombieClasses[ply.Class].SWEP end
 
 	return true
 end
@@ -1065,9 +1065,9 @@ function GM:PlayerSpawn(ply)
 	timer.Remove(ply:UserID().."SpawnProtection")
 
 	local plyteam = ply:Team()
-	ply:ShouldDropWeapon(plyteam == ZSF.TEAM_HUMAN)
+	ply:ShouldDropWeapon(plyteam == TEAM_HUMAN)
 
-	if plyteam == ZSF.TEAM_UNDEAD then
+	if plyteam == TEAM_UNDEAD then
 		if ply.DeathClass then
 			ply:SetZombieClass(ply.DeathClass)
 			ply.DeathClass = nil
@@ -1075,7 +1075,7 @@ function GM:PlayerSpawn(ply)
 		local class = ply:GetZombieClass()
 		local classtab = ZombieClasses[class]
 		ply:SetModel(classtab.Model)
-		--if team.NumPlayers(ZSF.TEAM_UNDEAD) <= 1 then
+		--if team.NumPlayers(TEAM_UNDEAD) <= 1 then
 			--ply:SetHealth(classtab.Health * 2)
 		--else
 			ply:SetHealth(classtab.Health)
@@ -1086,10 +1086,10 @@ function GM:PlayerSpawn(ply)
 		ply:SetNoTarget(true)
 		ply:SendLua("ZomC()")
 		ply:SetMaxHealth(1) -- To prevent picking up health packs
-		if ZSF.INFLICTION < 0.5 then
-			SpawnProtection(ply, 5 - ZSF.INFLICTION * 5) -- Less infliction, more spawn protection.
+		if INFLICTION < 0.5 then
+			SpawnProtection(ply, 5 - INFLICTION * 5) -- Less infliction, more spawn protection.
 		end
-	elseif plyteam == ZSF.TEAM_HUMAN then
+	elseif plyteam == TEAM_HUMAN then
 		//ply.PlayerFootstep = nil
 		local modelname = string.lower(player_manager.TranslatePlayerModel(ply:GetInfo("cl_playermodel")))
 		if self.RestrictedModels[modelname] then
@@ -1116,13 +1116,13 @@ end
 
 function GM:ScaleNPCDamage(npc, hitgroup, dmginfo)
     if hitgroup == HITGROUP_HEAD then
-		dmginfo:ScaleDamage(ZSF.HEAD_NPC_SCALE)
+		dmginfo:ScaleDamage(HEAD_NPC_SCALE)
 	end
 	return dmginfo
 end
 
 function GM:ScalePlayerDamage(ply, hitgroup, dmginfo)
-	if ply:Team() == ZSF.TEAM_HUMAN then
+	if ply:Team() == TEAM_HUMAN then
 		dmginfo:ScaleDamage(0)
 	elseif hitgroup == HITGROUP_HEAD then
 		dmginfo:ScaleDamage(2)
@@ -1138,7 +1138,7 @@ end
 end*/
 
 function GM:PlayerSwitchFlashlight(ply, switchon)
-	if switchon then return ply:Team() == ZSF.TEAM_HUMAN end
+	if switchon then return ply:Team() == TEAM_HUMAN end
 
 	return true
 end
@@ -1147,7 +1147,7 @@ function ThrowHeadcrab(owner, wep)
 	if not owner:IsValid() then return end
 	if not owner:IsPlayer() then return end
 	if not wep.Weapon then return end
-	if owner:Alive() and owner:Team() == ZSF.TEAM_UNDEAD and owner.Class == 3 then
+	if owner:Alive() and owner:Team() == TEAM_UNDEAD and owner.Class == 3 then
 		wep.Weapon:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
 		GAMEMODE:SetPlayerSpeed(owner, ZombieClasses[3].Speed)
 		wep.Headcrabs = wep.Headcrabs - 1
@@ -1167,7 +1167,7 @@ function ThrowHeadcrab(owner, wep)
 				return
 			end
 			for _, ply in ipairs(player.GetHumans()) do
-				if ply:Team() == ZSF.TEAM_UNDEAD then
+				if ply:Team() == TEAM_UNDEAD then
 					ent:AddEntityRelationship(ply, D_LI, 99)
 				else
 					ent:AddEntityRelationship(ply, D_HT, 99)
@@ -1185,13 +1185,13 @@ end
 
 concommand.Add("zs_class", function(sender, command, arguments)
 	if arguments[1] == nil then return end
-	if sender:Team() ~= ZSF.TEAM_UNDEAD or timer.IsTimer(sender:UniqueID().."secondwind") then return end
+	if sender:Team() ~= TEAM_UNDEAD or timer.IsTimer(sender:UniqueID().."secondwind") then return end
 	arguments = table.concat(arguments, " ")
 	for i=1, #ZombieClasses do
 		if string.lower(ZombieClasses[i].Name) == string.lower(arguments) then
 			if ZombieClasses[i].Hidden then
 				sender:PrintMessage(HUD_PRINTTALK, "AND STOP SHOUTING! I'M NOT DEAF!")
-			elseif ZombieClasses[i].Threshold > ZSF.INFLICTION and not ZombieClasses[i].Unlocked then
+			elseif ZombieClasses[i].Threshold > INFLICTION and not ZombieClasses[i].Unlocked then
 				sender:PrintMessage(HUD_PRINTTALK, "There are too many living to use that class. Kill some more humans to unlock it.")
 			elseif sender.Class == i and not sender.DeathClass then
 				sender:PrintMessage(HUD_PRINTTALK, "You are already a "..ZombieClasses[i].Name.."!")
@@ -1231,10 +1231,10 @@ end)
 
 util.PrecacheSound("ambient/voices/citizen_punches2.wav")
 concommand.Add("Shove", function(sender, command, arguments)
-	if not ZSF.ALLOW_SHOVE then return end
-	if not (sender:Alive() and sender:Team() == ZSF.TEAM_HUMAN and CurTime() >= sender.NextShove) then return end
+	if not ALLOW_SHOVE then return end
+	if not (sender:Alive() and sender:Team() == TEAM_HUMAN and CurTime() >= sender.NextShove) then return end
 	local ent = Entity(tonumber(arguments[1]))
-	if not (ent and ent:IsValid() and ent:IsPlayer() and ent:Team() == ZSF.TEAM_HUMAN) then return end
+	if not (ent and ent:IsValid() and ent:IsPlayer() and ent:Team() == TEAM_HUMAN) then return end
 	local shootpos = sender:GetShootPos()
 	if shootpos:Distance(ent:GetPos() + Vector(0,0,36)) <= 50 then
 		local vVel = sender:GetAimVector()

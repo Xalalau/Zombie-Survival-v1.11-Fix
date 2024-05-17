@@ -35,11 +35,11 @@ function PANEL:Paint()
 	draw.DrawText("("..GAMEMODE.Version.." "..GAMEMODE.SubVersion..")", "DefaultSmall", wide * 0.5 + gmw * 0.5 + 8, gmh - 20, COLOR_GRAY, TEXT_ALIGN_LEFT)
 	draw.DrawText(GetGlobalString("servername"), "HUDFont2", wide * 0.5, gmh, COLOR_GRAY, TEXT_ALIGN_CENTER)
 
-	local colHuman = team.GetColor(ZSF.TEAM_HUMAN)
-	local colUndead = team.GetColor(ZSF.TEAM_UNDEAD)
+	local colHuman = team.GetColor(TEAM_HUMAN)
+	local colUndead = team.GetColor(TEAM_UNDEAD)
 
-	local HumanPlayers = team.GetPlayers(ZSF.TEAM_HUMAN)
-	local UndeadPlayers = team.GetPlayers(ZSF.TEAM_UNDEAD)
+	local HumanPlayers = team.GetPlayers(TEAM_HUMAN)
+	local UndeadPlayers = team.GetPlayers(TEAM_UNDEAD)
 
 	table.sort(HumanPlayers, SortFunc)
 	table.sort(UndeadPlayers, SortFunc)

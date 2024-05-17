@@ -38,7 +38,7 @@ function PANEL:Paint()
 
 		local PlayerSorted = {}
 		for _, ply in ipairs(player.GetHumans()) do
-			if ply:Team() == ZSF.TEAM_HUMAN then
+			if ply:Team() == TEAM_HUMAN then
 				table.insert(PlayerSorted, ply)
 			end
 		end
@@ -47,7 +47,7 @@ function PANEL:Paint()
 
 		local PlayerSorted2 = {}
 		for _, ply in ipairs(player.GetHumans()) do
-			if ply:Team() == ZSF.TEAM_UNDEAD then
+			if ply:Team() == TEAM_UNDEAD then
 				table.insert(PlayerSorted2, ply)
 			end
 		end
@@ -116,7 +116,7 @@ function PANEL:Paint()
 			if not ZombieClasses[i].Hidden then
 				local colortouse = Color(255, 0, 0, 255)
 				local canuse = false
-				if ZSF.INFLICTION >= ZombieClasses[i].Threshold or ZombieClasses[i].Unlocked then
+				if INFLICTION >= ZombieClasses[i].Threshold or ZombieClasses[i].Unlocked then
 					colortouse = Color(0, 255, 0)
 					canuse = true
 				end
@@ -144,9 +144,9 @@ function PANEL:Paint()
 		local x = self:GetWide() * 0.1
 		local tall = self:GetTall()
 		local y = tall * 0.12
-		local touse = ZSF.HELP_TEXT
-		if ZSF.SURVIVALMODE then
-			touse = ZSF.HELP_TEXT_SURVIVALMODE
+		local touse = HELP_TEXT
+		if SURVIVALMODE then
+			touse = HELP_TEXT_SURVIVALMODE
 		end
 
 		for _, text in ipairs(touse) do
@@ -338,13 +338,13 @@ vgui.Register("ScoreboardTab", PANEL, "Button")
 PANEL = {}
 function PANEL:DoClick()
 	local ply = LocalPlayer()
-	if (ZSF.INFLICTION < ZombieClasses[self.Class].Threshold and not ZombieClasses[self.Class].Unlocked)or ply:Team() ~= ZSF.TEAM_UNDEAD then return end
+	if (INFLICTION < ZombieClasses[self.Class].Threshold and not ZombieClasses[self.Class].Unlocked)or ply:Team() ~= TEAM_UNDEAD then return end
 	ply:ConCommand("zs_class "..ZombieClasses[self.Class].Name.."\n")
 	surface.PlaySound("buttons/button1.wav")
 end
 function PANEL:Paint()
 	local bgColor = Color(255, 0, 0, 200)
-	if ZSF.INFLICTION >= ZombieClasses[self.Class].Threshold or ZombieClasses[self.Class].Unlocked then
+	if INFLICTION >= ZombieClasses[self.Class].Threshold or ZombieClasses[self.Class].Unlocked then
 		bgColor = Color(0, 255, 0, 200)
 		if self.Selected or self.Armed then
 			bgColor = color_white

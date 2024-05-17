@@ -70,7 +70,7 @@ usermessage.Hook("PlayerKilledSelf", RecvPlayerKilledSelf)
 local function RecvPlayerRedeemed(message)
 	local somePly = message:ReadEntity()
 	if somePly:IsValid() then
-		GAMEMODE:AddDeathNotice(nil, 0, "redeem", somePly:Name(), ZSF.TEAM_HUMAN)
+		GAMEMODE:AddDeathNotice(nil, 0, "redeem", somePly:Name(), TEAM_HUMAN)
 		if somePly == LocalPlayer() then
 			GAMEMODE:SplitMessage(h * 0.7, "<color=cyan><font=HUDFont>You redeemed!</font></color>")
 		end

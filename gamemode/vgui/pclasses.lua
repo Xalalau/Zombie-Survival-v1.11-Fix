@@ -48,7 +48,7 @@ function MakepClasses()
 			label:SetSize(tw, th)
 			label:SetFont("HUDFontSmallAA")
 			label:SetText(class.Name)
-			if class.Threshold <= ZSF.INFLICTION then
+			if class.Threshold <= INFLICTION then
 				label:SetTextColor(COLOR_LIMEGREEN)
 			else
 				label:SetTextColor(COLOR_RED)

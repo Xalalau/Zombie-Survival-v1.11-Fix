@@ -58,9 +58,9 @@ function MakepHelp()
 	surface.SetFont("Default")
 	local ___, defh = surface.GetTextSize("|")
 
-	local touse = ZSF.HELP_TEXT
-	if ZSF.SURVIVALMODE then
-		touse = ZSF.HELP_TEXT_SURVIVALMODE
+	local touse = HELP_TEXT
+	if SURVIVALMODE then
+		touse = HELP_TEXT_SURVIVALMODE
 	end
 	local y = 64
 	for i, text in ipairs(touse) do

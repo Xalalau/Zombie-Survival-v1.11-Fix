@@ -82,112 +82,112 @@ GM.AmmoRegeneration["helicoptergun"] = 100
 ------------------------------
 
 -- If you like NPC's. NPC's will only spawn in maps that actually were built to have them in the first place. This gamemode won't create it's own.
-ZSF.USE_NPCS = false
+USE_NPCS = false
 
 -- Set this to true if you want people to get 'kills' from killing NPC's.
 -- IT IS STRONGLY SUGGESTED THAT YOU EDIT THE REWARDS TABLE TO
--- MAKE THE REWARDS REQUIRE MORE KILLS AND/OR MAKE THE ZSF.DIFFICULTY HIGHER IF YOU DO THIS!!!
+-- MAKE THE REWARDS REQUIRE MORE KILLS AND/OR MAKE THE DIFFICULTY HIGHER IF YOU DO THIS!!!
 -- Example, change Rewards[6] to Rewards[15]. The number represents the kills.
-ZSF.NPCS_COUNT_AS_KILLS = false
+NPCS_COUNT_AS_KILLS = false
 
 -- Good values are 1 to 3. 0.5 is about the same as the default HL2. 1 is about ZS difficulty. This is mainly for NPC healths and damages.
-ZSF.DIFFICULTY = 1.5
+DIFFICULTY = 1.5
 
 if game.SinglePlayer() then
-	ZSF.USE_NPCS = true
-	ZSF.NPCS_COUNT_AS_KILLS = true
+	USE_NPCS = true
+	NPCS_COUNT_AS_KILLS = true
 end
 
 -- Use Zombie Survival's custom footstep sounds? I'm not sure how bad it might lag considering you're potentially sending a lot of data on heavily packed servers.
-ZSF.CUSTOM_FOOTSTEPS = true
+CUSTOM_FOOTSTEPS = true
 
 -- In seconds, repeatatively, the gamemode gives all humans get a box of whatever ammo of the weapon they use.
 -- if you set this number to something stupid like 0, you'll have some lag issues.
 -- Changing this means you're an idiot.
-ZSF.AMMO_REGENERATE_RATE = 100
+AMMO_REGENERATE_RATE = 100
 
 -- In seconds, how long humans need to survive.
-ZSF.ROUNDTIME = 1200 -- 20 minutes
+ROUNDTIME = 1200 -- 20 minutes
 
 -- Time in seconds between end round and next map.
-ZSF.INTERMISSION_TIME = 35
+INTERMISSION_TIME = 35
 
 -- New joining players will be put on the Undead team if the round is half over.
-ZSF.HUMAN_DEADLINE = true
+HUMAN_DEADLINE = true
 
 -- Set this to true to destroy all brush-based doors that aren't based on phys_hinge and func_physbox or whatever. For door campers.
-ZSF.DESTROY_DOORS = true
+DESTROY_DOORS = true
 
 -- Set this to true to destroy all prop-based doors. Not recommended since some doors have boards on them and what-not. Only for true door camping whores.
-ZSF.DESTROY_PROP_DOORS = false
+DESTROY_PROP_DOORS = false
 
 -- Set this to true to force players to have mat_monitorgamma set to 2.2. This could cause problems with non-calibrated screens so, whatever.
 -- It forces people to use flashlights instead of whoring the video settings to make it brighter.
-ZSF.FORCE_NORMAL_GAMMA = false
+FORCE_NORMAL_GAMMA = false
 
 -- Turn this to true if you don't want humans to be able to camp inside of vents and other hard to reach areas. They will die
 -- if they are in a vent for 60 seconds or more.
 -- Changing this means you're an idiot.
-ZSF.ANTI_VENT_CAMP = true
+ANTI_VENT_CAMP = true
 
 -- Set this to true to allow humans to shove other humans by pressing USE. Great for door blocking tards.
 -- Changing this means you're an idiot.
-ZSF.ALLOW_SHOVE = true
+ALLOW_SHOVE = true
 
 -- Set this to true if you want your admins to be able to use the 'noclip' concommand.
 -- If they already have rcon then it's pointless to set this to false.
-ZSF.ALLOW_ADMIN_NOCLIP = true
+ALLOW_ADMIN_NOCLIP = true
 
 -- Sound to play for last human.
-ZSF.LASTHUMANSOUND = "lasthuman.mp3"
+LASTHUMANSOUND = "lasthuman.mp3"
 
 -- In seconds, the length of the above file. It's important to have this correct or you may get delayed or overlapping music.
-ZSF.LASTHUMANSOUNDLENGTH = 119
+LASTHUMANSOUNDLENGTH = 119
 
 -- Sound to play for ambient Un-Life music.
-ZSF.UNLIFESOUND = "unlife1.mp3"
-ZSF.UNLIFESOUNDLENGTH = 210
+UNLIFESOUND = "unlife1.mp3"
+UNLIFESOUNDLENGTH = 210
 
 -- Sound played to a person when they lose.
-ZSF.ALLLOSESOUND = "lose_test.mp3"
+ALLLOSESOUND = "lose_test.mp3"
 
 -- Sound played to a person when they win.
-ZSF.HUMANWINSOUND = "humanwin.mp3"
+HUMANWINSOUND = "humanwin.mp3"
 
 -- Sound played to a person when they die as a human.
-ZSF.DEATHSOUND = "music/stingers/HL1_stinger_song28.mp3"
+DEATHSOUND = "music/stingers/HL1_stinger_song28.mp3"
 
 -- Human kills needed for a zombie player to redeem (resurrect). Do not set this to 0. If you want to turn this
--- system off, set ZSF.AUTOREDEEM to false.
-ZSF.REDEEM_KILLS = 4
+-- system off, set AUTOREDEEM to false.
+REDEEM_KILLS = 4
 
 -- Turn off/on the redeeming system.
-ZSF.REDEEM = true
+REDEEM = true
 
 -- Players don't have a choice if they want to redeem or not. Setting to false makes them press F2.
-ZSF.AUTOREDEEM = true
+AUTOREDEEM = true
 
-ZSF.WARMUP_THRESHOLD = 4
+WARMUP_THRESHOLD = 4
 -- If a person dies when there are less than the above amount of people, don't set them on the undead team if this is true. This should generally be true on public / big servers.
-ZSF.WARMUP_MODE = true
+WARMUP_MODE = true
 
 -- Missing config - Xala
-ZSF.SURVIVALMODE = false
+SURVIVALMODE = false
 
 
 if game.MaxPlayers() < 4 then
-	ZSF.WARMUP_MODE = false
+	WARMUP_MODE = false
 end
 
 if CLIENT then
-	util.PrecacheSound(ZSF.LASTHUMANSOUND)
-	util.PrecacheSound(ZSF.UNLIFESOUND)
+	util.PrecacheSound(LASTHUMANSOUND)
+	util.PrecacheSound(UNLIFESOUND)
 end
 
 local shit = ""
-if ZSF.REDEEM then
+if REDEEM then
 	shit = [[You must hurry and redeem yourself before the round ends!]] ..
-	[[@To redeem yourself, kill ]]..ZSF.REDEEM_KILLS..[[ humans and you will respawn as a human.]]
+	[[@To redeem yourself, kill ]]..REDEEM_KILLS..[[ humans and you will respawn as a human.]]
 end
 
 if CLIENT then
@@ -224,9 +224,9 @@ if CLIENT then
 	-- Don't put @'s right next to eachother.
 	-- Use ^r ^g ^b ^y  when the line starts to change color of the line
 
-	ZSF.HELP_TEXT =
+	HELP_TEXT =
 		[[^gWelcome to Zombie Survival v1.11 Fix by Xalalau @^gFor GMod March 2024 Update+.@ @^b          -- HUMANS --@^bSurvive for ]] ..
-		ToMinutesSeconds(ZSF.ROUNDTIME) ..
+		ToMinutesSeconds(ROUNDTIME) ..
 		[[ to win the match.@If you get killed by a zombie, you become one! ]] ..
 		shit .. 
 		[[@ @Watch the infliction bar. The bigger it is, the more humans are dead!@The bar at the bottom ]] ..
@@ -242,9 +242,9 @@ if CLIENT then
 		[[or you're a zombie at the end of the round.@If redeeming is allowed then you can kill a certain amount of ]] .. 
 		[[humans to ressurect yourself.@ @^yVisit github.com/Xalalau/Zombie-Survival-v1.11-Fix for updates to the game!]]
 
-	ZSF.HELP_TEXT_SURVIVALMODE =
+	HELP_TEXT_SURVIVALMODE =
 		[[^rWelcome to Zombie Survival v1.11 Fix by Xalalau @^rFor GMod March 2024 Update+.@ @^b          -- HUMANS --@^bSurvive for ]] ..
-		ToMinutesSeconds(ZSF.ROUNDTIME) ..
+		ToMinutesSeconds(ROUNDTIME) ..
 		[[ to win the match.@If you get killed by a zombie, you become one! ]] ..
 		shit ..
 		[[@ @Watch the infliction bar. The bigger it is, the more humans are dead!@The bar at the bottom of the screen ]] ..
@@ -259,13 +259,13 @@ if CLIENT then
 		[[allowed then you can kill a certain amount of humans to ressurect yourself.@ @^yVisit github.com/Xalalau/Zombie-Survival-v1.11-Fix ]] ..
 		[[for updates to the game!]]
 
-	ZSF.HELP_TEXT = string.Explode("@", ZSF.HELP_TEXT)
-	for _, text in ipairs(ZSF.HELP_TEXT) do
+	HELP_TEXT = string.Explode("@", HELP_TEXT)
+	for _, text in ipairs(HELP_TEXT) do
 		text = string.gsub(text, "@", "")
 	end
 
-	ZSF.HELP_TEXT_SURVIVALMODE = string.Explode("@", ZSF.HELP_TEXT_SURVIVALMODE)
-	for _, text in ipairs(ZSF.HELP_TEXT_SURVIVALMODE) do
+	HELP_TEXT_SURVIVALMODE = string.Explode("@", HELP_TEXT_SURVIVALMODE)
+	for _, text in ipairs(HELP_TEXT_SURVIVALMODE) do
 		text = string.gsub(text, "@", "")
 	end
 end

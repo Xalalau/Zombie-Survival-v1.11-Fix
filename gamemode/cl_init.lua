@@ -46,7 +46,7 @@ COLOR_CYAN = Color(0, 255, 255)
 COLOR_WHITE = Color(255, 255, 255)
 COLOR_BLACK = Color(0, 0, 0)
 
-ZSF.ENDTIME = 0
+ENDTIME = 0
 
 NearZombies = 0
 ActualNearZombies = 0
@@ -65,7 +65,7 @@ function GetZombieFocus2(mypos, range, multiplier, maxper)
 	local zombies = 0
 
 	for _, curPly in ipairs(player.GetHumans()) do
-		if curPly ~= LocalPlayer() and curPly:Team() == ZSF.TEAM_UNDEAD and curPly:Alive() then
+		if curPly ~= LocalPlayer() and curPly:Team() == TEAM_UNDEAD and curPly:Alive() then
 			local dist = curPly:GetPos():Distance(mypos)
 			if dist < range then
 				zombies = zombies + math.max((range - dist) * multiplier, maxper)
@@ -251,7 +251,7 @@ function GM:Initialize()
 		shadow = true
 	})
 
-	if ZSF.FORCE_NORMAL_GAMMA then
+	if FORCE_NORMAL_GAMMA then
 		RunConsoleCommand("mat_monitorgamma", "2.2")
 		timer.Create("GammaChecker", 3, 0, function()
 			RunConsoleCommand("mat_monitorgamma", "2.2")
@@ -263,17 +263,17 @@ function GM:PlayerDeath(ply, attacker)
 end
 
 local function LoopLastHuman()
-	if not ZSF.ENDROUND then
-		surface.PlaySound(ZSF.LASTHUMANSOUND)
-		timer.Simple(ZSF.LASTHUMANSOUNDLENGTH, LoopLastHuman)
+	if not ENDROUND then
+		surface.PlaySound(LASTHUMANSOUND)
+		timer.Simple(LASTHUMANSOUNDLENGTH, LoopLastHuman)
 	end
 end
 
 local function DelayedLH()
-	if not ZSF.ENDROUND then
+	if not ENDROUND then
 		local ply = LocalPlayer()
 
-		if ply:Team() == ZSF.TEAM_UNDEAD or not ply:Alive() then
+		if ply:Team() == TEAM_UNDEAD or not ply:Alive() then
 			GAMEMODE:SplitMessage(h * 0.7, "<color=red><font=HUDFontAA>Kill the Last Human!</font></color>")
 		else
 			GAMEMODE:SplitMessage(h * 0.7, "<color=ltred><font=HUDFontAA>You are the Last Human!</font></color>", "<color=red><font=HUDFontAA>RUN!</font></color>")
@@ -282,9 +282,9 @@ local function DelayedLH()
 end
 
 function GM:LastHuman()
-	if ZSF.LASTHUMAN then return end
+	if LASTHUMAN then return end
 
-	ZSF.LASTHUMAN = true
+	LASTHUMAN = true
 	RunConsoleCommand("stopsounds")
 	timer.Simple(0.5, LoopLastHuman)
 	DrawingDanger = 1
@@ -393,7 +393,7 @@ function GM:HUDPaint()
 	local zombies = 0
 	local humans = 0
 	for _, ply in ipairs(player.GetHumans()) do
-		if ply:Team() == ZSF.TEAM_ZOMBIE then
+		if ply:Team() == TEAM_ZOMBIE then
 			zombies = zombies + 1
 		else
 			humans = humans + 1
@@ -416,15 +416,15 @@ function GM:HUDPaint()
 	-- Death Notice
 	self:DrawDeathNotice(0.8, 0.04)
 
-	if myteam == ZSF.TEAM_UNDEAD then
+	if myteam == TEAM_UNDEAD then
 		self:ZombieHUD(ply)
 	else
 		self:HumanHUD(ply)
-		draw.DrawText("Survive: "..ToMinutesSeconds(ZSF.ROUNDTIME - CurTime()), "HUDFontSmallAA", w*0.09, 0, COLOR_GRAY, TEXT_ALIGN_LEFT)
+		draw.DrawText("Survive: "..ToMinutesSeconds(ROUNDTIME - CurTime()), "HUDFontSmallAA", w*0.09, 0, COLOR_GRAY, TEXT_ALIGN_LEFT)
 	end
 
 	-- Infliction
-	draw.DrawText("Infliction: " .. math.floor(ZSF.INFLICTION * 100) .. "%", "HUDFontSmallAA", 8, h - 112, COLOR_INFLICTION, TEXT_ALIGN_LEFT)
+	draw.DrawText("Infliction: " .. math.floor(INFLICTION * 100) .. "%", "HUDFontSmallAA", 8, h - 112, COLOR_INFLICTION, TEXT_ALIGN_LEFT)
 end
 
 util.PrecacheSound("npc/stalker/breathing3.wav")
@@ -433,8 +433,8 @@ function GM:PlayerBindPress(ply, bind)
 	if bind == "+walk" then
 		return true
 	--[[elseif bind == "impulse 100" then
-		return ply:Team() == ZSF.TEAM_UNDEAD]]--
-	elseif bind == "+speed" and ply:Team() == ZSF.TEAM_UNDEAD then
+		return ply:Team() == TEAM_UNDEAD]]--
+	elseif bind == "+speed" and ply:Team() == TEAM_UNDEAD then
 		if DLV then
 			ply:EmitSound("npc/zombie/zombie_pain6.wav", 100, 110)
 			DoZomC()
@@ -462,7 +462,7 @@ function GM:CalcView(ply, pos, ang, _fov)
 		end
 	end
 
-	if (ply:Health() <= 30 and ply:Team() == ZSF.TEAM_HUMAN) or ply:WaterLevel() > 2 then
+	if (ply:Health() <= 30 and ply:Team() == TEAM_HUMAN) or ply:WaterLevel() > 2 then
 		ang.roll = ang.roll + math.sin(RealTime()) * 7
 	end
 
@@ -531,9 +531,9 @@ function GM:RenderScene()
 end
 
 function Intermission(nextmap, winner)
-	ZSF.ENDROUND = true
+	ENDROUND = true
 	hook.Remove("RenderScreenspaceEffects", "PostProcess")
-	ZSF.ENDTIME = CurTime()
+	ENDTIME = CurTime()
 	DrawingDanger = 0
 	NearZombies = 0
 	NextThump = 999999
@@ -553,7 +553,7 @@ function Intermission(nextmap, winner)
 		if #Top > 0 then
 			draw.DrawText("Survival Times", "HUDFont", w*0.1, h*0.15, COLOR_CYAN, TEXT_ALIGN_LEFT)
 			for i=1, 5 do
-				if Top[i] and CurTime() > ZSF.ENDTIME + i * 0.7 then
+				if Top[i] and CurTime() > ENDTIME + i * 0.7 then
 					draw.DrawText(Top[i], "HUDFontSmall", w*0.13, h*0.15 + h*0.05*i, Color(285 - i*30, 0, i*65 - 65, 255), TEXT_ALIGN_LEFT)
 				end
 			end
@@ -561,7 +561,7 @@ function Intermission(nextmap, winner)
 		if #TopHD > 0 then
 			draw.DrawText("Damage to undead", "HUDFont", w*0.1, h*0.45, COLOR_CYAN, TEXT_ALIGN_LEFT)
 			for i=1, 5 do
-				if TopHD[i] and CurTime() > ZSF.ENDTIME + i * 0.7 then
+				if TopHD[i] and CurTime() > ENDTIME + i * 0.7 then
 					draw.DrawText(TopHD[i], "HUDFontSmall", w*0.13, h*0.45 + h*0.05*i, Color(285 - i*30, 0, i*65 - 65, 255), TEXT_ALIGN_LEFT)
 				end
 			end
@@ -570,7 +570,7 @@ function Intermission(nextmap, winner)
 		if #TopZ > 0 then
 			draw.DrawText("Brains Eaten", "HUDFont", w*0.65, h*0.15, COLOR_GREEN, TEXT_ALIGN_LEFT)
 			for i=1, 5 do
-				if TopZ[i] and CurTime() > ZSF.ENDTIME + i * 0.7 then
+				if TopZ[i] and CurTime() > ENDTIME + i * 0.7 then
 					draw.DrawText(TopZ[i], "HUDFontSmall", w*0.68, h*0.15 + h*0.05*i, Color(285 - i*30, 0, i*65 - 65, 255), TEXT_ALIGN_LEFT)
 				end
 			end
@@ -578,33 +578,33 @@ function Intermission(nextmap, winner)
 		if #TopZD > 0 then
 			draw.DrawText("Damage to humans", "HUDFont", w*0.65, h*0.45, COLOR_GREEN, TEXT_ALIGN_LEFT)
 			for i=1, 5 do
-				if TopZD[i] and CurTime() > ZSF.ENDTIME + i * 0.7 then
+				if TopZD[i] and CurTime() > ENDTIME + i * 0.7 then
 					draw.DrawText(TopZD[i], "HUDFontSmall", w*0.68, h*0.45 + h*0.05*i, Color(285 - i*30, 0, i*65 - 65, 255), TEXT_ALIGN_LEFT)
 				end
 			end
 		end
 
-		draw.DrawText("Next: "..ToMinutesSeconds(ZSF.ENDTIME + ZSF.INTERMISSION_TIME - CurTime()), "HUDFontSmall", w*0.5, h*0.7, COLOR_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.DrawText("Next: "..ToMinutesSeconds(ENDTIME + INTERMISSION_TIME - CurTime()), "HUDFontSmall", w*0.5, h*0.7, COLOR_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
-	if winner == ZSF.TEAM_UNDEAD then
+	if winner == TEAM_UNDEAD then
 		hook.Add("HUDPaint", "DrawLose", DrawLose)
 		timer.Simple(0.5, function()
-			surface.PlaySound(ZSF.ALLLOSESOUND)
+			surface.PlaySound(ALLLOSESOUND)
 		end)
 	else
-		if ZSF.TEAM_HUMAN == LocalPlayer():Team() then
+		if TEAM_HUMAN == LocalPlayer():Team() then
 			hook.Add("HUDPaint", "DrawWin", DrawWin)
 		else
 			hook.Add("HUDPaint", "DrawLose", DrawLose)
 		end
 		timer.Simple(0.5, function()
-			surface.PlaySound(ZSF.HUMANWINSOUND)
+			surface.PlaySound(HUMANWINSOUND)
 		end)
 	end
 end
 
 /*function DrawUnlock()
-	if ZSF.ENDROUND then
+	if ENDROUND then
 		hook.Remove("HUDPaint", "DrawUnlock")
 		DrawRewardTime = nil
 		return
@@ -622,20 +622,20 @@ end
 end*/
 
 local function LoopUnlife()
-	if ZSF.UNLIFE and not ZSF.ENDROUND and not ZSF.LASTHUMAN then
-		surface.PlaySound(ZSF.UNLIFESOUND)
-		timer.Simple(ZSF.UNLIFESOUNDLENGTH, LoopUnlife)
+	if UNLIFE and not ENDROUND and not LASTHUMAN then
+		surface.PlaySound(UNLIFESOUND)
+		timer.Simple(UNLIFESOUNDLENGTH, LoopUnlife)
 	end
 end
 
 local function SetInf(um)
-	ZSF.INFLICTION = um:ReadFloat()
+	INFLICTION = um:ReadFloat()
 
 	local usesound = false
 	local amount = 0
 	local UnlockedClass
 	for i in ipairs(ZombieClasses) do
-		if ZombieClasses[i].Threshold <= ZSF.INFLICTION and not ZombieClasses[i].Unlocked then
+		if ZombieClasses[i].Threshold <= INFLICTION and not ZombieClasses[i].Unlocked then
 			ZombieClasses[i].Unlocked = true
 			UnlockedClass = ZombieClasses[i].Name
 			usesound = true
@@ -643,16 +643,16 @@ local function SetInf(um)
 		end
 	end
 
-	if not ZSF.LASTHUMAN then
-		if ZSF.INFLICTION >= 0.75 and not ZSF.UNLIFE then
-			ZSF.UNLIFE = true
-			ZSF.HALFLIFE = true
+	if not LASTHUMAN then
+		if INFLICTION >= 0.75 and not UNLIFE then
+			UNLIFE = true
+			HALFLIFE = true
 			RunConsoleCommand("stopsounds")
 			timer.Simple(0.5, LoopUnlife)
 			GAMEMODE:SplitMessage(h * 0.725, "<color=ltred><font=HUDFontAA>Un-Life</font></color>", "<color=ltred><font=HUDFontSmallAA>Horde locked at 75%</font></color>")
 			GAMEMODE:SetUnlifeText()
-		elseif ZSF.INFLICTION >= 0.5 and not ZSF.HALFLIFE then
-			ZSF.HALFLIFE = true
+		elseif INFLICTION >= 0.5 and not HALFLIFE then
+			HALFLIFE = true
 			GAMEMODE:SplitMessage(h * 0.725, "<color=ltred><font=HUDFontAA>Half-Life</font></color>", "<color=ltred><font=HUDFontSmallAA>Horde locked above 50%</font></color>")
 			GAMEMODE:SetHalflifeText()
 		elseif usesound then
@@ -672,26 +672,26 @@ end
 usermessage.Hook("SetInf", SetInf)
 
 local function SetInfInit(um)
-	ZSF.INFLICTION = um:ReadFloat()
+	INFLICTION = um:ReadFloat()
 	for i in ipairs(ZombieClasses) do
-		if ZombieClasses[i].Threshold <= ZSF.INFLICTION then
+		if ZombieClasses[i].Threshold <= INFLICTION then
 			ZombieClasses[i].Unlocked = true
 		end
 	end
 
-	if ZSF.INFLICTION >= 0.75 then
-		ZSF.UNLIFE = true
-		ZSF.HALFLIFE = true
+	if INFLICTION >= 0.75 then
+		UNLIFE = true
+		HALFLIFE = true
 		LoopUnlife()
-	elseif ZSF.INFLICTION >= 0.5 then
-		ZSF.HALFLIFE = true
+	elseif INFLICTION >= 0.5 then
+		HALFLIFE = true
 	end
 end
 usermessage.Hook("SetInfInit", SetInfInit)
 /*
 function DrawLastHuman()
-	if ZSF.ENDROUND then return end
-	ZSF.LASTHUMAN = true
+	if ENDROUND then return end
+	LASTHUMAN = true
 	LastHumanY = LastHumanY or 0
 	if LastHumanY > h*0.67 then
 		LastHumanHoldTime = LastHumanHoldTime or RealTime()
@@ -727,13 +727,13 @@ end
 function Died()
 	LASTDEATH = RealTime()
 	//hook.Add("HUDPaint", "DrawDeath", DrawDeath)
-	surface.PlaySound(ZSF.DEATHSOUND)
+	surface.PlaySound(DEATHSOUND)
 	GAMEMODE:SplitMessage(h * 0.725, "<color=red><font=HUDFontSmallAA>You are dead.</font></color>")
 end
 
 function GM:KeyPress(ply, key)
 	local ply = LocalPlayer()
-	if key == IN_USE and ply:Team() == ZSF.TEAM_HUMAN then
+	if key == IN_USE and ply:Team() == TEAM_HUMAN then
 		local ent = util.TraceLine({start = ply:EyePos(), endpos = ply:EyePos() + ply:GetAimVector() * 50, filter = ply}).Entity
 		if ent and ent:IsValid() and ent:IsPlayer() then
 			RunConsoleCommand("shove", ent:EntIndex())

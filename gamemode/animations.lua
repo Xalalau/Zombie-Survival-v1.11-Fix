@@ -307,7 +307,7 @@ ATT[PLAYER_JUMP] = ACT_HL2MP_JUMP
 ATT[PLAYER_ATTACK1] = ACT_HL2MP_GESTURE_RANGE_ATTACK
 
 function GM:SetPlayerAnimation(ply, anim)
-	if ply:Team() == ZSF.TEAM_UNDEAD then
+	if ply:Team() == TEAM_UNDEAD then
 		SpecialAnims[ply.Class](ply, anim)
 		return
 	end

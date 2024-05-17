@@ -41,9 +41,9 @@ end
 function ENT:PhysicsCollide(data, phys)
 	local hitent = data.HitEntity
 
-	if hitent and hitent.SendLua and hitent:Team() ~= ZSF.TEAM_UNDEAD then
+	if hitent and hitent.SendLua and hitent:Team() ~= TEAM_UNDEAD then
 		local owner = self:GetOwner()
-		if owner and owner:IsValid() and owner:Team() == ZSF.TEAM_UNDEAD then
+		if owner and owner:IsValid() and owner:Team() == TEAM_UNDEAD then
 			hitent:TakeDamage(10, owner)
 		else
 			hitent:TakeDamage(10, self)

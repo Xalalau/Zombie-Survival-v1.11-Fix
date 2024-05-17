@@ -43,7 +43,7 @@ function meta:Redeem()
 	umsg.End()
 
 	self:StripWeapons()
-	self:SetTeam(ZSF.TEAM_HUMAN)
+	self:SetTeam(TEAM_HUMAN)
 	self:Spawn()
 	self:DrawViewModel(true)
 	self:DrawWorldModel(true)
@@ -201,7 +201,7 @@ function meta:PlayPainSound()
 	if CurTime() < self.NextPainSound then return end
 	self.NextPainSound = CurTime() + 0.2
 
-	if self:Team() == ZSF.TEAM_UNDEAD then
+	if self:Team() == TEAM_UNDEAD then
 		local snds = ZombieClasses[self.Class].PainSounds
 		self:EmitSound(snds[math.random(1, #snds)])
 	else

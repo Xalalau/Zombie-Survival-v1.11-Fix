@@ -2,8 +2,8 @@
 
 hook.Add("InitPostEntity", "DestroyDoor", function()
 	hook.Remove("InitPostEntity", "DestroyDoor")
-	ZSF.DESTROY_PROP_DOORS = false
-	ZSF.DESTROY_DOORS = false
+	DESTROY_PROP_DOORS = false
+	DESTROY_DOORS = false
 	local doors = ents.FindByClass("prop_door_rotating")
 	if doors[2] then
 		doors[2]:Remove()

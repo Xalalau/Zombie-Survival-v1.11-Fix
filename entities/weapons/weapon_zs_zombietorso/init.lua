@@ -45,7 +45,7 @@ function SWEP:Think()
 		else
 			local phys = ent:GetPhysicsObject()
 			if ent:IsPlayer() then
-				if ent:Team() == ZSF.TEAM_UNDEAD then
+				if ent:Team() == TEAM_UNDEAD then
 					local vel = ply:GetAimVector() * 390
 					vel.z = 95
 					ent:SetVelocity(vel)

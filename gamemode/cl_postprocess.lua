@@ -56,7 +56,7 @@ if render.GetDXLevel() >= 90 then
 		if ply:IsValid() then
 			if not ply:Alive() then
 				DeadC()
-			elseif ply:Team() == ZSF.TEAM_HUMAN then
+			elseif ply:Team() == TEAM_HUMAN then
 				if ply:Health() <= 30 then
 					ColorModify["$pp_colour_addr"] = math.Approach(ColorModify["$pp_colour_addr"], 0.12, FrameTime() * 0.04)
 					ColorModify["$pp_colour_mulr"] = 1
