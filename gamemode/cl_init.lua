@@ -393,9 +393,12 @@ function GM:HUDPaint()
 		end
 	end
 
-	draw.RoundedBox(16, 0, 0, w*0.25, h*0.11, color_black_alpha90)
-	local w05 = w * 0.05
-	local h05 = h * 0.05
+	local hunit = h*0.11
+	local windowwidth = hunit*2.8
+
+	draw.RoundedBox(16, 0, 0, windowwidth, hunit, color_black_alpha90)
+	local w05 = hunit/2.2
+	local h05 = w05
 	surface.SetDrawColor(235, 235, 235, 255)
 	surface.SetTexture(matZomboHeadID)
 	surface.DrawTexturedRect(0, 0, w05, h05)
@@ -409,11 +412,17 @@ function GM:HUDPaint()
 	-- Death Notice
 	self:DrawDeathNotice(0.8, 0.04)
 
+	local actionposx = w05 * 2
+	local actionposy = hunit/2 - draw.GetFontHeight("HUDFontSmallAA")
+	local killedposx = actionposx
+	local killedposy = hunit/2 
+
 	if myteam == TEAM_UNDEAD then
-		self:ZombieHUD(ply)
+		self:ZombieHUD(ply, actionposx, actionposy, killedposx, killedposy)
 	else
-		self:HumanHUD(ply)
-		draw.DrawText("Survive: "..ToMinutesSeconds(ROUNDTIME - CurTime()), "HUDFontSmallAA", w*0.09, 0, COLOR_GRAY, TEXT_ALIGN_LEFT)
+		self:HumanHUD(ply, killedposx, killedposy)
+		
+		draw.DrawText("Survive: "..ToMinutesSeconds(ROUNDTIME - CurTime()), "HUDFontSmallAA", actionposx, actionposy, COLOR_GRAY, TEXT_ALIGN_LEFT)
 	end
 
 	-- Infliction

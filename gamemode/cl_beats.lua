@@ -252,7 +252,7 @@ function GM:Think()
 	end
 end
 
-function GM:HumanHUD(ply)
+function GM:HumanHUD(ply, killedposx, killedposy)
 	local rounded = math.Round(NearZombies)
 
 	// Health
@@ -289,7 +289,7 @@ function GM:HumanHUD(ply)
 	draw.SimpleText(BeatText[rounded], "HUDFontTinyAA", 128, h - 42, COLOR_GRAY_HUD, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 	// Kill display
-	draw.DrawText("Kills: "..ply:Frags(), "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED_HUD, TEXT_ALIGN_LEFT)
+	draw.DrawText("Kills: "..ply:Frags(), "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED_HUD, TEXT_ALIGN_LEFT)
 
 	if not ENDROUND then
 		if SURVIVALMODE then
@@ -346,7 +346,7 @@ end
 
 local NextAura = 0
 
-function GM:ZombieHUD(ply)
+function GM:ZombieHUD(ply, actionposx, actionposy, killedposx, killedposy)
 	local entityhealth = math.max(ply:Health(), 0)
 	local maxhealth = ZombieClasses[ply.Class].Health
 	local percenthealth = entityhealth / maxhealth
@@ -385,36 +385,36 @@ function GM:ZombieHUD(ply)
 
 	local killz = ply:Frags()
 	if SMALL_HUD then
-		draw.DrawText("Feed: "..ToMinutesSeconds(ROUNDTIME - CurTime()), "HUDFontSmall", w*0.09, 0, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+		draw.DrawText("Feed: "..ToMinutesSeconds(ROUNDTIME - CurTime()), "HUDFontSmall", actionposx, actionposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 
 		if REDEEM then
 			if AUTOREDEEM then
-				draw.DrawText("Redemption: " .. REDEEM_KILLS - killz, "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+				draw.DrawText("Redemption: " .. REDEEM_KILLS - killz, "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 			else
 				if REDEEM_KILLS <= killz then
-					draw.DrawText("Redeem: F2!", "HUDFontSmall", w*0.09, h*0.04, COLOR_WHITE, TEXT_ALIGN_LEFT)
+					draw.DrawText("Redeem: F2!", "HUDFontSmall", killedposx, killedposy, COLOR_WHITE, TEXT_ALIGN_LEFT)
 				else
-					draw.DrawText("Redemption: " .. REDEEM_KILLS - killz, "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+					draw.DrawText("Redemption: " .. REDEEM_KILLS - killz, "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 				end
 			end
 		else
-			draw.DrawText("Brains: "..killz, "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+			draw.DrawText("Brains: "..killz, "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 		end
 	else
-		draw.DrawText("Feed: "..ToMinutesSeconds(ROUNDTIME - CurTime()), "HUDFontSmall", w*0.09, 0, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+		draw.DrawText("Feed: "..ToMinutesSeconds(ROUNDTIME - CurTime()), "HUDFontSmall", actionposx, actionposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 
 		if REDEEM then
 			if AUTOREDEEM then
-				draw.DrawText("Redemption: " .. REDEEM_KILLS - killz, "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+				draw.DrawText("Redemption: " .. REDEEM_KILLS - killz, "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 			else
 				if REDEEM_KILLS <= killz then
-					draw.DrawText("Redeem: F2!", "HUDFontSmall", w*0.09, h*0.04, COLOR_WHITE, TEXT_ALIGN_LEFT)
+					draw.DrawText("Redeem: F2!", "HUDFontSmall", killedposx, killedposy, COLOR_WHITE, TEXT_ALIGN_LEFT)
 				else
-					draw.DrawText("Redemption: " .. REDEEM_KILLS - killz, "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+					draw.DrawText("Redemption: " .. REDEEM_KILLS - killz, "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 				end
 			end
 		else
-			draw.DrawText("Brains: "..killz, "HUDFontSmall", w*0.09, h*0.04, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+			draw.DrawText("Brains: "..killz, "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 		end
 	end
 

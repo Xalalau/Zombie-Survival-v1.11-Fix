@@ -51,6 +51,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed poison headcrab was missing the damage variable to calculate the attack knockback
     * Fixed the path 'effects/zombiefireworks/init.lua' was invalid on Linux
     * Fixed GM:CalcView() in cl_init.lua was trying to access a nil phys obj for no reason at all
+    * Fixed size calculations on human/zombie counter on the HUD
     * Fixed F4 menu failing to calc its dimensions
     * Fixed the font was too small to read on the menus
     * Fixed renamed variables like sound and player that were locally overriding global functions
