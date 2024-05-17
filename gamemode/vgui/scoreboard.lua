@@ -47,25 +47,25 @@ function PANEL:Paint()
 	local y = 132
 	local x = wide - 288
 
-	draw.DrawText("Survivor", "HudDefault", 34, 116, color_white, TEXT_ALIGN_LEFT)
-	draw.DrawText("Kills", "HudDefault", 192, 116, color_white, TEXT_ALIGN_RIGHT)
-	draw.DrawText("Ping", "HudDefault", 284, 116, color_white, TEXT_ALIGN_RIGHT)
+	draw.DrawText("Survivor", "Default", 34, 116, color_white, TEXT_ALIGN_LEFT)
+	draw.DrawText("Kills", "Default", 192, 116, color_white, TEXT_ALIGN_RIGHT)
+	draw.DrawText("Ping", "Default", 284, 116, color_white, TEXT_ALIGN_RIGHT)
 
-	draw.DrawText("Zombie", "HudDefault", x + 2, 116, color_white, TEXT_ALIGN_LEFT)
-	draw.DrawText("Brains Eaten", "HudDefault", x + 192, 116, color_white, TEXT_ALIGN_RIGHT)
-	draw.DrawText("Ping", "HudDefault", x + 254, 116, color_white, TEXT_ALIGN_RIGHT)
+	draw.DrawText("Zombie", "Default", x + 2, 116, color_white, TEXT_ALIGN_LEFT)
+	draw.DrawText("Brains Eaten", "Default", x + 192, 116, color_white, TEXT_ALIGN_RIGHT)
+	draw.DrawText("Ping", "Default", x + 254, 116, color_white, TEXT_ALIGN_RIGHT)
 
-	surface.SetFont("HudDefault")
+	surface.SetFont("Default")
 	local width, height = surface.GetTextSize("Q")
 
 	for i, ply in ipairs(HumanPlayers) do
 		if y >= tall - 285 then
-			draw.DrawText("...", "HudDefault", 34, y, colHuman, TEXT_ALIGN_LEFT)
+			draw.DrawText("...", "Default", 34, y, colHuman, TEXT_ALIGN_LEFT)
 			break
 		else
-			draw.DrawText(ply:Name(), "HudDefault", 34, y, colHuman, TEXT_ALIGN_LEFT)
-			draw.DrawText(ply:Frags(), "HudDefault", 192, y, colHuman, TEXT_ALIGN_CENTER)
-			draw.DrawText(ply:Ping(), "HudDefault", 286, y, colHuman, TEXT_ALIGN_RIGHT)
+			draw.DrawText(ply:Name(), "Default", 34, y, colHuman, TEXT_ALIGN_LEFT)
+			draw.DrawText(ply:Frags(), "Default", 192, y, colHuman, TEXT_ALIGN_CENTER)
+			draw.DrawText(ply:Ping(), "Default", 286, y, colHuman, TEXT_ALIGN_RIGHT)
 			y = y + height
 		end
 	end
@@ -74,12 +74,12 @@ function PANEL:Paint()
 
 	for i, ply in ipairs(UndeadPlayers) do
 		if y >= tall - 285 then
-			draw.DrawText("...", "HudDefault", x + 2, y, colUndead, TEXT_ALIGN_LEFT)
+			draw.DrawText("...", "Default", x + 2, y, colUndead, TEXT_ALIGN_LEFT)
 			break
 		else
-			draw.DrawText(ply:Name(), "HudDefault", x + 2, y, colUndead, TEXT_ALIGN_LEFT)
-			draw.DrawText(ply:Frags(), "HudDefault", x + 192, y, colUndead, TEXT_ALIGN_CENTER)
-			draw.DrawText(ply:Ping(), "HudDefault", x + 254, y, colUndead, TEXT_ALIGN_RIGHT)
+			draw.DrawText(ply:Name(), "Default", x + 2, y, colUndead, TEXT_ALIGN_LEFT)
+			draw.DrawText(ply:Frags(), "Default", x + 192, y, colUndead, TEXT_ALIGN_CENTER)
+			draw.DrawText(ply:Ping(), "Default", x + 254, y, colUndead, TEXT_ALIGN_RIGHT)
 			y = y + height
 		end
 	end

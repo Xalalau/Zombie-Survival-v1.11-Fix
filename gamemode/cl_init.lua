@@ -80,39 +80,27 @@ function GM:Initialize()
 	self.ShowScoreboard = false
 
 	surface.CreateFont("ScoreboardHead", { 
-		font = "coolvetica",
+		font = "Coolvetica",
 		size = 48,
 		weight = 500,
-		antialias = true,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("ScoreboardSub", { 
-		font = "coolvetica",
+		font = "Coolvetica",
 		size = 24,
 		weight = 500,
-		antialias = true,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("ScoreboardText", { 
 		font = "Tahoma",
 		size = 16,
 		weight = 1000,
-		antialias = true,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("Signs", { 
 		font = "csd",
 		size = 42,
 		weight = 500,
-		antialias = true,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontTiny", { 
@@ -120,8 +108,6 @@ function GM:Initialize()
 		size = 16,
 		weight = 250,
 		antialias = false,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontSmall", { 
@@ -129,8 +115,6 @@ function GM:Initialize()
 		size = 28,
 		weight = 400,
 		antialias = false,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("HUDFont", { 
@@ -138,8 +122,6 @@ function GM:Initialize()
 		size = 42,
 		weight = 400,
 		antialias = false,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontBig", { 
@@ -147,107 +129,73 @@ function GM:Initialize()
 		size = 72,
 		weight = 400,
 		antialias = false,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontTinyAA", { 
 		font = "anthem",
 		size = 16,
 		weight = 250,
-		antialias = true,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontSmallAA", { 
 		font = "anthem",
 		size = 28,
 		weight = 400,
-		antialias = true,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontAA", { 
 		font = "anthem",
 		size = 42,
 		weight = 400,
-		antialias = true,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontBigAA", { 
 		font = "anthem",
 		size = 72,
 		weight = 400,
-		antialias = true,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontTiny2", { 
-		font = "akbar",
+		font = "AkbarPlain",
 		size = 16,
 		weight = 250,
-		antialias = true,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontSmall2", { 
-		font = "akbar",
+		font = "AkbarPlain",
 		size = 28,
 		weight = 500,
-		antialias = true,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("HUDFont2", { 
-		font = "akbar",
+		font = "AkbarPlain",
 		size = 42,
 		weight = 500,
-		antialias = true,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontBig2", { 
-		font = "akbar",
+		font = "AkbarPlain",
 		size = 72,
 		weight = 500,
-		antialias = true,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("noxnetbig", { 
-		font = "frosty",
+		font = "Frosty",
 		size = 32,
 		weight = 200,
 		antialias = false,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("noxnetnormal", { 
-		font = "akbar",
-		size = 24,
+		font = "AkbarPlain",
+		size = 22,
 		weight = 500,
-		antialias = true,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 	surface.CreateFont("DefaultBold", { 
 		font = "anthem",
 		size = 20,
 		weight = 400,
-		antialias = true,
-		blursize = 0,
-		scanlines = 0,
 		shadow = true
 	})
 

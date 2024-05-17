@@ -80,6 +80,7 @@ end
 
 function GM:Initialize()
 	resource.AddSingleFile("resource/fonts/anthem.ttf")
+	resource.AddSingleFile("resource/fonts/frosty.ttf")
 	for _, filename in ipairs(file.Find("materials/zombiesurvival/*.*", "THIRDPARTY")) do
 		resource.AddFile("materials/zombiesurvival/"..filename)
 	end

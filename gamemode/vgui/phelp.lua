@@ -7,8 +7,8 @@ function MakepHelp()
 
 	local Window = vgui.Create("DFrame")
 	local tall = h * 0.95
-	Window:SetSize(640, tall)
-	local wide = (w - 640) * 0.5
+	Window:SetSize(660, tall)
+	local wide = (w - 660) * 0.5
 	local tall = (h - tall) * 0.5
 	Window:SetPos(wide, tall)
 	Window:SetTitle(" ")
@@ -52,7 +52,7 @@ function MakepHelp()
 	label:SetText("F4: Options")
 	surface.SetFont("noxnetnormal")
 	local texw, texh = surface.GetTextSize("F4: Options")
-	label:SetPos(640 - texw - 16, 21)
+	label:SetPos(660 - texw - 16, 21)
 	label:SetSize(texw, texh)
 
 	surface.SetFont("Default")
@@ -85,19 +85,16 @@ function MakepHelp()
 				label:SetTextColor(color_white)
 			end
 			if i == 1 then
-				label:SetFont("Trebuchet18")
+				label:SetFont("HUDFontSmallAA")
 			else
-				label:SetFont("HudDefault")
+				label:SetFont("DefaultSmall")
 			end
 			label:SetText(text)
 			label:SetPos(16, y)
-			label:SetSize(640, 64)
+			label:SetSize(660, 64)
 			y = y + defh
 		end
 	end
-
-	-- TargetIDSmall TargetIDSmall
-	-- HUDFontSmallAA DefaultSmall
 
 	local button = vgui.Create("DButton", Window)
 	button:SetPos(240, Window:GetTall() - 64)
