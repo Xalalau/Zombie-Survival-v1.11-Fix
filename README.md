@@ -39,6 +39,7 @@ Changes from v1.11 -> v1.11 Fix
     * Added missing config SURVIVALMODE to zs_options.lua
     * Added ZS gamemode icon
     * Removed all the stupid SteamID bans from 2008
+    * Changed default _zs_filmgrainopacity from 16 to 4 (Sorry, it was unplayable before :p)
     * Changed many pairs() to ipairs() to improve performance
     * Changed some uppercase global variaves to be stored in another global var called ZSF
     * Changed some variable names to better fit their purpose or to improve standardization
