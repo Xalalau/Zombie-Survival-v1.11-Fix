@@ -241,6 +241,15 @@ function GM:Initialize()
 		scanlines = 0,
 		shadow = true
 	})
+	surface.CreateFont("DefaultBold", { 
+		font = "anthem",
+		size = 20,
+		weight = 400,
+		antialias = true,
+		blursize = 0,
+		scanlines = 0,
+		shadow = true
+	})
 
 	if ZSF.FORCE_NORMAL_GAMMA then
 		RunConsoleCommand("mat_monitorgamma", "2.2")
@@ -291,7 +300,7 @@ function GM:PlayerShouldTakeDamage(ply, attacker)
 end
 
 function GM:HUDShouldDraw(name)
-	return name ~= "CHudHealth" and name ~= "CHudBattery" and name ~= "CHudSecondaryAmmo"
+	return name ~= "CHudHealth" and name ~= "CHudBattery" and name ~= "CHudSecondaryAmmo" and name ~= "CHUDQuickInfo"
 end
 
 local function ReceiveTopTimes(um)
