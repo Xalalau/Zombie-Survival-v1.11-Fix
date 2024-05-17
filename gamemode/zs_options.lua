@@ -225,7 +225,7 @@ if CLIENT then
 	-- Use ^r ^g ^b ^y  when the line starts to change color of the line
 
 	HELP_TEXT =
-		[[^gWelcome to Zombie Survival v1.11 Fix by Xalalau @^gFor GMod March 2024 Update+.@ @^b          -- HUMANS --@^bSurvive for ]] ..
+		[[^gWelcome to Zombie Survival v1.11 Fix by Xalalau & collaborators @^gFor GMod March 2024 Update+.@ @^b          -- HUMANS --@^bSurvive for ]] ..
 		ToMinutesSeconds(ROUNDTIME) ..
 		[[ to win the match.@If you get killed by a zombie, you become one! ]] ..
 		shit .. 
@@ -240,10 +240,10 @@ if CLIENT then
 		[[ @ @^g          -- ZOMBIES --@You can change your class as a zombie by pressing F3.@Classes in red mean ]] .. 
 		[[that more humans need to be killed to get that class unlocked.@ @^rYou lose the match if all humans die ]] ..
 		[[or you're a zombie at the end of the round.@If redeeming is allowed then you can kill a certain amount of ]] .. 
-		[[humans to ressurect yourself.@ @^yVisit github.com/Xalalau/Zombie-Survival-v1.11-Fix for updates to the game!]]
+		[[humans to ressurect yourself.@ @^yVisit https://github.com/Xalalau/Zombie-Survival-v1.11-Fix for updates to the game!]]
 
 	HELP_TEXT_SURVIVALMODE =
-		[[^rWelcome to Zombie Survival v1.11 Fix by Xalalau @^rFor GMod March 2024 Update+.@ @^b          -- HUMANS --@^bSurvive for ]] ..
+		[[^rWelcome to Zombie Survival v1.11 Fix by Xalalau & collaborators @^rFor GMod March 2024 Update+.@ @^b          -- HUMANS --@^bSurvive for ]] ..
 		ToMinutesSeconds(ROUNDTIME) ..
 		[[ to win the match.@If you get killed by a zombie, you become one! ]] ..
 		shit ..
@@ -256,7 +256,7 @@ if CLIENT then
 		[[join them.@ @^rYou can scavenge for weapons and ammo by looking around the map for them.@ @^g          -- ZOMBIES --@You ]] ..
 		[[can change your class as a zombie by pressing F3.@Classes in red mean that more humans need to be killed to get that ]] ..
 		[[class unlocked.@ @^rYou lose the match if all humans die or you're a zombie at the end of the round.@If redeeming is ]] ..
-		[[allowed then you can kill a certain amount of humans to ressurect yourself.@ @^yVisit github.com/Xalalau/Zombie-Survival-v1.11-Fix ]] ..
+		[[allowed then you can kill a certain amount of humans to ressurect yourself.@ @^yVisit https://github.com/Xalalau/Zombie-Survival-v1.11-Fix ]] ..
 		[[for updates to the game!]]
 
 	HELP_TEXT = string.Explode("@", HELP_TEXT)

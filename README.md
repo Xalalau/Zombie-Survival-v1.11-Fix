@@ -32,7 +32,7 @@ https://discord.gg/mK2swJUZVf
 
 Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Some-urls-and-info) for more official stuff.
 
-# v1.11 Fix by Xalalau changelog
+# v1.11 Fix by Xalalau & collaborators changelog
 
 ```
 Changes from v1.11 -> v1.11 Fix
@@ -42,7 +42,7 @@ Changes from v1.11 -> v1.11 Fix
     * Changed many pairs() to ipairs() to improve performance
     * Changed some uppercase global variaves to be stored in another global var called ZSF
     * Changed some function and variable names to improve standardization
-    * Changed version to "v1.11 Fix by Xalalau - For GMod March 2024 Update+"
+    * Changed version to "v1.11 Fix by Xalalau & collaborators - For GMod March 2024 Update+"
     * Changed some game.ConsoleCommand to RunConsoleCommand
     * Changed kickid command to game.KickID() func
     * Changed player.GetAll() to player.GetHumans()
