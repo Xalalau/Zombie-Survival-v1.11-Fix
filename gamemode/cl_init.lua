@@ -303,60 +303,53 @@ function GM:HUDShouldDraw(name)
 	return name ~= "CHudHealth" and name ~= "CHudBattery" and name ~= "CHudSecondaryAmmo" and name ~= "CHUDQuickInfo"
 end
 
-local function ReceiveTopTimes(um)
-	local index = um:ReadShort()
-	Top[index] = um:ReadString()
+local function ReceiveTopTimes(index, toptimes)
+	Top[index] = toptimes
 	if Top[index] == "Downloading" or Top[index] == "[STRING NOT POOLED]" then
 		Top[index] = nil
 	else
 		Top[index] = index..". "..Top[index]
 	end
 end
-usermessage.Hook("RcTopTimes", ReceiveTopTimes)
+net.Receive("RcTopTimes", function() ReceiveTopTimes(net.ReadInt(16), net.ReadString()) end)
 
-local function ReceiveTopZombies(um)
-	local index = um:ReadShort()
-	TopZ[index] = um:ReadString()
+local function ReceiveTopZombies(index, topzombies)
+	TopZ[index] = topzombies
 	if TopZ[index] == "Downloading" or TopZ[index] == "[STRING NOT POOLED]" then
 		TopZ[index] = nil
 	else
 		TopZ[index] = index..". "..TopZ[index]
 	end
 end
-usermessage.Hook("RcTopZombies", ReceiveTopZombies)
+net.Receive("RcTopZombies", function() ReceiveTopZombies(net.ReadInt(16), net.ReadString()) end)
 
-local function ReceiveTopHumanDamages(um)
-	local index = um:ReadShort()
-	TopHD[index] = um:ReadString()
+local function ReceiveTopHumanDamages(index, tophumandamage)
+	TopHD[index] = tophumandamage
 	if TopHD[index] == "Downloading" or TopHD[index] == "[STRING NOT POOLED]" then
 		TopHD[index] = nil
 	else
 		TopHD[index] = index..". "..TopHD[index]
 	end
 end
-usermessage.Hook("RcTopHumanDamages", ReceiveTopHumanDamages)
+net.Receive("RcTopHumanDamages", function() ReceiveTopHumanDamages(net.ReadInt(16), net.ReadString()) end)
 
-local function ReceiveTopZombieDamages(um)
-	local index = um:ReadShort()
-	TopZD[index] = um:ReadString()
+local function ReceiveTopZombieDamages(index, topzombiedamage)
+	TopZD[index] = topzombiedamage
 	if TopZD[index] == "Downloading" or TopZD[index] == "[STRING NOT POOLED]" then
 		TopZD[index] = nil
 	else
 		TopZD[index] = index..". "..TopZD[index]
 	end
 end
-usermessage.Hook("RcTopZombieDamages", ReceiveTopZombieDamages)
+net.Receive("RcTopZombieDamages", function() ReceiveTopZombieDamages(net.ReadInt(16), net.ReadString()) end)
 
-local function ReceiveHeadcrabScale(um)
-	local ply = LocalPlayer()
-
-	local ply = um:ReadEntity()
-	if ply:IsValid() then
-		--ply:SetModelScale(Vector(2,2,2))
-		if ply == ply then
+local function ReceiveHeadcrabScale(somePly)
+	if somePly:IsValid() then
+		--somePly:SetModelScale(Vector(2,2,2))
+		if somePly == somePly then
 			HCView = true
 			hook.Add("Think", "HCView", function()
-				if ply:Health() <= 0 then
+				if somePly:Health() <= 0 then
 					HCView = false
 					hook.Remove("Think", "HCView")
 				end
@@ -364,7 +357,7 @@ local function ReceiveHeadcrabScale(um)
 		end
 	end
 end
-usermessage.Hook("RcHCScale", ReceiveHeadcrabScale)
+net.Receive("RcHCScale", function() ReceiveHeadcrabScale(net.ReadEntity()) end)
 
 function GM:HUDPaintBackground()
 end
@@ -628,8 +621,8 @@ local function LoopUnlife()
 	end
 end
 
-local function SetInf(um)
-	INFLICTION = um:ReadFloat()
+local function SetInf(infliction)
+	INFLICTION = infliction
 
 	local usesound = false
 	local amount = 0
@@ -669,10 +662,10 @@ local function SetInf(um)
 		end
 	end
 end
-usermessage.Hook("SetInf", SetInf)
+net.Receive("SetInf", function() SetInf(net.ReadFloat()) end)
 
-local function SetInfInit(um)
-	INFLICTION = um:ReadFloat()
+local function SetInfInit(infliction)
+	INFLICTION = infliction
 	for i in ipairs(ZombieClasses) do
 		if ZombieClasses[i].Threshold <= INFLICTION then
 			ZombieClasses[i].Unlocked = true
@@ -687,7 +680,7 @@ local function SetInfInit(um)
 		HALFLIFE = true
 	end
 end
-usermessage.Hook("SetInfInit", SetInfInit)
+net.Receive("SetInfInit", function() SetInf(net.ReadFloat()) end)
 /*
 function DrawLastHuman()
 	if ENDROUND then return end

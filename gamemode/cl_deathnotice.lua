@@ -45,30 +45,30 @@ local Deaths = {}
 	return ply:Name()
 end*/
 
-local function RecvPlayerKilledByPlayer(message)
-	local victim = message:ReadEntity()
-	local inflictor = message:ReadString()
-	local attacker = message:ReadEntity()
-	local victimteam = message:ReadShort()
-	local attackerteam = message:ReadShort()
-	local headshot = message:ReadBool()
-
+local function RecvPlayerKilledByPlayer(victim, inflictor, attacker, victimteam, attackerteam, headshot)
 	if victim:IsValid() and attacker:IsValid() then
 		GAMEMODE:AddDeathNotice(attacker:Name(), attackerteam, inflictor, victim:Name(), victimteam, headshot)
 	end
 end
-usermessage.Hook("PlayerKilledByPlayer", RecvPlayerKilledByPlayer)
+net.Receive("PlayerKilledByPlayer", function()
+	local victim = net.ReadEntity()
+	local inflictor = net.ReadString()
+	local attacker = net.ReadEntity()
+	local victimteam = net.ReadInt(16)
+	local attackerteam = net.ReadInt(16)
+	local headshot = net.ReadBool()
 
-local function RecvPlayerKilledSelf( message )
-	local victim = message:ReadEntity()
+	RecvPlayerKilledByPlayer(victim, inflictor, attacker, victimteam, attackerteam, headshot)
+end)
+
+local function RecvPlayerKilledSelf(victim)
 	if victim:IsValid() then
 		GAMEMODE:AddDeathNotice( nil, 0, "suicide", victim:Name(), victim:Team() )
 	end
 end
-usermessage.Hook("PlayerKilledSelf", RecvPlayerKilledSelf)
+net.Receive("PlayerKilledSelf", function() RecvPlayerKilledSelf(net.ReadEntity()) end)
 
-local function RecvPlayerRedeemed(message)
-	local somePly = message:ReadEntity()
+local function RecvPlayerRedeemed(somePly)
 	if somePly:IsValid() then
 		GAMEMODE:AddDeathNotice(nil, 0, "redeem", somePly:Name(), TEAM_HUMAN)
 		if somePly == LocalPlayer() then
@@ -76,36 +76,42 @@ local function RecvPlayerRedeemed(message)
 		end
 	end
 end
-usermessage.Hook("PlayerRedeemed", RecvPlayerRedeemed)
+net.Receive("PlayerRedeemed", function() RecvPlayerRedeemed(net.ReadEntity()) end)
 
-local function RecvPlayerKilled(message)
-	local victim = message:ReadEntity()
-	local inflictor = message:ReadString()
-	local attacker = "#" .. message:ReadString()
-
+local function RecvPlayerKilled(victim, inflictor, attacker)
 	GAMEMODE:AddDeathNotice(attacker, -1, inflictor, victim:Name(), victim:Team())
 end
-usermessage.Hook("PlayerKilled", RecvPlayerKilled)
+net.Receive("PlayerKilled", function()
+	local victim = net.ReadEntity()
+	local inflictor = net.ReadString()
+	local attacker = "#" .. net.ReadString()
 
-local function RecvPlayerKilledNPC(message)
-	local victim = "#"..message:ReadString()
-	local inflictor = message:ReadString()
-	local attacker = message:ReadEntity()
+	RecvPlayerKilled(victim, inflictor, attacker)
+end)
 
+local function RecvPlayerKilledNPC(victim, inflictor, attacker)
 	if attacker:IsValid() then
 		GAMEMODE:AddDeathNotice(attacker:Name(), attacker:Team(), inflictor, victim, -1)
 	end
 end
-usermessage.Hook("PlayerKilledNPC", RecvPlayerKilledNPC)
+net.Receive("PlayerKilledNPC", function()
+	local victim = "#" .. net.ReadString()
+	local inflictor = net.ReadString()
+	local attacker = net.ReadEntity()
 
-local function RecvNPCKilledNPC(message)
-	local victim = "#"..message:ReadString()
-	local inflictor = message:ReadString()
-	local attacker = "#"..message:ReadString()
+	RecvPlayerKilledNPC(victim, inflictor, attacker)
+end)
 
+local function RecvNPCKilledNPC(victim, inflictor, attacker)
 	GAMEMODE:AddDeathNotice(attacker, -1, inflictor, victim, -1)
 end
-usermessage.Hook("NPCKilledNPC", RecvNPCKilledNPC)
+net.Receive("NPCKilledNPC", function()
+	local victim = "#" .. net.ReadString()
+	local inflictor = net.ReadString()
+	local attacker = "#" .. net.ReadString()
+
+	RecvNPCKilledNPC(victim, inflictor, attacker)
+end)
 
 function GM:AddDeathNotice(Victim, team1, Inflictor, Attacker, team2, headshot)
    	local Death = {}

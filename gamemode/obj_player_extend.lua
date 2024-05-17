@@ -38,9 +38,9 @@ function meta:Redeem()
 		effectdata:SetOrigin(self:GetPos())
 	util.Effect("redeem", effectdata)
 
-	umsg.Start("PlayerRedeemed")
-		umsg.Entity(self)
-	umsg.End()
+	net.Start("PlayerRedeemed")
+		net.WriteEntity(self)
+	net.Broadcast()
 
 	self:StripWeapons()
 	self:SetTeam(TEAM_HUMAN)

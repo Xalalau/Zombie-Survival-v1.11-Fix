@@ -8,11 +8,12 @@ SWEP.AutoSwitchTo = true
 SWEP.AutoSwitchFrom = false
 
 function SWEP:Deploy()
-	self:GetOwner():DrawViewModel(false)
-	self:GetOwner():DrawWorldModel(false)
-	umsg.Start("RcHCScale")
-		umsg.Entity(self:GetOwner())
-	umsg.End()
+	local owner = self:GetOwner()
+	owner:DrawViewModel(false)
+	owner:DrawWorldModel(false)
+	net.Start("RcHCScale")
+		net.WriteEntity(owner)
+	net.Broadcast()
 end
 
 function SWEP:Think()

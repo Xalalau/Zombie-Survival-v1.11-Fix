@@ -1,3 +1,17 @@
+util.AddNetworkString("RcHCScale")
+util.AddNetworkString("SetInf")
+util.AddNetworkString("SetInfInit")
+util.AddNetworkString("RcTopTimes")
+util.AddNetworkString("RcTopZombies")
+util.AddNetworkString("RcTopHumanDamages")
+util.AddNetworkString("RcTopZombieDamages")
+util.AddNetworkString("PlayerKilledSelf")
+util.AddNetworkString("PlayerKilledByPlayer")
+util.AddNetworkString("PlayerKilled")
+util.AddNetworkString("PlayerRedeemed")
+util.AddNetworkString("PlayerKilledNPC")
+util.AddNetworkString("NPCKilledNPC")
+
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 
@@ -308,15 +322,23 @@ function GM:PlayerSelectSpawn(ply)
 end
 
 function GM:SendInfliction(to)
-	umsg.Start("SetInf", to)
-		umsg.Float(INFLICTION)
-	umsg.End()
+	net.Start("SetInf")
+		net.WriteFloat(INFLICTION)
+	if IsValid(to) then
+		net.Send(to)
+	else
+		net.Broadcast()
+	end
 end
 
 function GM:SendInflictionInit(to)
-	umsg.Start("SetInfInit", to)
-		umsg.Float(INFLICTION)
-	umsg.End()
+	net.Start("SetInfInit")
+		net.WriteFloat(INFLICTION)
+	if IsValid(to) then
+		net.Send(to)
+	else
+		net.Broadcast()
+	end
 end
 
 function GM:Think()
@@ -424,10 +446,14 @@ function GM:SendTopTimes(to)
 	for _, ply in ipairs(PlayerSorted) do
 		if x < 5 then
 			x = x + 1
-			umsg.Start("RcTopTimes", to)
-				umsg.Short(x)
-				umsg.String(ply:Name()..": "..ToMinutesSeconds(ply.SurvivalTime))
-			umsg.End()
+			net.Start("RcTopTimes")
+				net.WriteInt(x, 16)
+				net.WriteString(ply:Name()..": "..ToMinutesSeconds(ply.SurvivalTime))
+			if IsValid(to) then
+				net.Send(to)
+			else
+				net.Broadcast()
+			end
 		end
 	end
 end
@@ -454,10 +480,14 @@ function GM:SendTopZombies(to)
 	for _, ply in ipairs(PlayerSorted) do
 		if x < 5 then
 			x = x + 1
-			umsg.Start("RcTopZombies", to)
-				umsg.Short(x)
-				umsg.String(ply:Name()..": "..ply.BrainsEaten)
-			umsg.End()
+			net.Start("RcTopZombies")
+				net.WriteInt(x, 16)
+				net.WriteString(ply:Name()..": "..ply.BrainsEaten)
+			if IsValid(to) then
+				net.Send(to)
+			else
+				net.Broadcast()
+			end
 		end
 	end
 end
@@ -485,10 +515,14 @@ function GM:SendTopHumanDamages(to)
 	for _, ply in ipairs(PlayerSorted) do
 		if x < 5 then
 			x = x + 1
-			umsg.Start("RcTopHumanDamages", to)
-				umsg.Short(x)
-				umsg.String(ply:Name()..": "..math.ceil(ply.DamageDealt[TEAM_HUMAN]))
-			umsg.End()
+			net.Start("RcTopHumanDamages")
+				net.WriteInt(x, 16)
+				net.WriteString(ply:Name()..": "..math.ceil(ply.DamageDealt[TEAM_HUMAN]))
+			if IsValid(to) then
+				net.Send(to)
+			else
+				net.Broadcast()
+			end
 		end
 	end
 end
@@ -515,10 +549,14 @@ function GM:SendTopZombieDamages(to)
 	for _, ply in ipairs(PlayerSorted) do
 		if x < 5 then
 			x = x + 1
-			umsg.Start("RcTopZombieDamages", to)
-				umsg.Short(x)
-				umsg.String(ply:Name()..": "..math.ceil(ply.DamageDealt[TEAM_UNDEAD]))
-			umsg.End()
+			net.Start("RcTopZombieDamages")
+				net.WriteInt(x, 16)
+				net.WriteString(ply:Name()..": "..math.ceil(ply.DamageDealt[TEAM_UNDEAD]))
+			if IsValid(to) then
+				net.Send(to)
+			else
+				net.Broadcast()
+			end
 		end
 	end
 end
@@ -980,9 +1018,9 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	if revive then return end
 
 	if attacker == ply then
-		umsg.Start("PlayerKilledSelf")
-			umsg.Entity(ply)
-		umsg.End()
+		net.Start("PlayerKilledSelf")
+			net.WriteEntity(ply)
+		net.Broadcast()
 	elseif attacker:IsPlayer() then
 		if headshot then
 			ply:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
@@ -993,20 +1031,20 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 				effectdata:SetEntity(ply)
 			util.Effect("headshot", effectdata)
 		end
-		umsg.Start("PlayerKilledByPlayer")
-			umsg.Entity(ply)
-			umsg.String(inflictor:GetClass())
-			umsg.Entity(attacker)
-			umsg.Short(ply:Team())
-			umsg.Short(attacker:Team())
-			umsg.Bool(headshot)
-		umsg.End()
+		net.Start("PlayerKilledByPlayer")
+			net.WriteEntity(ply)
+			net.WriteString(inflictor:GetClass())
+			net.WriteEntity(attacker)
+			net.WriteInt(ply:Team(), 16)
+			net.WriteInt(attacker:Team(), 16)
+			net.WriteBool(headshot)
+		net.Broadcast()
 	else
-		umsg.Start("PlayerKilled")
-			umsg.Entity(ply)
-			umsg.String(inflictor:GetClass())
-			umsg.String(attacker:GetClass())
-		umsg.End()
+		net.Start("PlayerKilled")
+			net.WriteEntity(ply)
+			net.WriteString(inflictor:GetClass())
+			net.WriteString(attacker:GetClass())
+		net.Broadcast()
 	end
 end
 

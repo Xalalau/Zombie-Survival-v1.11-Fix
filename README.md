@@ -41,12 +41,13 @@ Changes from v1.11 -> v1.11 Fix
     * Removed all the stupid SteamID bans from 2008
     * Changed many pairs() to ipairs() to improve performance
     * Changed some uppercase global variaves to be stored in another global var called ZSF
-    * Changed some function and variable names to improve standardization
+    * Changed some variable names to better fit their purpose or to improve standardization
     * Changed version to "v1.11 Fix by Xalalau & collaborators - For GMod March 2024 Update+"
     * Changed some game.ConsoleCommand to RunConsoleCommand
     * Changed kickid command to game.KickID() func
     * Changed player.GetAll() to player.GetHumans()
     * Changed timer.Destroy() to timer.Remove()
+    * Changed umsg lib to net
     * Fixed poison headcrab was missing the damage variable to calculate the attack knockback
     * Fixed the path 'effects/zombiefireworks/init.lua' was invalid on Linux
     * Fixed GM:CalcView() in cl_init.lua was trying to access a nil phys obj for no reason at all
