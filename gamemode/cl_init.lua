@@ -342,16 +342,16 @@ function GM:HUDPaint()
 	end
 
 	local hunit = h*0.11
-	local windowwidth = hunit*2.8
+	local windowwidth = hunit*2.9
 
 	draw.RoundedBox(16, 0, 0, windowwidth, hunit, color_black_alpha90)
 	local w05 = hunit/2.2
 	local h05 = w05
 	surface.SetDrawColor(235, 235, 235, 255)
 	surface.SetTexture(matZomboHeadID)
-	surface.DrawTexturedRect(0, 0, w05, h05)
+	surface.DrawTexturedRect(0, 4, w05, h05)
 	surface.SetTexture(matHumanHeadID)
-	surface.DrawTexturedRect(0, h05, w05, h05)
+	surface.DrawTexturedRect(0, h05 + 4, w05, h05)
 	draw.DrawText(zombies, "HUDFontAA", w05, 0, COLOR_DARKGREEN, TEXT_ALIGN_LEFT)
 	draw.DrawText(zombies, "HUDFontAA", w05, 0, COLOR_DARKGREEN, TEXT_ALIGN_LEFT)
 	draw.DrawText(humans, "HUDFontAA", w05, h05, COLOR_DARKBLUE, TEXT_ALIGN_LEFT)
@@ -360,7 +360,7 @@ function GM:HUDPaint()
 	-- Death Notice
 	self:DrawDeathNotice(0.8, 0.04)
 
-	local actionposx = w05 * 2
+	local actionposx = w05 * 2.4
 	local actionposy = hunit/2 - draw.GetFontHeight("HUDFontSmallAA")
 	local killedposx = actionposx
 	local killedposy = hunit/2 
