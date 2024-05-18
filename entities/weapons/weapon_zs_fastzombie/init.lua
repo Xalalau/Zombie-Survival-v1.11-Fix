@@ -132,7 +132,7 @@ function SWEP:SecondaryAttack()
 		tr.endpos = tr.endpos + Vector(0,0,-52)
 		local Hit2 = util.TraceLine(tr).Hit
 		if Hit or Hit2 then
-			self:GetOwner():SetLocalVelocity(Vector(0,0,150))
+			self:GetOwner():SetLocalVelocity(Vector(0,0,200))
 			self:GetOwner():SetAnimation(PLAYER_SUPERJUMP)
 			self.NextClimb = CurTime() + self.Secondary.Delay
 			self:GetOwner():EmitSound("player/footsteps/metalgrate"..math.random(1,4)..".wav")
