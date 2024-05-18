@@ -4,7 +4,7 @@ function EFFECT:Init(data)
 	local emitter = ParticleEmitter(pos)
 		for i=1, math.random(4, 10) do
 			local particle = emitter:Add("particles/smokey", pos)
-			particle:SetVelocity(VectorRand():Normalize() * math.Rand(16, 64))
+			particle:SetVelocity(VectorRand():GetNormalized() * math.Rand(16, 64))
 			particle:SetDieTime(math.Rand(0.9, 2.0))
 			particle:SetStartAlpha(220)
 			particle:SetEndAlpha(50)
