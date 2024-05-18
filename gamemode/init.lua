@@ -1237,7 +1237,7 @@ end
 
 concommand.Add("zs_class", function(sender, command, arguments)
 	if arguments[1] == nil then return end
-	if sender:Team() ~= TEAM_UNDEAD or timer.IsTimer(sender:UniqueID().."secondwind") then return end
+	if sender:Team() ~= TEAM_UNDEAD or timer.Exists(sender:UniqueID().."secondwind") then return end
 	arguments = table.concat(arguments, " ")
 	for i=1, #ZombieClasses do
 		if string.lower(ZombieClasses[i].Name) == string.lower(arguments) then
