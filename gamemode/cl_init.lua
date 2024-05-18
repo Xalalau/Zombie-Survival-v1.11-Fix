@@ -233,7 +233,7 @@ function GM:LastHuman()
 	if LASTHUMAN then return end
 
 	LASTHUMAN = true
-	RunConsoleCommand("stopsounds")
+	RunConsoleCommand("stopsound")
 	timer.Simple(0.5, LoopLastHuman)
 	DrawingDanger = 1
 	timer.Simple(0.5, DelayedLH)
@@ -487,7 +487,7 @@ function Intermission(nextmap, winner)
 	DrawingDanger = 0
 	NearZombies = 0
 	NextThump = 999999
-	RunConsoleCommand("stopsounds")
+	RunConsoleCommand("stopsound")
 	LastLineY = h*0.4
 	DoHumC()
 	function GAMEMODE:HUDPaint()
@@ -597,7 +597,7 @@ local function SetInf(infliction)
 		if INFLICTION >= 0.75 and not UNLIFE then
 			UNLIFE = true
 			HALFLIFE = true
-			RunConsoleCommand("stopsounds")
+			RunConsoleCommand("stopsound")
 			timer.Simple(0.5, LoopUnlife)
 			GAMEMODE:SplitMessage(h * 0.725, "<color=ltred><font=HUDFontAA>Un-Life</font></color>", "<color=ltred><font=HUDFontSmallAA>Horde locked at 75%</font></color>")
 			GAMEMODE:SetUnlifeText()

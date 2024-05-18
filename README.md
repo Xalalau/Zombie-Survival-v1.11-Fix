@@ -71,6 +71,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed util.tobool() was updated to tobool()
     * Fixed GetConVarNumber() was updated to GetConvar() or to vars directly calling ConVar methods
     * Fixed WorldSound() was updated to EmitSound()
+    * Fixed renamed stopsounds to stopsound
 ```
 
 # (Very inaccurate but official) Changelog
