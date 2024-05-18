@@ -534,7 +534,8 @@ function Intermission(nextmap, winner)
 			end
 		end
 
-		draw.DrawText("Next: "..ToMinutesSeconds(ENDTIME + INTERMISSION_TIME - CurTime()), "HUDFontSmall", w*0.5, h*0.7, COLOR_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		local time = ENDTIME + INTERMISSION_TIME - CurTime()
+		draw.DrawText("Next: "..ToMinutesSeconds(time >= 0 and time or 0), "HUDFontSmall", w*0.5, h*0.7, COLOR_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 	if winner == TEAM_UNDEAD then
 		hook.Add("HUDPaint", "DrawLose", DrawLose)

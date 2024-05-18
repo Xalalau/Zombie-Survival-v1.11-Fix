@@ -76,6 +76,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed some Entity:SetAngles() were receiving a Vector() instead of an Angle()
     * Fixed all Vector() Normalize() methods were returning nil so I changed them to GetNormalized()
     * Fixed headcrab, fastheadcrab and fastzombie jumps were not working anymore (view offset and end pos)
+    * Fixed intermission time counter becoming negative
 ```
 
 # (Very inaccurate but official) Changelog
