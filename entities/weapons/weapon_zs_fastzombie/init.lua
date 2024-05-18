@@ -20,11 +20,15 @@ function SWEP:Think()
 		if owner:OnGround() or owner:WaterLevel() > 0 then
 			self.Leaping = false
 			self.NextLeap = CurTime() + 1
+			self:GetOwner():SetViewOffset(self.OriginalViewOffset)
 		else
 			local vStart = self:GetOwner():GetViewOffset() + owner:GetPos()
 			local tr = {}
+			local ang = self:GetOwner():GetAimVector()
+			ang.z = 0
+
 			tr.start = vStart
-			tr.endpos = vStart + self:GetOwner():GetAngles()
+			tr.endpos = vStart + ang
 			tr.filter = owner
 			local trace = util.TraceLine(tr)
 			local ent = trace.Entity
@@ -49,12 +53,14 @@ function SWEP:Think()
 				end
 				self.Leaping = false
 				self.NextLeap = CurTime() + 1.5
+				self:GetOwner():SetViewOffset(self.OriginalViewOffset)
 				owner:EmitSound("physics/flesh/flesh_strider_impact_bullet1.wav")
 				owner:ViewPunch(Angle(math.random(0, 70), math.random(0, 70), math.random(0, 70)))
 			elseif trace.HitWorld then
 				owner:EmitSound("physics/flesh/flesh_strider_impact_bullet1.wav")
 				self.Leaping = false
 				self.NextLeap = CurTime() + 1.5
+				self:GetOwner():SetViewOffset(self.OriginalViewOffset)
 			end
 		end
 	end
@@ -134,14 +140,22 @@ function SWEP:SecondaryAttack()
 			return
 		end
 	end
+
 	if CurTime() < self.NextLeap then return end
 	if not onground then return end
+
 	local vel = self:GetOwner():GetAngles():Forward() * 800
+
 	if vel.z < 200 then vel.z = 200 end
+
 	local eyeangles = self:GetOwner():GetAngles():Forward()
 	eyeangles.pitch = -0.15
 	eyeangles.z = -0.1
+
 	local ang = self:GetOwner():GetAimVector() ang.z = 0
+
+	self.OriginalViewOffset = self:GetOwner():GetViewOffset()
+
 	self:GetOwner():SetViewOffset(ang * 85)
 	self:GetOwner():SetAngles(Angle(0,0,7))
 	self:GetOwner():SetGroundEntity(NULL)

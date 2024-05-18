@@ -75,6 +75,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed timer.IsTimer() was updated to timer.Exists()
     * Fixed some Entity:SetAngles() were receiving a Vector() instead of an Angle()
     * Fixed all Vector() Normalize() methods were returning nil so I changed them to GetNormalize()
+    * Fixed headcrab, fastheadcrab and fastzombie jumps were not working anymore (view offset and end pos)
 ```
 
 # (Very inaccurate but official) Changelog
