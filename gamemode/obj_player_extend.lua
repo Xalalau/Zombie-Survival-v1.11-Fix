@@ -73,7 +73,7 @@ function meta:Gib(dmginfo)
 	local effectdata = EffectData()
 		effectdata:SetEntity(self)
 		effectdata:SetOrigin(self:GetPos())
-		effectdata:SetNormal(self:GetVelocity():GetNormalize())
+		effectdata:SetNormal(self:GetVelocity():GetNormalized())
 	util.Effect("gib_player", effectdata, true, true)
 
 	// NDB

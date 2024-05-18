@@ -79,11 +79,11 @@ function SWEP:PrimaryAttack()
 
 	local vel = self:GetOwner():GetAimVector()
 	vel.z = math.max(0.45, vel.z)
-	vel = vel:GetNormalize()
+	vel = vel:GetNormalized()
 
 	local angles = self:GetOwner():GetAngles():Forward()
 	angles.z = -0.1
-	angles = angles:GetNormalize()
+	angles = angles:GetNormalized()
 
 	self.OriginalViewOffset = self:GetOwner():GetViewOffset()
 

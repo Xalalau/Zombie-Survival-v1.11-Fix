@@ -20,7 +20,7 @@ function EFFECT:Init(data)
 end
 
 function EFFECT:Think()
-	local tr = util.TraceLine({start = self.Entity:GetPos(), endpos = self.Entity:GetPos() + self.Entity:GetVelocity():GetNormalize() * 16, mask = MASK_NPCWORLDSTATIC})
+	local tr = util.TraceLine({start = self.Entity:GetPos(), endpos = self.Entity:GetPos() + self.Entity:GetVelocity():GetNormalized() * 16, mask = MASK_NPCWORLDSTATIC})
 	if tr.Hit then
 		self.Living = -5
 		local emitter = ParticleEmitter(self.Entity:GetPos())
