@@ -342,7 +342,7 @@ function GM:HUDPaint()
 	end
 
 	local hunit = h*0.11
-	local windowwidth = hunit*2.9
+	local windowwidth = hunit*3.1
 
 	draw.RoundedBox(16, 0, 0, windowwidth, hunit, color_black_alpha90)
 	local w05 = hunit/2.2
