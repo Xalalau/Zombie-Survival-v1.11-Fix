@@ -93,7 +93,9 @@ function SWEP:SecondaryAttack()
 	GAMEMODE:SetPlayerSpeed(self:GetOwner(), 1)
 	self.NextYell = CurTime() + 4
 	timer.Simple(1, function()
-		ThrowHeadcrab(self:GetOwner(), self)
+		if IsValid(self) and IsValid(self:GetOwner()) then
+			ThrowHeadcrab(self:GetOwner(), self)
+		end
 	end)
 end
 

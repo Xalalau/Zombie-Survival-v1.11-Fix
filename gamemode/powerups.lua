@@ -16,7 +16,9 @@ end
 
 PowerupFunctions["_Regeneration"] = function(ply)
 	timer.Create("regeneration"..ply:UniqueID(), 3, 0, function()
-		RegenerationTimer(ply, ply:UniqueID())
+		if IsValid(ply) then
+			RegenerationTimer(ply, ply:UniqueID())
+		end
 	end)
 	local effectdata = EffectData()
 		effectdata:SetOrigin(ply:GetPos() + Vector(0,0,48))

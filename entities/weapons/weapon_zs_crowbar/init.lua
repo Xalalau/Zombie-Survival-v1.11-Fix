@@ -14,7 +14,9 @@ function SWEP:Deploy()
 		GAMEMODE:SetPlayerSpeed(self:GetOwner(), self.WalkSpeed)
 	elseif self.WalkSpeed > self:GetOwner().WalkSpeed then
 		timer.Create(timername, 1, 1, function()
-			GAMEMODE:SetPlayerSpeed(self:GetOwner(), self.WalkSpeed)
+			if IsValid(self) and IsValid(self:GetOwner()) then
+				GAMEMODE:SetPlayerSpeed(self:GetOwner(), self.WalkSpeed)
+			end
 		end)
 	end
 	return true

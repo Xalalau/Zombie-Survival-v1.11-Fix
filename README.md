@@ -49,6 +49,7 @@ Changes from v1.11 -> v1.11 Fix
     * Changed player.GetAll() to player.GetHumans()
     * Changed timer.Destroy() to timer.Remove()
     * Changed umsg lib to net
+    * Fixed add missing IsValid checks to every timer
     * Fixed poison headcrab was missing the damage variable to calculate the attack knockback
     * Fixed the path 'effects/zombiefireworks/init.lua' was invalid on Linux
     * Fixed GM:CalcView() in cl_init.lua was trying to access a nil phys obj for no reason at all

@@ -85,7 +85,9 @@ function SWEP:Think()
 					ent:TakeDamage(5, owner)
 					local timername = tostring(ent).."poisonedby"..tostring(owner)
 					timer.Create(timername, 2, math.random(7, 10), function()
-						DoPoisoned(ent, owner, timername)
+						if IsValid(hitent) and IsValid(owner) then
+							DoPoisoned(ent, owner, timername)
+						end
 					end)
 					ent:SendLua("PoisEff()")
 				else

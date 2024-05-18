@@ -14,7 +14,9 @@ function SWEP:Deploy()
 		local timername = tostring(self:GetOwner()).."speedchange"
 		timer.Remove(timername)
 		timer.Create(timername, 1, 1, function()
-			GAMEMODE:SetPlayerSpeed(self:GetOwner(), self.WalkSpeed)
+			if IsValid(self) and IsValid(self:GetOwner()) then
+				GAMEMODE:SetPlayerSpeed(self:GetOwner(), self.WalkSpeed)
+			end
 		end)
 	end
 

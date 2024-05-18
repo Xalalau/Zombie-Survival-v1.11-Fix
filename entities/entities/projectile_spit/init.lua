@@ -60,7 +60,9 @@ function ENT:PhysicsCollide(data, phys)
 				end
 				local timername = tostring(hitent).."poisonedby"..tostring(self)
 				timer.Create(timername, 1, math.random(3, 5), function()
-					DoPoisoned(hitent, owner, timername)
+					if IsValid(hitent) and IsValid(owner) then
+						DoPoisoned(hitent, owner, timername)
+					end
 				end)
 				hitent:SendLua("PoisEff()")
 			end

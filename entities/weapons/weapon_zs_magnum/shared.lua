@@ -61,7 +61,9 @@ local function RicochetCallback(bouncenum, attacker, tr, dmginfo)
 	}
 
 	timer.Simple( 0.02 * bouncenum, function()
-		attacker:FireBullets(bullet)
+		if IsValid(attacker) then
+			attacker:FireBullets(bullet)
+		end
 	end)
 end
 

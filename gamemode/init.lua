@@ -698,7 +698,9 @@ end
 function GM:PlayerDisconnected(ply)
 	DeadSteamIDs[ply:SteamID()] = true
 	timer.Simple(2, function()
-		self:CalculateInfliction()
+		if IsValid(self) then
+			self:CalculateInfliction()
+		end
 	end)
 end
 
@@ -884,7 +886,9 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			local attackerteam = attacker:Team()
 			if attackerteam ~= TEAM_UNDEAD and attackerteam ~= TEAM_HUMAN then
 				timer.Simple(1, function()
-					BanIdiot(attacker)
+					if IsValid(attacker) then
+						BanIdiot(attacker)
+					end
 				end)
 			end
 			inflictor = attacker:GetActiveWeapon()
@@ -914,12 +918,16 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		ply.Gibbed = true
 		if LASTHUMAN then
 			timer.Simple(0, function()
-				ChemBomb(ply, false)
+				if IsValid(ply) then
+					ChemBomb(ply, false)
+				end
 			end)
 		else
 			ply:AddFrags(-100)
 			timer.Simple(0, function()
-				ChemBomb(ply, true)
+				if IsValid(ply) then
+					ChemBomb(ply, true)
+				end
 			end)
 		end
 	elseif ply:Health() < -35 or dmginfo:IsExplosionDamage() or dmginfo:IsFallDamage() then
@@ -939,17 +947,23 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 							ply:SetZombieClass(9)
 							ply:LegsGib()
 							timer.Simple(0, function()
-								SecondWind(ply)
+								if IsValid(ply) then
+									SecondWind(ply)
+								end
 							end)
 						else
 							timer.Create(ply:UniqueID().."secondwind", 2, 1, function()
-								SecondWind(ply)
+								if IsValid(ply) then
+									SecondWind(ply)
+								end
 							end)
 							revive = true
 						end
 					else
 						timer.Create(ply:UniqueID().."secondwind", 2, 1, function()
-							SecondWind(ply)
+							if IsValid(ply) then
+								SecondWind(ply)
+							end
 						end)
 						revive = true
 					end
@@ -984,7 +998,9 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			if not ply.Gibbed then
 				ply:PlayDeathSound()
 				timer.Create(ply:UniqueID().."secondwind", 2.5, 1, function()
-					SecondWind(ply)
+					if IsValid(ply) then
+						SecondWind(ply)
+					end
 				end)
 			end
 		end
@@ -1054,7 +1070,9 @@ function SpawnProtection(ply, tim)
 	ply:SetMaterial("models/shiny")
 	ply:GodEnable()
 	timer.Create(ply:UserID().."SpawnProtection", tim, 1, function()
-		DeSpawnProtection(ply)
+		if IsValid(ply) then
+			DeSpawnProtection(ply)
+		end
 	end)
 end
 

@@ -47,7 +47,9 @@ function SWEP:Reload()
 		self:SetNetworkedBool( "reloading", true )
 		self:DefaultReload( ACT_VM_RELOAD )
 		timer.Simple(0.25, function()
-			self:SendWeaponAnim(ACT_SHOTGUN_RELOAD_FINISH)
+			if IsValid(self) then
+				self:SendWeaponAnim(ACT_SHOTGUN_RELOAD_FINISH)
+			end
 		end)
 		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	end
