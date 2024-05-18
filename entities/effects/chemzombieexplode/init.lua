@@ -2,7 +2,7 @@ function EFFECT:Init(data)
 	local pos = data:GetOrigin()
 	pos = pos + Vector(0, 0, 48)
 
-	WorldSound("ambient/explosions/explode_9.wav", pos, 90, math.random(85, 95))
+	EmitSound("ambient/explosions/explode_9.wav", pos, 0, CHAN_AUTO, 1, 90, 0, math.random(85, 95))
 
 	local emitter = ParticleEmitter(pos)
 		for i=1, math.random(12, 15) do

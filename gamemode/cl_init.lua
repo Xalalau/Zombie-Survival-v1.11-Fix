@@ -795,9 +795,9 @@ rW = Rewarded
 /*local FootModels = {}
 FootModels["models/zombie/classic.mdl"] = function(ply, vFootPos, iFoot, strSoundName, fVolume, pFilter)
 	if iFoot == 0 and math.random(1, 2) < 2 then
-		WorldSound("npc/zombie/foot_slide"..math.random(1,3)..".wav", vFootPos, math.max(55, fVolume), math.random(97, 103))
+		EmitSound("npc/zombie/foot_slide"..math.random(1,3)..".wav", vFootPos, 0, CHAN_AUTO, 1, math.max(55, fVolume), 0, math.random(97, 103))
 	else
-		WorldSound("npc/zombie/foot"..math.random(1,3)..".wav", vFootPos, math.max(55, fVolume), math.random(97, 103))
+		EmitSound("npc/zombie/foot"..math.random(1,3)..".wav", vFootPos, 0, CHAN_AUTO, 1, math.max(55, fVolume), 0, math.random(97, 103))
 	end
 
 	return true
@@ -805,7 +805,7 @@ end
 
 FootModels["models/zombie/fast.mdl"] = function(ply, vFootPos, iFoot, strSoundName, fVolume, pFilter)
 	if iFoot ~= 0 then
-		WorldSound("npc/fast_zombie/foot"..math.random(1,4)..".wav", vFootPos, math.max(50, fVolume), math.random(115, 120))
+		EmitSound("npc/fast_zombie/foot"..math.random(1,4)..".wav", vFootPos, 0, CHAN_AUTO, 1, math.max(50, fVolume), 0, math.random(115, 120))
 	end
 
 	return true

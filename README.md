@@ -70,6 +70,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed variable number of parameters syntax in GM:SplitMessage(y, ...) were on a weird and invalid format from the past
     * Fixed util.tobool() was updated to tobool()
     * Fixed GetConVarNumber() was updated to GetConvar() or to vars directly calling ConVar methods
+    * Fixed WorldSound() was updated to EmitSound()
 ```
 
 # (Very inaccurate but official) Changelog

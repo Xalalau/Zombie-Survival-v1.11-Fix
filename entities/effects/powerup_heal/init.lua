@@ -4,7 +4,7 @@ function EFFECT:Init(data)
 	local pos = data:GetOrigin()
 	if not pos then return end
 
-	WorldSound("items/medshot4.wav", pos, 80, math.random(90, 110))
+	EmitSound("items/medshot4.wav", pos, 0, CHAN_AUTO, 1, 80, 0, math.random(90, 110))
 
 	local emitter = ParticleEmitter(pos)
 		for i=1, math.random(9, 14) do

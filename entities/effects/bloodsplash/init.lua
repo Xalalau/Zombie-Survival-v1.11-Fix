@@ -19,7 +19,7 @@ function EFFECT:Init(data)
 	util.Decal("Blood", Pos + Norm*10, Pos - Norm*10)
 	
 	if math.random(0, 4) == 0 then
-		WorldSound("physics/flesh/flesh_bloody_impact_hard1.wav", Pos, 80, math.random(75, 110))
+		EmitSound("physics/flesh/flesh_bloody_impact_hard1.wav", pos, 0, CHAN_AUTO, 1, 80, 0, math.random(75, 110))
 		-- I replaced this with world sound because emit sound was causing the sound to be played from across the map, regardless of volume. This sounded VERY shitty because it sonded like it came from your ass or something.
 	end
 

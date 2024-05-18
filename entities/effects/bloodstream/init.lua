@@ -7,7 +7,7 @@ util.PrecacheSound("physics/flesh/flesh_squishy_impact_hard4.wav")
 local function CollideCallbackSmall(particle, hitpos, hitnormal)
 	particle:SetDieTime(0)
 	if math.random(1, 3) == 3 then
-		WorldSound("physics/flesh/flesh_bloody_impact_hard1.wav", hitpos, 50, math.random(95, 105))
+		EmitSound("physics/flesh/flesh_bloody_impact_hard1.wav", hitpos, 0, CHAN_AUTO, 1, 50, 0, math.random(95, 105))
 		util.Decal("Impact.Flesh", hitpos + hitnormal, hitpos - hitnormal)
 	end
 end
@@ -18,9 +18,9 @@ local function CollideCallback(particle, hitpos, hitnormal)
 	local pos = hitpos + hitnormal
 
 	if math.random(1, 3) == 3 then
-		WorldSound("physics/flesh/flesh_squishy_impact_hard"..math.random(1,4)..".wav", hitpos, 50, math.random(95, 105))
+		EmitSound("physics/flesh/flesh_squishy_impact_hard"..math.random(1,4)..".wav", hitpos, 0, CHAN_AUTO, 1, 50, 0, math.random(95, 105))
 	end
-	//WorldSound("physics/flesh/flesh_bloody_impact_hard1.wav", hitpos, 60, math.random(95, 105))
+	//EmitSound("physics/flesh/flesh_bloody_impact_hard1", hitpos, 0, CHAN_AUTO, 1, 60, 0, math.random(95, 105))
 	util.Decal("Blood", pos, hitpos - hitnormal)
 
 	local nhitnormal = hitnormal * 90

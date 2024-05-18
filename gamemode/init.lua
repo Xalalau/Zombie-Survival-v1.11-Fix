@@ -1035,10 +1035,11 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	elseif attacker:IsPlayer() then
 		if headshot then
 			ply:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
+			local dmgforce = dmginfo:GetDamageForce()
 			local effectdata = EffectData()
 				effectdata:SetOrigin(ply:GetAttachment(1).Pos)
-				effectdata:SetNormal(dmginfo:GetDamageForce():Normalize())
-				effectdata:SetMagnitude(dmginfo:GetDamageForce():Length() * 3)
+				effectdata:SetNormal(dmgforce:GetNormalized())
+				effectdata:SetMagnitude(dmgforce:Length() * 3)
 				effectdata:SetEntity(ply)
 			util.Effect("headshot", effectdata)
 		end

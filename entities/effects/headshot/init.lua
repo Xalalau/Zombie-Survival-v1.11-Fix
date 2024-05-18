@@ -7,7 +7,7 @@ function EFFECT:Init(data)
 		pos = ent:GetAttachment(1).Pos
 	end
 
-	WorldSound("physics/flesh/flesh_bloody_break.wav", pos, 80, math.random(50, 100))
+	EmitSound("physics/flesh/flesh_bloody_break.wav", pos, 0, CHAN_AUTO, 1, 80, 0, math.random(50, 100))
 
 	local emitter = ParticleEmitter(pos)
 		for i=1, 16 do
