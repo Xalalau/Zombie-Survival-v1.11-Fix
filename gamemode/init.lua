@@ -1204,7 +1204,7 @@ function ThrowHeadcrab(owner, wep)
 		GAMEMODE:SetPlayerSpeed(owner, ZombieClasses[3].Speed)
 		wep.Headcrabs = wep.Headcrabs - 1
 		local eyeangles = owner:EyeAngles()
-		local vel = eyeangles:Forward():Normalize()
+		local vel = eyeangles:Forward():GetNormalize()
 		eyeangles.pitch = 0
 		local ent = ents.Create("npc_headcrab_black")
 		if ent:IsValid() then
@@ -1296,7 +1296,7 @@ concommand.Add("Shove", function(sender, command, arguments)
 		if tr.Hit then
 			sender.NextShove = CurTime() + 1.5
 			ent:EmitSound("ambient/voices/citizen_punches2.wav", 80, math.random(76, 85))
-			ent:SetVelocity(vVel:Normalize() * 340 + Vector(0,0,32))
+			ent:SetVelocity(vVel:GetNormalize() * 340 + Vector(0,0,32))
 		end
 	end
 end)

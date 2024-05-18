@@ -74,6 +74,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed stopsounds command was updated to stopsound
     * Fixed timer.IsTimer() was updated to timer.Exists()
     * Fixed some Entity:SetAngles() were receiving a Vector() instead of an Angle()
+    * Fixed all Vector() Normalize() methods were returning nil so I changed them to GetNormalize()
 ```
 
 # (Very inaccurate but official) Changelog

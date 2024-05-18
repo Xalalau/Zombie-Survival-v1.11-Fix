@@ -9,7 +9,7 @@ function ENT:Initialize()
 	local ply = self:GetOwner()
 	local aimvec = ply:GetAimVector()
 	aimvec.z = math.max(aimvec.z, 0.2)
-	aimvec = aimvec:Normalize()
+	aimvec = aimvec:GetNormalize()
 	local vStart = ply:GetShootPos() + Vector(0,0,-48)
 	local tr = util.TraceLine({start=vStart, endpos=vStart + ply:GetAimVector() * 30, filter=ply})
 	if tr.Hit then
