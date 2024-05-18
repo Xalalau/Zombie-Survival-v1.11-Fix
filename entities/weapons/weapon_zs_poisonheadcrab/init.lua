@@ -53,8 +53,11 @@ function SWEP:Think()
 		else
 			local vStart = self:GetOwner():GetViewOffset() + owner:GetPos()
 			local tr = {}
+			local ang = self:GetOwner():GetAimVector()
+			ang.z = 0
+
 			tr.start = vStart
-			tr.endpos = vStart + self:GetOwner():GetAngles()
+			tr.endpos = vStart + ang
 			tr.filter = owner
 			local trace = util.TraceLine(tr)
 			local ent = trace.Entity
