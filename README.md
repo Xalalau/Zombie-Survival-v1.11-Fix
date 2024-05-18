@@ -73,6 +73,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed WorldSound() was updated to EmitSound()
     * Fixed stopsounds command was updated to stopsound
     * Fixed timer.IsTimer() was updated to timer.Exists()
+    * Fixed some Entity:SetAngles() were receiving a Vector() instead of an Angle()
 ```
 
 # (Very inaccurate but official) Changelog

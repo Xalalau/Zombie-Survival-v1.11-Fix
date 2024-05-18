@@ -80,7 +80,7 @@ function SWEP:PrimaryAttack()
 	angles = angles:Normalize()
 
 	self:GetOwner():SetViewOffset(angles * 48)
-	self:GetOwner():SetAngles(Vector(0, 0, 6))
+	self:GetOwner():SetAngles(Angle(0, 0, 6))
 	self:GetOwner():SetGroundEntity(NULL)
 	self:GetOwner():SetLocalVelocity(vel * 450)
 	self:GetOwner():EmitSound("npc/headcrab/attack"..math.random(1,3)..".wav")

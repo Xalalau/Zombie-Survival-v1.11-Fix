@@ -143,7 +143,7 @@ function SWEP:SecondaryAttack()
 	eyeangles.z = -0.1
 	local ang = self:GetOwner():GetAimVector() ang.z = 0
 	self:GetOwner():SetViewOffset(ang * 85)
-	self:GetOwner():SetAngles(Vector(0,0,7))
+	self:GetOwner():SetAngles(Angle(0,0,7))
 	self:GetOwner():SetGroundEntity(NULL)
 	self:GetOwner():SetLocalVelocity(vel)
 	self.Leaping = true
