@@ -294,7 +294,7 @@ net.Receive("RcTopZombieDamages", function() ReceiveTopZombieDamages(net.ReadInt
 local function ReceiveHeadcrabScale(somePly)
 	if somePly:IsValid() then
 		--somePly:SetModelScale(Vector(2,2,2))
-		if somePly == somePly then
+		if somePly == LocalPlayer() then
 			HCView = true
 			hook.Add("Think", "HCView", function()
 				if somePly:Health() <= 0 then
