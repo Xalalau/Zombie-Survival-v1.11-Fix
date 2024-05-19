@@ -17,7 +17,7 @@ function EFFECT:Init(data)
 				particle:SetEndAlpha(150)
 				particle:SetStartSize(math.Rand(4, 5))
 				particle:SetEndSize(1)
-				particle:SetColor(Color(math.random(80, 100), 255, math.random(80, 100)))
+				particle:SetColor(math.random(80, 100), 255, math.random(80, 100))
 				particle:SetRoll(math.random(90, 360))
 			end
 		end

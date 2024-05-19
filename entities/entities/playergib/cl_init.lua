@@ -11,7 +11,7 @@ function ENT:Draw()
 		particle:SetStartSize(18)
 		particle:SetEndSize(8)
 		particle:SetRoll(180)
-		particle:SetColor(Color(255, 0, 0))
+		particle:SetColor(255, 0, 0)
 		particle:SetLighting(true)
 	end
 end

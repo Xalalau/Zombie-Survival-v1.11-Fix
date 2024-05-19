@@ -40,11 +40,11 @@ function EFFECT:Think()
 				particle:SetCollide(true)
 				local rand = math.random(1, 3)
 				if rand == 1 then
-					particle:SetColor(Color(255, 0, 0))
+					particle:SetColor(255, 0, 0)
 				elseif rand == 2 then
-					particle:SetColor(Color(255, 255, 255))
+					particle:SetColor(255, 255, 255)
 				elseif rand == 3 then
-					particle:SetColor(Color(30, 100, 255))
+					particle:SetColor(30, 100, 255)
 				end
 				particle:SetBounce(0.9)
 				particle:SetGravity(Vector(0,0,-400))

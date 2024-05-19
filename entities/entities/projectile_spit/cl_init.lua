@@ -19,7 +19,7 @@ function ENT:Think()
 			particle:SetStartSize(math.Rand(4, 8))
 			particle:SetEndSize(0)
 			particle:SetRoll(math.Rand(-0.2, 0.2))
-			particle:SetColor(Color(0, 255, 0))
+			particle:SetColor(0, 255, 0)
 	emitter:Finish()
 end
 

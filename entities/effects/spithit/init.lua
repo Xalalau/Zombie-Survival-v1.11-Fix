@@ -12,7 +12,7 @@ function EFFECT:Init(data)
 			particle:SetEndSize(5)
 			particle:SetRoll(math.Rand(0, 360))
 			particle:SetCollide(true)
-			particle:SetColor(Color(10, 255, 10))
+			particle:SetColor(10, 255, 10)
 			particle:SetAirResistance(math.random(30, 80))
 		end
 	emitter:Finish()
