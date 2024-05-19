@@ -78,6 +78,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed headcrab, fastheadcrab and fastzombie jumps were not working anymore (view offset and end pos)
     * Fixed intermission time counter becoming negative
     * Fixed fastzombie climb force was not enough to get over buildings or models
+    * Fixed Wraith not becoming invisible and casting shadows
 ```
 
 # (Very inaccurate but official) Changelog

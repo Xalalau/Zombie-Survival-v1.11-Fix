@@ -10,6 +10,7 @@ SWEP.AutoSwitchFrom = false
 function SWEP:Deploy()
 	self:GetOwner():DrawViewModel(true)
 	self:GetOwner():DrawWorldModel(false)
+	self:GetOwner():DrawShadow(false)
 	//self:GetOwner():SetMaterial("models/props_combine/com_shield001a")
 end
 
@@ -19,7 +20,8 @@ function SWEP:Think()
 	if self.NextHit then
 		owner:SetColor(Color(20, 20, 20, 200))
 	else
-		owner:SetColor(Color(20, 20, 20, math.min(owner:GetVelocity():Length(), 200)))
+		local vel = owner:GetVelocity():Length()
+		owner:SetColor(Color(20, 20, 20, math.min(vel > 0 and vel or math.random(1, 18), 200)))
 		return
 	end
 

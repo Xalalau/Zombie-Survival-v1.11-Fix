@@ -1111,6 +1111,8 @@ VoiceSetTranslate["models/player/male_03.mdl"] = "male"
 VoiceSetTranslate["models/player/male_08.mdl"] = "male"
 
 function GM:PlayerSpawn(ply)
+	ply:SetRenderMode(RENDERMODE_TRANSCOLOR)
+	ply:DrawShadow(true)
 	ply:SetColor(Color(255, 255, 255, 255))
 	ply:SetMaterial("")
 	ply.Gibbed = false
