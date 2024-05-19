@@ -8,12 +8,31 @@ SWEP.AutoSwitchTo = true
 SWEP.AutoSwitchFrom = false
 
 function SWEP:Deploy()
+	self.CloakFail = 0
+
 	local owner = self:GetOwner()
 	owner:DrawViewModel(true)
 	owner:DrawWorldModel(false)
 	owner:DrawShadow(false)
 	owner:SetRenderMode(RENDERMODE_TRANSCOLOR)
 	//owner:SetMaterial("models/props_combine/com_shield001a")
+
+	local hookname = "WraithCloackFail" .. tostring(owner)
+	local timername = "WraithCloackRecover" .. tostring(owner)
+	local wep = self
+	local recovercloack = function() if wep:IsValid() then self.CloakFail = 0 end end
+	hook.Add("EntityTakeDamage", hookname, function(target, dmginfo)
+		if target ~= owner then return end
+
+		if not owner:IsValid() or not wep:IsValid() then
+			hook.Remove("EntityTakeDamage", hookname)
+			return
+		end
+
+		wep.CloakFail = 150
+		timer.Create(timername, 0.2, 1, recovercloack)
+		owner:SetColor(Color(20, 20, 20, 200))
+	end)
 end
 
 function SWEP:Think()
@@ -23,7 +42,15 @@ function SWEP:Think()
 		owner:SetColor(Color(20, 20, 20, 200))
 	else
 		local vel = owner:GetVelocity():Length()
-		owner:SetColor(Color(20, 20, 20, math.min(vel > 0 and vel or math.random(1, 18), 200)))
+		local min
+
+		if vel > 0 then
+			min = vel
+		else
+			min = math.random(1 + (self.CloakFail ~= 0 and 60 or 0), 22 + self.CloakFail)
+		end
+
+		owner:SetColor(Color(20, 20, 20, math.min(min, 200)))
 		return
 	end
 
