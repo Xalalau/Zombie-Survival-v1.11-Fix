@@ -347,6 +347,8 @@ end
 local NextAura = 0
 
 function GM:ZombieHUD(ply, actionposx, actionposy, killedposx, killedposy)
+	if not ply.Class then return end
+
 	local entityhealth = math.max(ply:Health(), 0)
 	local maxhealth = ZombieClasses[ply.Class].Health
 	local percenthealth = entityhealth / maxhealth
