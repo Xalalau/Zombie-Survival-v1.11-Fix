@@ -22,7 +22,7 @@ function SWEP:Think()
 		if owner:OnGround() or 0 < owner:WaterLevel() then
 			self.Leaping = false
 			self.NextLeap = CurTime() + 0.75
-			self:GetOwner():SetViewOffset(self.OriginalViewOffset)
+			--self:GetOwner():SetViewOffset(self.OriginalViewOffset)
 		else
 			local vStart = self:GetOwner():GetViewOffset() + owner:GetPos()
 			local tr = {}
@@ -59,14 +59,14 @@ function SWEP:Think()
 				end
 				self.Leaping = false
 				self.NextLeap = CurTime() + 1
-				self:GetOwner():SetViewOffset(self.OriginalViewOffset)
+				--self:GetOwner():SetViewOffset(self.OriginalViewOffset)
 				owner:EmitSound("npc/headcrab/headbite.wav")
 				owner:ViewPunch(Angle(math.random(0, 30), math.random(0, 30), math.random(0, 30)))
 			elseif trace.HitWorld then
 				owner:EmitSound("physics/flesh/flesh_strider_impact_bullet1.wav")
 				self.Leaping = false
 				self.NextLeap = CurTime() + 1
-				self:GetOwner():SetViewOffset(self.OriginalViewOffset)
+				--self:GetOwner():SetViewOffset(self.OriginalViewOffset)
 			end
 		end
 	end
@@ -85,9 +85,9 @@ function SWEP:PrimaryAttack()
 	angles.z = -0.1
 	angles = angles:GetNormalized()
 
-	self.OriginalViewOffset = self:GetOwner():GetViewOffset()
+	--self.OriginalViewOffset = self:GetOwner():GetViewOffset()
 
-	self:GetOwner():SetViewOffset(angles * 48)
+	--self:GetOwner():SetViewOffset(angles * 48)
 	self:GetOwner():SetAngles(Angle(0, 0, 6))
 	self:GetOwner():SetGroundEntity(NULL)
 	self:GetOwner():SetLocalVelocity(vel * 450)
