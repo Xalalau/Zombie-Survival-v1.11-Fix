@@ -8,10 +8,12 @@ SWEP.AutoSwitchTo = true
 SWEP.AutoSwitchFrom = false
 
 function SWEP:Deploy()
-	self:GetOwner():DrawViewModel(true)
-	self:GetOwner():DrawWorldModel(false)
-	self:GetOwner():DrawShadow(false)
-	//self:GetOwner():SetMaterial("models/props_combine/com_shield001a")
+	local owner = self:GetOwner()
+	owner:DrawViewModel(true)
+	owner:DrawWorldModel(false)
+	owner:DrawShadow(false)
+	owner:SetRenderMode(RENDERMODE_TRANSCOLOR)
+	//owner:SetMaterial("models/props_combine/com_shield001a")
 end
 
 function SWEP:Think()
