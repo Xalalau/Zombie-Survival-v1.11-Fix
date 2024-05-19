@@ -134,6 +134,10 @@ function GM:UnlockAllWeapons(sender)
 		for _, scoreweapons in pairs(self.Rewards) do
 			for __, weapon in ipairs(scoreweapons) do
 				for ___, ply in ipairs(player.GetHumans()) do
+					if ply:Team() ~= TEAM_HUMAN then
+						continue
+					end
+
 					if ply:HasWeapon(weapon) then
 						local wep = ply:GetWeapon(weapon)
 						if wep:IsValid() then
