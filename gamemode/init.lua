@@ -390,8 +390,8 @@ function GM:Think()
 
 		self:SendInfliction()
 
-		local plays = player.GetAll()
-		if 0.75 <= INFLICTION then plays = table.Add(plays, player.GetAll()) end -- Double ammo on horde conditions
+		local plays = player.GetHumans()
+		if 0.75 <= INFLICTION then plays = table.Add(plays, player.GetHumans()) end -- Double ammo on horde conditions
 
 		for _, ply in pairs(plays) do
 			if ply:Team() == TEAM_HUMAN then
@@ -1041,7 +1041,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 				end)
 			end
 		end
-		if WARMUP_MODE and #player.GetAll() < WARMUP_THRESHOLD then
+		if WARMUP_MODE and #player.GetHumans() < WARMUP_THRESHOLD then
 			ply:PrintMessage(HUD_PRINTTALK, "There are not enough people playing for you to change to the Undead. Set WARMUP_MODE in zs_options.lua to false to change this.")
 		else
 			ply:SetTeam(TEAM_UNDEAD)
