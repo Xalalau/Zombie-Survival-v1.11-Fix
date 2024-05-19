@@ -7,8 +7,8 @@ function MakepHelp()
 
 	local Window = vgui.Create("DFrame")
 	local tall = h * 0.95
-	Window:SetSize(670, tall)
-	local wide = (w - 670) * 0.5
+	Window:SetSize(640, tall)
+	local wide = (w - 640) * 0.5
 	local tall = (h - tall) * 0.5
 	Window:SetPos(wide, tall)
 	Window:SetTitle(" ")
@@ -34,7 +34,7 @@ function MakepHelp()
 	label:SetText("F2: Manual Redeem")
 	surface.SetFont("noxnetnormal")
 	local texw, texh = surface.GetTextSize("F2: Manual Redeem")
-	label:SetPos(200 - texw * 0.5, 21)
+	label:SetPos(190 - texw * 0.5, 21)
 	label:SetSize(texw, texh)
 
 	local label = vgui.Create("DLabel", Window)
@@ -43,7 +43,7 @@ function MakepHelp()
 	label:SetText("F3: Change Zombie Class")
 	surface.SetFont("noxnetnormal")
 	local texw, texh = surface.GetTextSize("F3: Change Zombie Class")
-	label:SetPos(420 - texw * 0.5, 21)
+	label:SetPos(400 - texw * 0.5, 21)
 	label:SetSize(texw, texh)
 
 	local label = vgui.Create("DLabel", Window)
@@ -52,7 +52,7 @@ function MakepHelp()
 	label:SetText("F4: Options")
 	surface.SetFont("noxnetnormal")
 	local texw, texh = surface.GetTextSize("F4: Options")
-	label:SetPos(670 - texw - 16, 21)
+	label:SetPos(640 - texw - 16, 21)
 	label:SetSize(texw, texh)
 
 	surface.SetFont("Default")
@@ -91,7 +91,7 @@ function MakepHelp()
 			end
 			label:SetText(text)
 			label:SetPos(16, y)
-			label:SetSize(670, 64)
+			label:SetSize(640, 64)
 			y = y + defh
 		end
 	end
