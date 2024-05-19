@@ -6,7 +6,7 @@ function MakepHelp()
 	end
 
 	local Window = vgui.Create("DFrame")
-	local tall = h * 0.95
+	local tall = 720 --h * 0.95 -- Limit the height -- Xala
 	Window:SetSize(640, tall)
 	local wide = (w - 640) * 0.5
 	local tall = (h - tall) * 0.5

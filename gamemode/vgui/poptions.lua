@@ -13,7 +13,7 @@ function MakepOptions()
 	end
 
 	local Window = vgui.Create("DFrame")
-	local wide = 500
+	local wide = 580
 	local tall = 360
 	Window:SetSize(wide, tall)
 	local wide = (wide) * 0.5
@@ -43,7 +43,7 @@ function MakepOptions()
 
 	local slider = vgui.Create("DNumSlider", Window)
 	slider:SetPos(32, 80)
-	slider:SetSize(200, 48)
+	slider:SetSize(280, 48)
 	slider:SetDecimals(0)
 	slider:SetMinMax(0, 1600)
 	slider:SetConVar("cl_detaildist")
@@ -91,7 +91,7 @@ function MakepOptions()
 
 	local slider = vgui.Create("DNumSlider", Window)
 	slider:SetPos(wide + 32, 200)
-	slider:SetSize(200, 48)
+	slider:SetSize(250, 48)
 	slider:SetDecimals(1)
 	slider:SetMinMax(0, 48)
 	slider:SetConVar("_zs_filmgrainopacity")

@@ -56,8 +56,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed the path 'effects/zombiefireworks/init.lua' was invalid on Linux
     * Fixed GM:CalcView() in cl_init.lua was trying to access a nil phys obj for no reason at all
     * Fixed size calculations on human/zombie counter on the HUD
-    * Fixed F4 menu failing to calc its dimensions
-    * Fixed the font was too small to read on the menus
+    * Fixed overall menu dimensions were no fit for monitors greater then 1024x768 (distorsions everywhere)
     * Fixed renamed variables like sound and player that were locally overriding global functions
     * Fixed the film grain slider was not working
     * Fixed wraith was missing cloack failure when shot and a visible body after death

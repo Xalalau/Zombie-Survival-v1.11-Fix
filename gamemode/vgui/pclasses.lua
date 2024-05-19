@@ -11,8 +11,13 @@ function MakepClasses()
 	end
 
 	local Window = vgui.Create("DFrame")
-	Window:SetPos(w * 0.25, h * 0.025)
-	Window:SetSize(w * 0.5, h * 0.95)
+	local wide = 500 -- w * 0.5
+	local tall = 650 -- h * 0.95
+
+	Window:SetSize(wide, tall)
+	Window:CenterVertical()
+	Window:CenterHorizontal()
+	--Window:SetPos(w * 0.25, h * 0.025)
 	Window:SetTitle(" ")
 	Window:SetVisible(true)
 	Window:SetDraggable(false)
@@ -24,18 +29,20 @@ function MakepClasses()
 	surface.SetFont("HUDFontAA")
 	local tw, th = surface.GetTextSize("Choose a class...")
 	local label = vgui.Create("DLabel", Window)
-	label:SetPos(w * 0.25 - tw * 0.5, 21)
+	label:SetY(25)
 	label:SetSize(tw, th)
+	label:CenterHorizontal()
+
 	label:SetFont("HUDFontAA")
 	label:SetText("Choose a class...")
 	label:SetTextColor(color_white)
 
-	local y = 60
+	local y = 95
 
 	for i, class in ipairs(ZombieClasses) do
 		if not class.Hidden then
 			local button = vgui.Create("SpawnIcon", Window)
-			button:SetPos(16, y)
+			button:SetPos(41, y)
 			button:SetSize(48, 48)
 			button:SetModel(class.Model)
 			button.Class = class
@@ -44,7 +51,7 @@ function MakepClasses()
 			surface.SetFont("HUDFontSmallAA")
 			local tw, th = surface.GetTextSize(class.Name)
 			local label = vgui.Create("DLabel", Window)
-			label:SetPos(button:GetWide() + 24, y + 2)
+			label:SetPos(button:GetWide() + 49, y + 2)
 			label:SetSize(tw, th)
 			label:SetFont("HUDFontSmallAA")
 			label:SetText(class.Name)
@@ -59,7 +66,7 @@ function MakepClasses()
 				surface.SetFont("Default")
 				local tw, th = surface.GetTextSize(line)
 				local label = vgui.Create("DLabel", Window)
-				label:SetPos(button:GetWide() + 27, yy)
+				label:SetPos(button:GetWide() + 52, yy)
 				label:SetSize(tw, th)
 				label:SetFont("Default")
 				label:SetText(line)
