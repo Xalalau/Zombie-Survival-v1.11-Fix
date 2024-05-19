@@ -129,6 +129,15 @@ function GM:Initialize()
 	RunConsoleCommand("mp_allowspectators", "0")
 end
 
+function GM:UnlockAllClasses(sender)
+	if sender:IsAdmin() then
+		print("All zombie classes are unlocked")
+		for _,class in ipairs(ZombieClasses) do class.Unlocked=true end
+			BroadcastLua("for _,class in ipairs(ZombieClasses) do class['Threshold']=0 print('Unlocked ' .. class['Name']) end GAMEMODE:SplitMessage(h * 0.7, '<color=red><font=HUDFontAA>All zombies unlocked!</font></color>')")
+	end
+end
+concommand.Add("zs_unlock_all_classes", function(sender, command, arguments) GAMEMODE:UnlockAllClasses(sender) end)
+
 function GM:ShowHelp(ply)
 	ply:SendLua("MakepHelp()")
 end
