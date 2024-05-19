@@ -3,7 +3,7 @@ include("shared.lua")
 SWEP.PrintName = "Wraith"
 SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = true
-SWEP.ViewModelFOV = 60
+SWEP.ViewModelFOV = 40
 SWEP.ViewModelFlip = false
 SWEP.CSMuzzleFlashes = false
 

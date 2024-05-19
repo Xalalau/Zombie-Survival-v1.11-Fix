@@ -79,6 +79,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed intermission time counter becoming negative
     * Fixed fastzombie climb force was not enough to get over buildings or models
     * Fixed Wraith not becoming invisible and casting shadows
+    * Fixed Wraith viewmodel fov was showing the missing parts of his arm
 ```
 
 # (Very inaccurate but official) Changelog
