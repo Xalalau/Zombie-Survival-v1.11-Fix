@@ -129,6 +129,34 @@ function GM:Initialize()
 	RunConsoleCommand("mp_allowspectators", "0")
 end
 
+function GM:UnlockAllWeapons(sender)
+	if sender:IsAdmin() then
+		for _, scoreweapons in pairs(self.Rewards) do
+			for __, weapon in ipairs(scoreweapons) do
+				for ___, ply in ipairs(player.GetHumans()) do
+					if ply:HasWeapon(weapon) then
+						local wep = ply:GetWeapon(weapon)
+						if wep:IsValid() then
+							local ammotype = wep:GetPrimaryAmmoTypeString() or ply.HighestAmmoType or "pistol"
+							ply:GiveAmmo(self.AmmoRegeneration[ammotype], ammotype, true)
+						end
+					else
+						ply:Give(weapon)
+						local wep = ply:GetWeapon(weapon)
+						if wep:IsValid() then
+							ply.HighestAmmoType = wep:GetPrimaryAmmoTypeString() or ply.HighestAmmoType
+						end
+					end
+				end
+			end
+		end
+
+		print("All weapons are unlocked")
+		BroadcastLua("GAMEMODE:SplitMessage(h * 0.7, '<color=red><font=HUDFontAA>All weapons unlocked!</font></color>')")
+	end
+end
+concommand.Add("zs_unlock_all_weapons", function(sender, command, arguments) GAMEMODE:UnlockAllWeapons(sender) end)
+
 function GM:UnlockAllClasses(sender)
 	if sender:IsAdmin() then
 		print("All zombie classes are unlocked")
@@ -839,10 +867,10 @@ function GM:PlayerDeathSound()
 end
 
 function GM:CanPlayerSuicide(ply)
-	if ply:Team() == TEAM_HUMAN and CurTime() < ROUNDTIME * 0.1 then
-		ply:PrintMessage(4, "Give others time to spawn before suiciding.")
-		return false
-	end
+	-- if ply:Team() == TEAM_HUMAN and CurTime() < ROUNDTIME * 0.1 then
+	-- 	ply:PrintMessage(4, "Give others time to spawn before suiciding.")
+	-- 	return false
+	-- end
 
 	return true
 end

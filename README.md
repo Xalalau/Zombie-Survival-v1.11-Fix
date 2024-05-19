@@ -38,7 +38,7 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 Changes from v1.11 -> v1.11 Fix
     * Added missing config SURVIVALMODE to zs_options.lua
     * Added ZS gamemode icon
-    * Added command zs_unlock_all_classes to help development
+    * Added command zs_unlock_all_classes and zs_unlock_all_weapons to help development
     * Removed all the stupid SteamID bans from 2008
     * Changed default _zs_filmgrainopacity from 16 to 3 (It was unplayable before)
     * Changed many pairs() to ipairs() to improve performance
