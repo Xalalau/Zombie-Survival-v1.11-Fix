@@ -83,6 +83,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed Wraith not becoming invisible and casting shadows
     * Fixed Wraith viewmodel fov was showing the missing parts of his arm
     * Fixed GM:ZombieHUD trying to access nil ply.Class
+    * Fixed view camera inside the zombie head after death
 ```
 
 # (Very inaccurate but official) Changelog

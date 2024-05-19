@@ -407,7 +407,7 @@ function GM:CalcView(ply, pos, ang, _fov)
 		if lookup > 0 then
 			local attach = ragdoll:GetAttachment(lookup)
 			if attach then
-				return {origin=attach.Pos + attach.Ang:Forward() * -5, angles=attach.Ang}
+				return {origin=attach.Pos + attach.Ang:Forward(), angles=attach.Ang}
 			end
 		end
 	end
