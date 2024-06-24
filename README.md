@@ -60,6 +60,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed overall menu dimensions were no fit for monitors greater then 1024x768 (distorsions everywhere)
     * Fixed renamed variables like sound and player that were locally overriding global functions
     * Fixed the film grain slider was not working
+    * Fixed zombie torso arms viewmodel pos
     * Fixed wraith was missing cloack failure when shot and a visible body after death
     * Fixed game.BroadcastLua was updated to RunBroadcastLua
     * Fixed self.GetOwner was updated to self:GetOwner()
