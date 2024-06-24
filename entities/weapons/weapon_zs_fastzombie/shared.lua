@@ -43,3 +43,15 @@ function SWEP:Precache()
 	util.PrecacheSound("player/footsteps/metalgrate3.wav")
 	util.PrecacheSound("player/footsteps/metalgrate4.wav")
 end
+
+function SWEP:GetClimbing()
+	return self:GetDTBool(1)
+end
+
+function SWEP:GetSwinging()
+	return self:GetDTBool(2)
+end
+
+function SWEP:GetPounceTime()
+	return self:GetDTFloat(1)
+end

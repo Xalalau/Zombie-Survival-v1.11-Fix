@@ -9,17 +9,39 @@ SWEP.AutoSwitchFrom = false
 
 SWEP.SwapAnims = false
 
+function SWEP:SetClimbing(climbing)
+	self:SetDTBool(1, climbing)
+end
+
+function SWEP:SetSwinging(swinging)
+	self:SetDTBool(2, swinging)
+end
+
+function SWEP:SetPounceTime(leaping)
+	self:SetDTFloat(1, leaping)
+end
+
 function SWEP:Deploy()
 	self:GetOwner():DrawViewModel(true)
 	self:GetOwner():DrawWorldModel(false)
+	self:SetPounceTime(0)
 end
 
 function SWEP:Think()
 	local owner = self:GetOwner()
+
+	if self:GetClimbing() and CurTime() >= self.NextClimb then
+		self:SetClimbing(false)
+	end
+
+	if self:GetPounceTime() > 0 and CurTime() >= self:GetPounceTime() then
+		self:SetPounceTime(0)
+	end
+
 	if self.Leaping then
 		if owner:OnGround() or owner:WaterLevel() > 0 then
 			self.Leaping = false
-			self.NextLeap = CurTime() + 1
+			self:SetPounceTime(CurTime() + 1)
 			--self:GetOwner():SetViewOffset(self.OriginalViewOffset)
 		else
 			local vStart = self:GetOwner():GetViewOffset() + owner:GetPos()
@@ -52,23 +74,23 @@ function SWEP:Think()
 					end
 				end
 				self.Leaping = false
-				self.NextLeap = CurTime() + 1.5
+				self:SetPounceTime(CurTime() + 1.5)
 				--self:GetOwner():SetViewOffset(self.OriginalViewOffset)
 				owner:EmitSound("physics/flesh/flesh_strider_impact_bullet1.wav")
 				owner:ViewPunch(Angle(math.random(0, 70), math.random(0, 70), math.random(0, 70)))
 			elseif trace.HitWorld then
 				owner:EmitSound("physics/flesh/flesh_strider_impact_bullet1.wav")
 				self.Leaping = false
-				self.NextLeap = CurTime() + 1.5
+				self:SetPounceTime(CurTime() + 1.5)
 				--self:GetOwner():SetViewOffset(self.OriginalViewOffset)
 			end
 		end
 	end
 
-	if not self.Swinging then return end
+	if not self:GetSwinging() then return end
 	if CurTime() < self.NextSwing then return end
 	if not owner:KeyDown(IN_ATTACK) then
-		self.Swinging = false
+		self:SetSwinging(false)
 		//GAMEMODE:SetPlayerSpeed(owner, ZombieClasses[owner:GetZombieClass()].Speed)
 		return
 	end
@@ -109,16 +131,15 @@ end
 
 SWEP.NextSwing = 0
 function SWEP:PrimaryAttack()
-	if self.Swinging or self.Leaping then return end
+	if self:GetSwinging() or self.Leaping then return end
 	//GAMEMODE:SetPlayerSpeed(self:GetOwner(), ZombieClasses[self:GetOwner():GetZombieClass()].Speed * 0.5)
 	self.NextSwing = CurTime()
-	self.Swinging = true
+	self:SetSwinging(true)
 end
 
-SWEP.NextLeap = 0
 SWEP.NextClimb = 0
 function SWEP:SecondaryAttack()
-	if self.Leaping or self.Swinging then return end
+	if self.Leaping or self:GetSwinging() then return end
 	local onground = self:GetOwner():OnGround()
 	if CurTime() >= self.NextClimb and not onground then
 		local vStart = self:GetOwner():GetShootPos()
@@ -135,13 +156,14 @@ function SWEP:SecondaryAttack()
 			self:GetOwner():SetLocalVelocity(Vector(0,0,200))
 			self:GetOwner():SetAnimation(PLAYER_SUPERJUMP)
 			self.NextClimb = CurTime() + self.Secondary.Delay
+			self:SetClimbing(true)
 			self:GetOwner():EmitSound("player/footsteps/metalgrate"..math.random(1,4)..".wav")
 			self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
 			return
 		end
 	end
 
-	if CurTime() < self.NextLeap then return end
+	if CurTime() < self:GetPounceTime() then return end
 	if not onground then return end
 
 	local vel = self:GetOwner():GetAngles():Forward() * 800

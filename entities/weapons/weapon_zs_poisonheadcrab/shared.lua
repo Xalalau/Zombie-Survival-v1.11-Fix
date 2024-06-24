@@ -21,6 +21,9 @@ SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = true
 SWEP.Secondary.Ammo	= "none"
 
+SWEP.SpitWindUp = 1.25
+SWEP.PounceWindUp = 1.25
+
 function SWEP:Reload()
 	return false
 end
@@ -35,4 +38,29 @@ function SWEP:Precache()
 	util.PrecacheSound("npc/headcrab_poison/ph_poisonbite1.wav")
 	util.PrecacheSound("npc/headcrab_poison/ph_poisonbite2.wav")
 	util.PrecacheSound("npc/headcrab_poison/ph_poisonbite3.wav")
+end
+
+function SWEP:GetNextSpit()
+	return self:GetDTFloat(0)
+end
+
+function SWEP:IsGoingToSpit()
+	return self:GetNextSpit() > 0
+end
+
+function SWEP:GetLeaping()
+	return self:GetDTBool(0)
+end
+SWEP.IsLeaping = SWEP.GetLeaping
+
+function SWEP:GetNextLeap()
+	return self:GetDTFloat(1)
+end
+
+function SWEP:IsGoingToLeap()
+	return self:GetNextLeap() > 0
+end
+
+function SWEP:ShouldPlayLeapAnimation()
+	return self:IsLeaping() or self:IsGoingToLeap()
 end

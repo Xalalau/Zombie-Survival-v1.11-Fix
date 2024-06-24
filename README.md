@@ -50,6 +50,7 @@ Changes from v1.11 -> v1.11 Fix
     * Changed player.GetAll() to player.GetHumans()
     * Changed timer.Destroy() to timer.Remove()
     * Changed umsg lib to net
+    * Fixed animations (backported from the latest ZS and adapted)
     * Fixed film grain post processing effect flickering due to two frames being too white
     * Fixed add missing IsValid checks to every timer
     * Fixed poison headcrab was missing the damage variable to calculate the attack knockback

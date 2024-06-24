@@ -7,6 +7,18 @@ SWEP.Weight = 5
 SWEP.AutoSwitchTo = true
 SWEP.AutoSwitchFrom = false
 
+function SWEP:SetNextSpit(time)
+	self:SetDTFloat(0, time)
+end
+
+function SWEP:SetLeaping(leap)
+	self:SetDTBool(0, leap)
+end
+
+function SWEP:SetNextLeap(time)
+	self:SetDTFloat(1, time)
+end
+
 function SWEP:Deploy()
 	local owner = self:GetOwner()
 	owner:DrawViewModel(false)
@@ -14,22 +26,24 @@ function SWEP:Deploy()
 	net.Start("RcHCScale")
 		net.WriteEntity(owner)
 	net.Broadcast()
+	self:SetNextSpit(0)
+	self:SetNextLeap(0)
 end
 
 function SWEP:Think()
 	local owner = self:GetOwner()
-	if self.GoingToSpit and CurTime() > self.GoingToSpit then
+	if self:IsGoingToSpit() and CurTime() > self:GetNextSpit() then
 		owner:Freeze(false)
-		self.GoingToSpit = nil
-		self.NextSpit = CurTime() + 3
+		self:SetNextSpit(0)
+		self:SetNextSecondaryFire(CurTime() + 3)
 		local ent = ents.Create("projectile_spit")
 		if ent:IsValid() then
 			ent:SetOwner(owner)
 			ent:Spawn()
 		end
-	elseif self.GoingToLeap and CurTime() > self.GoingToLeap then
+	elseif self:IsGoingToLeap() and CurTime() > self:GetNextLeap() then
 		owner:Freeze(false)
-		self.GoingToLeap = nil
+		self:SetNextLeap(0)
 		if owner:OnGround() then
 			local vel = self.RememberAngles:Forward() * 450
 			if vel.z < 250 then vel.z = 250 end
@@ -42,14 +56,14 @@ function SWEP:Think()
 			owner:SetGroundEntity(NULL)
 			owner:SetLocalVelocity(vel)
 
-			self.Leaping = true
+			self:SetLeaping(true)
 
 			owner:EmitSound("npc/headcrab_poison/ph_jump"..math.random(1,3)..".wav")
 		end
-	elseif self.Leaping then
+	elseif self:IsLeaping() then
 		if owner:OnGround() or 0 < owner:WaterLevel() then
-			self.Leaping = false
-			self.NextLeap = CurTime() + 0.8
+			self:SetLeaping(false)
+			self:SetNextPrimaryFire(CurTime() + 0.8)
 		else
 			local vStart = self:GetOwner():GetViewOffset() + owner:GetPos()
 			local tr = {}
@@ -80,8 +94,8 @@ function SWEP:Think()
 					ent:SetPhysicsAttacker(owner)
 				end
 
-				self.Leaping = false
-				self.NextLeap = CurTime() + 1
+				self:SetLeaping(false)
+				self:SetNextPrimaryFire(CurTime() + 1)
 				owner:EmitSound("npc/headcrab_poison/ph_poisonbite"..math.random(1,3)..".wav")
 				owner:ViewPunch(Angle(math.random(0, 30), math.random(0, 30), math.random(0, 30)))
 				if ent:IsPlayer() and ent:Team() ~= owner:Team() then
@@ -98,24 +112,22 @@ function SWEP:Think()
 				end
 			elseif trace.HitWorld then
 				owner:EmitSound("physics/flesh/flesh_strider_impact_bullet1.wav")
-				self.Leaping = false
-				self.NextLeap = CurTime() + 1
+				self:SetLeaping(false)
+				self:SetNextPrimaryFire(CurTime() + 1)
 			end
 		end
 	end
 end
 
-SWEP.NextLeap = 0
-
 function SWEP:PrimaryAttack()
-	if self.Leaping or self.GoingToSpit then return end
+	if self:IsLeaping() or self:IsGoingToSpit() then return end
 	self:GetOwner():Fire("IgnoreFallDamage", "", 0)
 
-	if CurTime() < self.NextLeap then return end
+	if CurTime() < self:GetNextLeap() then return end
 
 	if not self:GetOwner():OnGround() then return end
 
-	self.GoingToLeap = CurTime() + 1.25
+	self:SetNextLeap(CurTime() + self.PounceWindUp)
 	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
 	self:GetOwner():EmitSound("npc/headcrab_poison/ph_scream"..math.random(1,3)..".wav")
 
@@ -124,14 +136,12 @@ function SWEP:PrimaryAttack()
 	self:GetOwner():Freeze(true)
 end
 
-SWEP.NextSpit = 0
-
 function SWEP:SecondaryAttack()
-	if self.Leaping or self.GoingToSpit then return end
+	if self:IsLeaping() or self:IsGoingToSpit() then return end
 
-	if CurTime() < self.NextSpit then return end
+	if CurTime() < self:GetNextSpit() then return end
 
-	self.GoingToSpit = CurTime() + 1.25
+	self:SetNextSpit(CurTime() + self.SpitWindUp)
 	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
 	self:GetOwner():EmitSound("npc/headcrab_poison/ph_scream"..math.random(1,3)..".wav")
 

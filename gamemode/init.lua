@@ -29,6 +29,8 @@ AddCSLuaFile("cl_dermaskin.lua")
 AddCSLuaFile("obj_player_extend.lua")
 AddCSLuaFile("obj_weapon_extend.lua")
 
+AddCSLuaFile("animations.lua")
+
 AddCSLuaFile("zs_options.lua")
 
 AddCSLuaFile("vgui/scoreboard.lua")
@@ -40,7 +42,10 @@ AddCSLuaFile("cl_splitmessage.lua")
 
 include("shared.lua")
 include("powerups.lua")
-include("animations.lua")
+
+for classnum, ZombieClass in ipairs(ZombieClasses) do
+	AddCSLuaFile("zombieanims/" .. ZombieClass["ANIM"] .. ".lua")
+end
 
 GM.PlayerSpawnTime = {}
 
@@ -1293,6 +1298,7 @@ concommand.Add("zs_class", function(sender, command, arguments)
 			else
 				sender:PrintMessage(HUD_PRINTTALK, "You will respawn as a "..ZombieClasses[i].Name..".")
 				sender.DeathClass = i
+				sender:SetZombieClass(i)
 			end
 		    return
 		end

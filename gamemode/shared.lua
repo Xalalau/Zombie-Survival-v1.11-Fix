@@ -1,6 +1,7 @@
 include("obj_player_extend.lua")
 include("obj_weapon_extend.lua")
 include("zs_options.lua")
+include("animations.lua")
 
 -- This stuff isn't for you to change. You should only edit the stuff in zs_options.lua
 GM.Name = "Zombie Survival "..GM.Version.." "..GM.SubVersion
