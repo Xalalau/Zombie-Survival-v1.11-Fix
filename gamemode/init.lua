@@ -1314,6 +1314,9 @@ concommand.Add("zs_class", function(sender, command, arguments)
 				sender:PrintMessage(HUD_PRINTTALK, "You will respawn as a "..ZombieClasses[i].Name..".")
 				sender.DeathClass = i
 				sender:SetZombieClass(i)
+				if sender:Health() > 0 then
+					sender:Kill()
+				end
 			end
 		    return
 		end
