@@ -10,10 +10,15 @@ SWEP.AutoSwitchFrom = false
 -- This is to get around that dumb thing where the view anims don't play right.
 SWEP.SwapAnims = false
 
+function SWEP:SetNextYell(time)
+	self:SetDTFloat(0, time)
+end
+
 function SWEP:Deploy()
 	self:GetOwner():DrawViewModel(true)
 	self:GetOwner():DrawWorldModel(false)
 	self:GetOwner().ZomAnim = math.random(1, 3)
+	self:SetNextYell(0)
 end
 
 -- This is kind of unique. It does a trace on the pre swing to see if it hits anything
@@ -83,13 +88,12 @@ function SWEP:PrimaryAttack()
 	end
 end
 
-SWEP.NextYell = 0
 function SWEP:SecondaryAttack()
-	if CurTime() < self.NextYell then return end
+	if CurTime() < self:GetNextYell() then return end
 	self:GetOwner():SetAnimation(PLAYER_SUPERJUMP)
 
 	self:GetOwner():EmitSound("npc/zombie/zombie_voice_idle"..math.random(1, 14)..".wav")
-	self.NextYell = CurTime() + 2
+	self:SetNextYell(CurTime() + self.YellTime)
 end
 
 function SWEP:Reload()

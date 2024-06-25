@@ -1,4 +1,9 @@
 function CLASS.CalcMainActivity(ply, velocity)
+	local wep = ply:GetActiveWeapon()
+	if wep.GetNextYell and CurTime() < wep:GetNextYell() then
+		return ACT_HL2MP_WALK_ZOMBIE_05, -1
+	end
+
 	if ply:WaterLevel() >= 3 then
 		return ACT_HL2MP_SWIM_PISTOL, -1
 	end

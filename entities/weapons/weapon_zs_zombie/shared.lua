@@ -20,6 +20,8 @@ SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = true
 SWEP.Secondary.Ammo = "none"
 
+SWEP.YellTime = 2
+
 function SWEP:Reload()
 	return false
 end
@@ -49,4 +51,8 @@ function SWEP:Precache()
 	util.PrecacheSound("npc/zombie/zombie_die1.wav")
 	util.PrecacheSound("npc/zombie/zombie_die2.wav")
 	util.PrecacheSound("npc/zombie/zombie_die3.wav")
+end
+
+function SWEP:GetNextYell()
+	return self:GetDTFloat(0)
 end
