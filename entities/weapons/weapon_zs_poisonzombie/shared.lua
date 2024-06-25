@@ -20,6 +20,8 @@ SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = true
 SWEP.Secondary.Ammo	= "none"
 
+SWEP.ThrowAnimBaseTime = 2
+
 function SWEP:Reload()
 	return false
 end
@@ -40,4 +42,8 @@ function SWEP:Precache()
 	util.PrecacheSound("npc/headcrab_poison/ph_jump1.wav")
 	util.PrecacheSound("npc/headcrab_poison/ph_jump2.wav")
 	util.PrecacheSound("npc/headcrab_poison/ph_jump3.wav")
+end
+
+function SWEP:GetThrowAnimTime()
+	return self:GetDTFloat(0)
 end

@@ -1,5 +1,10 @@
 function CLASS.CalcMainActivity(ply, velocity)
-    if velocity:Length2DSqr() <= 1 then
+	local wep = ply:GetActiveWeapon()
+	if wep.GetThrowAnimTime and CurTime() < wep:GetThrowAnimTime() then
+		return ACT_RANGE_ATTACK2, -1
+	end
+
+	if velocity:Length2DSqr() <= 1 then
 		return ACT_IDLE, -1
 	end
 

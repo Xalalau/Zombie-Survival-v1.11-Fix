@@ -9,6 +9,10 @@ SWEP.AutoSwitchFrom = false
 
 SWEP.Headcrabs = 2
 
+function SWEP:SetThrowAnimTime(time)
+	self:SetDTFloat(0, time)
+end
+
 function SWEP:Deploy()
 	self:GetOwner():DrawViewModel(true)
 	self:GetOwner():DrawWorldModel(false)
@@ -88,6 +92,7 @@ function SWEP:SecondaryAttack()
 		self.NextYell = CurTime() + 2
 		return
 	end
+	self:SetThrowAnimTime(CurTime() + self.ThrowAnimBaseTime)
 	self:GetOwner():SetAnimation(PLAYER_SUPERJUMP)
 	self:GetOwner():EmitSound("npc/zombie_poison/pz_throw"..math.random(2,3)..".wav")
 	GAMEMODE:SetPlayerSpeed(self:GetOwner(), 1)
