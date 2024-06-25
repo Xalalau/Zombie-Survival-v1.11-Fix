@@ -29,6 +29,13 @@ AddCSLuaFile("cl_dermaskin.lua")
 AddCSLuaFile("obj_player_extend.lua")
 AddCSLuaFile("obj_weapon_extend.lua")
 
+do
+	local files, directories = file.Find("gamemodes/zombiesurvival/gamemode/zombieanims/*.lua", "GAME")
+
+	for k, _file in ipairs(files) do
+		AddCSLuaFile("zombieanims/" .. _file)
+	end
+end
 AddCSLuaFile("animations.lua")
 
 AddCSLuaFile("zs_options.lua")
@@ -42,10 +49,6 @@ AddCSLuaFile("cl_splitmessage.lua")
 
 include("shared.lua")
 include("powerups.lua")
-
-for classnum, ZombieClass in ipairs(ZombieClasses) do
-	AddCSLuaFile("zombieanims/" .. ZombieClass["ANIM"] .. ".lua")
-end
 
 GM.PlayerSpawnTime = {}
 
@@ -671,7 +674,19 @@ concommand.Add("PostPlayerInitialSpawn", function(sender, command, arguments)
 	end
 end)
 
+local loadqueue = {}
+
+function GM:StartCommand(ply, cmd)
+	if loadqueue[ply] and not cmd:IsForced() then
+		loadqueue[ply] = nil
+		-- Reliable place to send net messages to new players spawning for the first time
+		ply:SetZombieClass(1)
+	end
+end
+
 function GM:PlayerInitialSpawn(ply)
+	loadqueue[ply] = true
+
 	ply:SetZombieClass(1)
 	ply.Gibbed = false
 	ply.BrainsEaten = 0
