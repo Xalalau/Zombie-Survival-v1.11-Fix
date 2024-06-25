@@ -1,11 +1,11 @@
 function CLASS.CalcMainActivity(ply, velocity)
     local wep = ply:GetActiveWeapon()
 	if wep:IsValid() then
-		if wep:ShouldPlayLeapAnimation() then
+		if wep.ShouldPlayLeapAnimation and wep:ShouldPlayLeapAnimation() then
 			return 1, 7
 		end
 
-		if wep:IsGoingToSpit() then
+		if wep.IsGoingToSpit and wep:IsGoingToSpit() then
 			return 1, 2
 		end
 	end
