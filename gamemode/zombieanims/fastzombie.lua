@@ -31,6 +31,10 @@ function CLASS.UpdateAnimation(ply, velocity, maxseqgroundspeed)
 	local wep = ply:GetActiveWeapon()
 	if not wep:IsValid() or not wep.GetClimbing or not wep.GetPounceTime or not wep.GetSwinging then return end
 
+	if IsValid(ply:GetViewModel()) then
+		ply:GetViewModel():SetPlaybackRate(2)
+	end
+
 	if wep:GetSwinging() then
 		if not ply.PlayingFZSwing then
 			ply.PlayingFZSwing = true
