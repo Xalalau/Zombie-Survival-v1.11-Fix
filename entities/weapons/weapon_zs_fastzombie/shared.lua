@@ -45,13 +45,17 @@ function SWEP:Precache()
 end
 
 function SWEP:GetClimbing()
-	return self:GetDTBool(1)
+	return self:GetDTBool(0)
 end
 
 function SWEP:GetSwinging()
-	return self:GetDTBool(2)
+	return self:GetDTBool(1)
 end
 
 function SWEP:GetPounceTime()
+	return self:GetDTFloat(0)
+end
+
+function SWEP:GetNextSwing()
 	return self:GetDTFloat(1)
 end

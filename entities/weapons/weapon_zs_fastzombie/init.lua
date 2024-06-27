@@ -10,21 +10,26 @@ SWEP.AutoSwitchFrom = false
 SWEP.SwapAnims = false
 
 function SWEP:SetClimbing(climbing)
-	self:SetDTBool(1, climbing)
+	self:SetDTBool(0, climbing)
 end
 
 function SWEP:SetSwinging(swinging)
-	self:SetDTBool(2, swinging)
+	self:SetDTBool(1, swinging)
 end
 
 function SWEP:SetPounceTime(leaping)
-	self:SetDTFloat(1, leaping)
+	self:SetDTFloat(0, leaping)
+end
+
+function SWEP:SetNextSwing(time)
+	self:SetDTFloat(1, time)
 end
 
 function SWEP:Deploy()
 	self:GetOwner():DrawViewModel(true)
 	self:GetOwner():DrawWorldModel(false)
 	self:SetPounceTime(0)
+	self:SetNextSwing(0)
 end
 
 function SWEP:Think()
@@ -88,12 +93,13 @@ function SWEP:Think()
 	end
 
 	if not self:GetSwinging() then return end
-	if CurTime() < self.NextSwing then return end
+	if CurTime() < self:GetNextSwing() then return end
 	if not owner:KeyDown(IN_ATTACK) then
 		self:SetSwinging(false)
 		//GAMEMODE:SetPlayerSpeed(owner, ZombieClasses[owner:GetZombieClass()].Speed)
 		return
 	end
+
 	local trace = owner:TraceLine(85, MASK_SHOT)
 	local ent = trace.Entity
 
@@ -125,15 +131,14 @@ function SWEP:Think()
 	owner:SetAnimation(PLAYER_ATTACK1)
 	if self.SwapAnims then self:SendWeaponAnim(ACT_VM_HITCENTER) else self:SendWeaponAnim(ACT_VM_SECONDARYATTACK) end
 	self.SwapAnims = not self.SwapAnims
-	self.NextSwing = CurTime() + self.Primary.Delay
+	self:SetNextSwing(CurTime() + self.Primary.Delay)
 	owner:Fire("IgnoreFallDamage", "", 0)
 end
 
-SWEP.NextSwing = 0
 function SWEP:PrimaryAttack()
 	if self:GetSwinging() or self.Leaping then return end
 	//GAMEMODE:SetPlayerSpeed(self:GetOwner(), ZombieClasses[self:GetOwner():GetZombieClass()].Speed * 0.5)
-	self.NextSwing = CurTime()
+	self:SetNextSwing(CurTime())
 	self:SetSwinging(true)
 end
 
