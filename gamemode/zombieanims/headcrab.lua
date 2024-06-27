@@ -22,7 +22,7 @@ function CLASS.UpdateAnimation(ply, velocity, maxseqgroundspeed)
 			ply:SetCycle(0)
 		end
 
-		ply:SetPlaybackRate(1)
+		ply:SetPlaybackRate(1.5)
 
 		return true
 	elseif ply.m_PrevFrameCycle then
