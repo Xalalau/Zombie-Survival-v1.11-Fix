@@ -40,9 +40,8 @@ Changes from v1.11 -> v1.11 Fix
     * Added ZS gamemode icon
     * Added command zs_unlock_all_classes and zs_unlock_all_weapons to help development
     * Removed all the stupid SteamID bans from 2008
-    * Changed default _zs_filmgrainopacity from 16 to 3 (It was unplayable before)
+    * Changed default _zs_filmgrainopacity from 16 to 3 (So it's actually playable by default)
     * Changed many pairs() to ipairs() to improve performance
-    * Changed some uppercase global variaves to be stored in another global var called ZSF
     * Changed some variable names to better fit their purpose or to improve standardization
     * Changed version to "v1.11 Fix by Xalalau & collaborators - For GMod March 2024 Update+"
     * Changed some game.ConsoleCommand to RunConsoleCommand
