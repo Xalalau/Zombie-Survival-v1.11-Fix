@@ -16,9 +16,9 @@ function SWEP:Deploy()
 	if self.Deployed then return end
 	self.Deployed = true
 
-	/*local effectdata = EffectData()
+	local effectdata = EffectData()
 		effectdata:SetEntity(self:GetOwner())
-	util.Effect("chemzombieambient", effectdata)*/
+	util.Effect("chemzombieambient", effectdata)
 end
 
 function SWEP:Think()

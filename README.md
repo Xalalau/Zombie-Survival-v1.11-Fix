@@ -51,6 +51,7 @@ Changes from v1.11 -> v1.11 Fix
     * Changed timer.Destroy() to timer.Remove()
     * Changed umsg lib to net
     * Changed Kill the player after he picks a new zombie class (to avoid animation bugs)
+    * Changed poison zombie green particles effect is reenabled
     * Fixed animations (backported and adapted from the latest ZS - Comparison: https://youtu.be/gOrt6uQwQig)
     * Fixed film grain post processing effect flickering due to two frames being too white
     * Fixed add missing IsValid checks to every timer
