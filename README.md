@@ -10,6 +10,10 @@ And thank you all very much!
 
 > 4 the Devs: would you like to contribute to this base with **new features**? Well, fork it and create your own ZS!! I won't accept these PRs here because they'll ruin the restoration. Advances must be made elsewhere! But if you want to contribute following the repo main goals, go ahead. Here are the commits golden rules: 1) Commits cannot change the original experience, even if you want to fix bugs like moonwalk; 2) We can fix bugs that prevent the game from running; 3) We must port deprecated code from GMod 11 to the current GMod; 4) We may change internal code to make our lives easier, but don't try to fix the spaghetti because I won't accept it.
 
+# REQUIREMENTS
+
+- Counter-Strike: Source downloaded and mounted in GMod
+
 # WANTED DEAD OR ALIVE
 
 ```diff
