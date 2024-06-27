@@ -905,7 +905,20 @@ local function ChemBomb(ply, refrag)
 	util.Effect("chemzombieexplode", effectdata, true, true)
 	--local damagescale = 150 + 150 * math.min(GetZombieFocus(ply:GetPos(), 300, 0.001, 0) - 0.3, 1)
 	--util.BlastDamage(ply, ply, ply:GetPos() + Vector(0,0,16), damagescale, damagescale * 0.25)
-	util.BlastDamage(ply, ply, ply:GetPos() + Vector(0,0,16), 170, 42)
+	--util.BlastDamage(ply, ply, ply:WorldSpaceCenter(), 170, 42)
+
+	local dmg = DamageInfo() -- Manually apply blast damage, as util.BlastDamage seems to fail when chem zombie and players are over displacements - Xala 
+	dmg:SetDamage(42)
+	dmg:SetAttacker(ply)
+	dmg:SetInflictor(ply)
+	dmg:SetDamageType(DMG_BLAST)
+
+	for k, ent in ipairs(ents.FindInSphere(ply:WorldSpaceCenter(), 170)) do
+		if ent:IsValid() and ent:IsPlayer() and ply:VisibleVec(ent:GetPos()) then
+			ent:TakeDamageInfo(dmg)
+		end
+	end
+
 	if refrag then
 		ply:AddFrags(100)
 	end
