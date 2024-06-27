@@ -107,10 +107,10 @@ CUSTOM_FOOTSTEPS = true
 AMMO_REGENERATE_RATE = 100
 
 -- In seconds, how long humans need to survive.
-ROUNDTIME = 1200 -- 20 minutes
+ROUNDTIME = 6666 -- 20 minutes
 
 -- Time in seconds between end round and next map.
-INTERMISSION_TIME = 35
+INTERMISSION_TIME = 15
 
 -- New joining players will be put on the Undead team if the round is half over.
 HUMAN_DEADLINE = true
@@ -169,7 +169,7 @@ AUTOREDEEM = true
 
 WARMUP_THRESHOLD = 4
 -- If a person dies when there are less than the above amount of people, don't set them on the undead team if this is true. This should generally be true on public / big servers.
-WARMUP_MODE = true
+WARMUP_MODE = false
 
 -- Missing config - Xala
 SURVIVALMODE = false
@@ -381,7 +381,7 @@ ZombieClasses[5] =
 	Threshold = 0.4,
 	SWEP = "weapon_zs_wraith",
 	ANIM = "wraith",
-	Model = Model("models/player/zelpa/stalker.mdl"),
+	Model = Model("models/stalker.mdl"),
 	Speed = 205,
 	Description="An apparition that does large amounts of damage.@Unique abilities: Heavy damage. Completely invisible while standing still.",
 	PainSounds = {
