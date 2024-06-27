@@ -79,7 +79,7 @@ end
 
 function CLASS.DoAnimationEvent(ply, event, data)
 	if event == PLAYERANIMEVENT_ATTACK_PRIMARY then
-		ply:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_GMOD_GESTURE_RANGE_ZOMBIE_SPECIAL, true)
+		ply:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_GMOD_GESTURE_RANGE_FRENZY, true)
 		return ACT_INVALID
 	elseif event == PLAYERANIMEVENT_RELOAD then
 		return ACT_INVALID
