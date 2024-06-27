@@ -3,7 +3,7 @@ include("shared.lua")
 SWEP.PrintName = "Poison Zombie"
 SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = true
-SWEP.ViewModelFOV = 60
+SWEP.ViewModelFOV = 47
 SWEP.ViewModelFlip = false
 SWEP.CSMuzzleFlashes = false
 

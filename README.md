@@ -55,6 +55,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed film grain post processing effect flickering due to two frames being too white
     * Fixed add missing IsValid checks to every timer
     * Fixed poison headcrab was missing the damage variable to calculate the attack knockback
+    * Fixed poison zombie viewmodel FOV was too high for wide 19:6 screens
     * Fixed the path 'effects/zombiefireworks/init.lua' was invalid on Linux
     * Fixed GM:CalcView() in cl_init.lua was trying to access a nil phys obj for no reason at all
     * Fixed size calculations on human/zombie counter on the HUD
