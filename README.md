@@ -92,6 +92,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed Wraith viewmodel fov was showing the missing parts of his arm
     * Fixed GM:ZombieHUD trying to access nil ply.Class
     * Fixed view camera inside the zombie head after death
+    * Fixed EntityTakeDamage trying to process nil damage
 ```
 
 # (Very inaccurate but official) Changelog

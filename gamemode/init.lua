@@ -782,6 +782,8 @@ function GM:PlayerDeathThink(ply)
 end
 
 function GM:EntityTakeDamage(ent, attacker, inflictor, damage)
+	if not damage then return end
+
 	if ent.SendLua then
 		local entteam = ent:Team()
 		if attacker.SendLua and attacker:Team() ~= entteam then
