@@ -12,7 +12,7 @@ And thank you all very much!
 
 # REQUIREMENTS
 
-- Counter-Strike: Source downloaded and mounted in GMod
+- Counter-Strike: Source downloaded and mounted in GMod OR this addon https://steamcommunity.com/sharedfiles/filedetails/?id=797917860
 
 # WANTED DEAD OR ALIVE
 
