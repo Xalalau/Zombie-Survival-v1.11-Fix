@@ -107,10 +107,10 @@ CUSTOM_FOOTSTEPS = true
 AMMO_REGENERATE_RATE = 100
 
 -- In seconds, how long humans need to survive.
-ROUNDTIME = 6666 -- 20 minutes
+ROUNDTIME = 1200 -- 20 minutes
 
 -- Time in seconds between end round and next map.
-INTERMISSION_TIME = 15
+INTERMISSION_TIME = 35
 
 -- New joining players will be put on the Undead team if the round is half over.
 HUMAN_DEADLINE = true
@@ -169,7 +169,7 @@ AUTOREDEEM = true
 
 WARMUP_THRESHOLD = 4
 -- If a person dies when there are less than the above amount of people, don't set them on the undead team if this is true. This should generally be true on public / big servers.
-WARMUP_MODE = false
+WARMUP_MODE = true
 
 -- Missing config - Xala
 SURVIVALMODE = false
