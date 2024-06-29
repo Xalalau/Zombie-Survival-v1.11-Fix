@@ -225,7 +225,7 @@ if CLIENT then
 	-- Use ^r ^g ^b ^y  when the line starts to change color of the line
 
 	HELP_TEXT =
-		[[^gWelcome to Zombie Survival v1.11 Fix @^gThe original gamemode from 2008 ported by Xalalau to GMod March 2024 Update+.@ @^b          -- HUMANS --@^bSurvive for ]] ..
+		[[^gWelcome to Zombie Survival v1.11 Fix @^gBy JetBoom (2008). Adapted to GMod March 2024 Update+ by Xalalau.@ @^b          -- HUMANS --@^bSurvive for ]] ..
 		ToMinutesSeconds(ROUNDTIME) ..
 		[[ to win the match.@If you get killed by a zombie, you become one! ]] ..
 		shit .. 
@@ -243,7 +243,7 @@ if CLIENT then
 		[[humans to ressurect yourself.@ @^yVisit https://github.com/Xalalau/Zombie-Survival-v1.11-Fix for updates to the game!]]
 
 	HELP_TEXT_SURVIVALMODE =
-		[[^rWelcome to Zombie Survival v1.11 Fix @^rThe original gamemode from 2008 ported by Xalalau to GMod March 2024 Update+.@ @^b          -- HUMANS --@^bSurvive for ]] ..
+		[[^rWelcome to Zombie Survival v1.11 Fix @^rBy JetBoom (2008). Adapted to GMod March 2024 Update+ by Xalalau.@ @^b          -- HUMANS --@^bSurvive for ]] ..
 		ToMinutesSeconds(ROUNDTIME) ..
 		[[ to win the match.@If you get killed by a zombie, you become one! ]] ..
 		shit ..
