@@ -30,8 +30,6 @@ Clone this repo and place it in your addons folder or subscribe to the gamemode 
 
 For now, to control ZS v1.11 settings you're supposed to edit the file ``gamemode/zs_options.lua`` -- it's an old gamemode after all.
 
-# Recommendations
-
 I recommend the following settings for a 10 player game:
 
 ```lua
