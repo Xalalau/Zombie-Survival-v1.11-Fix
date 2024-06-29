@@ -94,6 +94,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed view camera inside the zombie head after death
     * Fixed EntityTakeDamage trying to process nil damage
     * Fixed scoreboard gamemode version info was being cropped
+    * Fixed film grain filter trying to use nil materials
 ```
 
 # (Very inaccurate but official) Changelog

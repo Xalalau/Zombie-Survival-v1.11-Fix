@@ -41,7 +41,11 @@ if render.GetDXLevel() >= 90 then
 		end*/
 
 		if FILM_GRAIN:GetBool() then
-			surface.SetTexture(matFilmGrain[math.floor(CURRENTGRAIN)])
+			local texture = matFilmGrain[math.floor(CURRENTGRAIN)]
+
+			if not texture then return end -- Avoid init/early game errors
+
+			surface.SetTexture(texture)
 			surface.SetDrawColor(225, 225, 225, FILM_GRAIN_OPACITY:GetInt())
 			surface.DrawTexturedRect(0, 0, w, h)
 
