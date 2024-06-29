@@ -18,8 +18,14 @@ SWEP.WalkSpeed = 200
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
 
-SWEP.ViewModel = "models/weapons/v_pist_usp.mdl"
-SWEP.WorldModel = "models/weapons/w_pist_usp.mdl"
+-- Support replacement weapons, so we don't require CSS - Xala
+if file.Exists("models/weapons/2_pist_usp.mdl", "GAME") then
+	SWEP.ViewModel = "models/weapons/2_pist_usp.mdl"
+	SWEP.WorldModel = "models/weapons/3_pist_usp.mdl"
+else
+	SWEP.ViewModel = "models/weapons/v_pist_usp.mdl"
+	SWEP.WorldModel = "models/weapons/w_pist_usp.mdl"
+end
 
 SWEP.Weight = 5
 SWEP.AutoSwitchTo = false

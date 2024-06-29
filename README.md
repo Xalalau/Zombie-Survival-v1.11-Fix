@@ -10,14 +10,49 @@ And thank you all very much!
 
 > 4 the Devs: would you like to contribute to this base with **new features**? Well, fork it and create your own ZS!! I won't accept these PRs here because they'll ruin the restoration. Advances must be made elsewhere! But if you want to contribute following the repo main goals, go ahead. Here are the commits golden rules: 1) Commits cannot change the original experience, even if you want to fix bugs like moonwalk; 2) We can fix bugs that prevent the game from running; 3) We must port deprecated code from GMod 11 to the current GMod; 4) We may change internal code to make our lives easier, but don't try to fix the spaghetti because I won't accept it.
 
-# REQUIREMENTS
-
-- Counter-Strike: Source downloaded and mounted in GMod OR this addon https://steamcommunity.com/sharedfiles/filedetails/?id=797917860
-
 # WANTED DEAD OR ALIVE
 
 ```diff
 -Do you have the map zs_windmill_hut_v2? **Send it to me immediately!**
+```
+
+# REQUIREMENTS
+
+- ``Counter-Strike: Source`` downloaded and mounted in GMod OR [this addon](https://steamcommunity.com/sharedfiles/filedetails/?id=3278214014) (CSS should be the right option anyway as many maps need it).
+
+- Get some maps! You can use [this pack](https://steamcommunity.com/sharedfiles/filedetails/?id=3278214930) or select some files from [here](https://github.com/MOHAA2002/zombiesurvival-map-archive-update) or get newer maps in the workshop if they exist.
+
+# Installation
+
+Clone this repo and place it in your addons folder or subscribe to the gamemode in the Steam Workshop.
+
+# Settings
+
+For now, to control ZS v1.11 settings you're supposed to edit the file ``gamemode/zs_options.lua`` -- it's an old gamemode after all.
+
+# Recommendations
+
+I recommend the following settings for a 10 player game:
+
+```lua
+GM.Rewards = {} -- Leave this.
+GM.Rewards[2] = {"weapon_zs_deagle", "weapon_zs_deagle", "weapon_zs_glock3", "weapon_zs_glock3", "weapon_zs_magnum"}
+GM.Rewards[4] = {"_Heal", "_Heal", "_Shell"}
+GM.Rewards[6] = {"weapon_zs_uzi", "weapon_zs_uzi", "weapon_zs_crossbow", "weapon_zs_smg"}
+GM.Rewards[8] = {"weapon_zs_sweepershotgun", "weapon_zs_slugrifle"}
+GM.Rewards[10] = {"weapon_zs_barricadekit"}
+GM.Rewards[12] = {"_Regeneration", "_Heal"}
+GM.Rewards[14] = {"weapon_slam"}
+
+AMMO_REGENERATE_RATE = 40
+
+ROUNDTIME = 600 -- 10 minutes
+
+INTERMISSION_TIME = 25
+
+REDEEM_KILLS = 3
+
+WARMUP_THRESHOLD = 2
 ```
 
 # Original files and gameplay
@@ -40,6 +75,7 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 
 ```
 Changes from v1.11 -> v1.11 Fix
+    * Added support for replacement weapons, so the gamemode doesn't require CSS
     * Added missing config SURVIVALMODE to zs_options.lua
     * Added ZS gamemode icon
     * Added command zs_unlock_all_classes and zs_unlock_all_weapons to help development

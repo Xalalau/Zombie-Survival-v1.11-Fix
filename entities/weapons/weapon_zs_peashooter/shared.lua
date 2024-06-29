@@ -15,8 +15,14 @@ SWEP.Base = "weapon_zs_base"
 
 SWEP.WalkSpeed = 200
 
-SWEP.ViewModel = "models/weapons/v_pist_p228.mdl"
-SWEP.WorldModel = "models/weapons/w_pist_p228.mdl"
+-- Support replacement weapons, so we don't require CSS - Xala
+if file.Exists("models/weapons/2_pist_p228.mdl", "GAME") then
+	SWEP.ViewModel = "models/weapons/2_pist_p228.mdl"
+	SWEP.WorldModel = "models/weapons/3_pist_p228.mdl"
+else
+	SWEP.ViewModel = "models/weapons/v_pist_p228.mdl"
+	SWEP.WorldModel = "models/weapons/w_pist_p228.mdl"
+end
 
 SWEP.Weight = 5
 

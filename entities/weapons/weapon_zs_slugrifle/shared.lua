@@ -14,8 +14,14 @@ end
 
 SWEP.Base = "weapon_zs_base"
 
-SWEP.ViewModel = "models/weapons/v_shot_xm1014.mdl"
-SWEP.WorldModel = "models/weapons/w_shot_xm1014.mdl"
+-- Support replacement weapons, so we don't require CSS - Xala
+if file.Exists("models/weapons/2_shot_xm1014.mdl", "GAME") then
+	SWEP.ViewModel = "models/weapons/2_shot_xm1014.mdl"
+	SWEP.WorldModel = "models/weapons/3_shot_xm1014.mdl"
+else
+	SWEP.ViewModel = "models/weapons/v_shot_xm1014.mdl"
+	SWEP.WorldModel = "models/weapons/w_shot_xm1014.mdl"
+end
 
 SWEP.Weight = 6
 SWEP.AutoSwitchTo = false

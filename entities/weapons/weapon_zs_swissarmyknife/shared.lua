@@ -3,8 +3,14 @@ SWEP.Contact = ""
 SWEP.Purpose = ""
 SWEP.Instructions = ""
 
-SWEP.ViewModel = "models/weapons/v_knife_t.mdl"
-SWEP.WorldModel = "models/weapons/w_knife_t.mdl"
+-- Support replacement weapons, so we don't require CSS - Xala
+if file.Exists("models/weapons/2_knife_t.mdl", "GAME") then
+	SWEP.ViewModel = "models/weapons/2_knife_t.mdl"
+	SWEP.WorldModel = "models/weapons/3_knife_t.mdl"
+else
+	SWEP.ViewModel = "models/weapons/v_knife_t.mdl"
+	SWEP.WorldModel = "models/weapons/w_knife_t.mdl"
+end
 
 SWEP.HoldType = "melee"
 
