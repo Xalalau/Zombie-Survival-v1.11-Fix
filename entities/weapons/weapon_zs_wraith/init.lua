@@ -14,7 +14,7 @@ function SWEP:Deploy()
 	owner:DrawViewModel(true)
 	owner:DrawWorldModel(false)
 	owner:DrawShadow(false)
-	-- owner:SetRenderMode(RENDERMODE_TRANSCOLOR)
+	owner:SetRenderMode(RENDERMODE_TRANSCOLOR)
 	//owner:SetMaterial("models/props_combine/com_shield001a")
 
 	local hookname = "WraithCloackFail" .. tostring(owner)
