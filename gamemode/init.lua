@@ -916,8 +916,20 @@ local function ChemBomb(ply, refrag)
 	dmg:SetDamageType(DMG_BLAST)
 
 	for k, ent in ipairs(ents.FindInSphere(ply:WorldSpaceCenter(), 170)) do
-		if ent:IsValid() and ent:IsPlayer() and ply:VisibleVec(ent:GetPos()) then
-			ent:TakeDamageInfo(dmg)
+		if ent:IsValid() and ent:IsPlayer() and ent ~= ply then
+			local tr = util.TraceLine({
+				start = ply:EyePos(),
+				endpos = ent:EyePos(),
+				filter = function(hitent)
+					return hitent:IsValid() and hitent.GetClass and hitent:GetClass() ~= "playergib" or false
+				end
+			})
+
+			if tr.Entity:IsValid() and tr.Entity:IsPlayer() or
+			   not tr.Entity:IsValid() and (not tr.Entity.IsWorld or not tr.Entity:IsWorld())
+			then
+				ent:TakeDamageInfo(dmg)
+			end
 		end
 	end
 
