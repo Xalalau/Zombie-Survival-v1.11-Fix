@@ -20,20 +20,20 @@ function PANEL:Paint()
 	draw.RoundedBox(16, 0, 0, wide, tall, colBackground)
 
 	surface.SetDrawColor(0, 0, 0, 255)
-	surface.DrawRect(32, 128, 256, tall - 300)
-	surface.DrawRect(wide - 288, 128, 256, tall - 300)
+	surface.DrawRect(32, 138, 256, tall - 300)
+	surface.DrawRect(wide - 288, 138, 256, tall - 300)
 
 	surface.SetDrawColor(0, 50, 255, 255)
-	surface.DrawOutlinedRect(32, 128, 256, tall - 300)
+	surface.DrawOutlinedRect(32, 138, 256, tall - 300)
 
 	surface.SetDrawColor(0, 255, 0, 255)
-	surface.DrawOutlinedRect(wide - 288, 128, 256, tall - 300)
+	surface.DrawOutlinedRect(wide - 288, 138, 256, tall - 300)
 
 	draw.DrawText("Zombie Survival", "HUDFontBig", wide * 0.5, 0, COLOR_LIMEGREEN, TEXT_ALIGN_CENTER)
 	surface.SetFont("HUDFontBig")
 	local gmw, gmh = surface.GetTextSize("Zombie Survival")
-	draw.DrawText("("..GAMEMODE.Version.." "..GAMEMODE.SubVersion..")", "DefaultSmall", wide * 0.5 + gmw * 0.5 + 8, gmh - 20, COLOR_GRAY, TEXT_ALIGN_LEFT)
-	draw.DrawText(GetGlobalString("servername"), "HUDFont2", wide * 0.5, gmh, COLOR_GRAY, TEXT_ALIGN_CENTER)
+	draw.DrawText("("..GAMEMODE.Version.." "..GAMEMODE.SubVersion..")", "DefaultSmall", gmw, gmh - 10, COLOR_GRAY, TEXT_ALIGN_LEFT)
+	draw.DrawText(GetGlobalString("servername"), "HUDFont2", wide * 0.5, gmh + 10, COLOR_GRAY, TEXT_ALIGN_CENTER)
 
 	local colHuman = team.GetColor(TEAM_HUMAN)
 	local colUndead = team.GetColor(TEAM_UNDEAD)
@@ -44,16 +44,16 @@ function PANEL:Paint()
 	table.sort(HumanPlayers, SortFunc)
 	table.sort(UndeadPlayers, SortFunc)
 
-	local y = 132
+	local y = 142
 	local x = wide - 288
 
-	draw.DrawText("Survivor", "Default", 34, 116, color_white, TEXT_ALIGN_LEFT)
-	draw.DrawText("Kills", "Default", 192, 116, color_white, TEXT_ALIGN_RIGHT)
-	draw.DrawText("Ping", "Default", 284, 116, color_white, TEXT_ALIGN_RIGHT)
+	draw.DrawText("Survivor", "Default", 34, 126, color_white, TEXT_ALIGN_LEFT)
+	draw.DrawText("Kills", "Default", 192, 126, color_white, TEXT_ALIGN_RIGHT)
+	draw.DrawText("Ping", "Default", 284, 126, color_white, TEXT_ALIGN_RIGHT)
 
-	draw.DrawText("Zombie", "Default", x + 2, 116, color_white, TEXT_ALIGN_LEFT)
-	draw.DrawText("Brains Eaten", "Default", x + 192, 116, color_white, TEXT_ALIGN_RIGHT)
-	draw.DrawText("Ping", "Default", x + 254, 116, color_white, TEXT_ALIGN_RIGHT)
+	draw.DrawText("Zombie", "Default", x + 2, 126, color_white, TEXT_ALIGN_LEFT)
+	draw.DrawText("Brains Eaten", "Default", x + 192, 126, color_white, TEXT_ALIGN_RIGHT)
+	draw.DrawText("Ping", "Default", x + 254, 126, color_white, TEXT_ALIGN_RIGHT)
 
 	surface.SetFont("Default")
 	local width, height = surface.GetTextSize("Q")
@@ -70,7 +70,7 @@ function PANEL:Paint()
 		end
 	end
 
-	y = 132
+	y = 142
 
 	for i, ply in ipairs(UndeadPlayers) do
 		if y >= tall - 285 then
@@ -84,7 +84,7 @@ function PANEL:Paint()
 		end
 	end
 
-	local y = tall - 165
+	local y = tall - 155
 	draw.DrawText("F1:  Help", "HUDFontSmallAA", 28, y, COLOR_RED, TEXT_ALIGN_LEFT)
 	local tw, th = surface.GetTextSize("F1:  Help")
 	y = y + th + 5
