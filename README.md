@@ -132,6 +132,7 @@ Changes from v1.11 -> v1.11 Fix
     * Fixed EntityTakeDamage trying to process nil damage
     * Fixed scoreboard gamemode version info was being cropped
     * Fixed film grain filter trying to use nil materials
+    * Fixed poison headcrab spit on dedicated servers
 ```
 
 # (Very inaccurate but official) Changelog

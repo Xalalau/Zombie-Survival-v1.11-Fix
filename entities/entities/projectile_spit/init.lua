@@ -18,14 +18,14 @@ function ENT:Initialize()
 		self:SetPos(tr.HitPos)
 	end
 	self:SetModel("models/props/cs_italy/orange.mdl")
-	self:PhysicsInit(SOLID_VPHYSICS)
+	self:PhysicsInitSphere(1)
 	self:SetSolid(SOLID_VPHYSICS)
 	//self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 	self:SetTrigger(true)
 	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
 		phys:Wake()
-		phys:ApplyForceCenter(aimvec * 2500)
+		phys:ApplyForceCenter(aimvec * 800)
 		phys:SetMass(4)
 		phys:SetMaterial("metal")
 	end
