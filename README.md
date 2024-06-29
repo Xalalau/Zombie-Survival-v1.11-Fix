@@ -20,7 +20,10 @@ And thank you all very much!
 
 - ``Counter-Strike: Source`` downloaded and mounted in GMod OR [this addon](https://steamcommunity.com/sharedfiles/filedetails/?id=3278214014) (CSS should be the right option anyway as many maps need it).
 
-- Get some maps! You can use [this pack](https://steamcommunity.com/sharedfiles/filedetails/?id=3278214930) or select some files from [here](https://github.com/MOHAA2002/zombiesurvival-map-archive-update) or get newer maps in the workshop if they exist.
+- Get some maps! You can:
+  - use [this pack](https://steamcommunity.com/sharedfiles/filedetails/?id=3278214930); or
+  - select some files from [here](https://github.com/MOHAA2002/zombiesurvival-map-archive-update); or
+  - get newer maps from the Workshop if they exist.
 
 # Installation
 
