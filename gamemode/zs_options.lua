@@ -38,13 +38,13 @@ GM.STARTLOADOUTS = {
 -- Changing these means you're most likely an idiot.
 
 GM.Rewards = {} -- Leave this.
-GM.Rewards[5] = {"weapon_zs_deagle", "weapon_zs_deagle", "weapon_zs_glock3", "weapon_zs_glock3", "weapon_zs_magnum"}
-GM.Rewards[10] = {"_Heal", "_Heal", "_Shell"}
-GM.Rewards[15] = {"weapon_zs_uzi", "weapon_zs_uzi", "weapon_zs_crossbow", "weapon_zs_smg"}
-GM.Rewards[28] = {"weapon_zs_sweepershotgun", "weapon_zs_slugrifle"}
-GM.Rewards[35] = {"weapon_zs_barricadekit"}
-GM.Rewards[60] = {"_Regeneration", "_Heal"}
-GM.Rewards[75] = {"weapon_slam"}
+GM.Rewards[cvars.Number("zs_rewards_1", 5)] = {"weapon_zs_deagle", "weapon_zs_deagle", "weapon_zs_glock3", "weapon_zs_glock3", "weapon_zs_magnum"}
+GM.Rewards[cvars.Number("zs_rewards_2", 10)] = {"_Heal", "_Heal", "_Shell"}
+GM.Rewards[cvars.Number("zs_rewards_3", 15)] = {"weapon_zs_uzi", "weapon_zs_uzi", "weapon_zs_crossbow", "weapon_zs_smg"}
+GM.Rewards[cvars.Number("zs_rewards_4", 28)] = {"weapon_zs_sweepershotgun", "weapon_zs_slugrifle"}
+GM.Rewards[cvars.Number("zs_rewards_5", 35)] = {"weapon_zs_barricadekit"}
+GM.Rewards[cvars.Number("zs_rewards_6", 60)] = {"_Regeneration", "_Heal"}
+GM.Rewards[cvars.Number("zs_rewards_7", 75)] = {"weapon_slam"}
 
 ----------------------------------
 --		AMMO REGENERATION		--
@@ -82,21 +82,22 @@ GM.AmmoRegeneration["helicoptergun"] = 100
 ------------------------------
 
 -- If you like NPC's. NPC's will only spawn in maps that actually were built to have them in the first place. This gamemode won't create it's own.
-USE_NPCS = false
+USE_NPCS = cvars.Bool("zs_allow_map_npcs", false)
 
 -- Set this to true if you want people to get 'kills' from killing NPC's.
 -- IT IS STRONGLY SUGGESTED THAT YOU EDIT THE REWARDS TABLE TO
 -- MAKE THE REWARDS REQUIRE MORE KILLS AND/OR MAKE THE DIFFICULTY HIGHER IF YOU DO THIS!!!
 -- Example, change Rewards[6] to Rewards[15]. The number represents the kills.
-NPCS_COUNT_AS_KILLS = false
+NPCS_COUNT_AS_KILLS = cvars.Bool("zs_npcs_count_as_kills", false)
 
--- Good values are 1 to 3. 0.5 is about the same as the default HL2. 1 is about ZS difficulty. This is mainly for NPC healths and damages.
-DIFFICULTY = 1.5
-
+-- Auto apply NPC configs if the player is in singleplayer mode
 if game.SinglePlayer() then
 	USE_NPCS = true
 	NPCS_COUNT_AS_KILLS = true
 end
+
+-- Good values are 1 to 3. 0.5 is about the same as the default HL2. 1 is about ZS difficulty. This is mainly for NPC healths and damages.
+DIFFICULTY = cvars.Number("zs_difficulty", 1.5)
 
 -- Use Zombie Survival's custom footstep sounds? I'm not sure how bad it might lag considering you're potentially sending a lot of data on heavily packed servers.
 CUSTOM_FOOTSTEPS = true
@@ -104,22 +105,22 @@ CUSTOM_FOOTSTEPS = true
 -- In seconds, repeatatively, the gamemode gives all humans get a box of whatever ammo of the weapon they use.
 -- if you set this number to something stupid like 0, you'll have some lag issues.
 -- Changing this means you're an idiot.
-AMMO_REGENERATE_RATE = 100
+AMMO_REGENERATE_RATE = cvars.Number("zs_ammo_regenerate_rate", 100)
 
 -- In seconds, how long humans need to survive.
-ROUNDTIME = 1200 -- 20 minutes
+ROUNDTIME = cvars.Number("zs_roundtime", 1200) -- 20 minutes
 
 -- Time in seconds between end round and next map.
-INTERMISSION_TIME = 35
+INTERMISSION_TIME = cvars.Number("zs_intermission_time", 35)
 
 -- New joining players will be put on the Undead team if the round is half over.
-HUMAN_DEADLINE = true
+HUMAN_DEADLINE = cvars.Bool("zs_human_deadline", true)
 
 -- Set this to true to destroy all brush-based doors that aren't based on phys_hinge and func_physbox or whatever. For door campers.
-DESTROY_DOORS = true
+DESTROY_DOORS = cvars.Bool("zs_destroy_doors", true)
 
 -- Set this to true to destroy all prop-based doors. Not recommended since some doors have boards on them and what-not. Only for true door camping whores.
-DESTROY_PROP_DOORS = false
+DESTROY_PROP_DOORS = cvars.Bool("zs_destroy_prop_doors", false)
 
 -- Set this to true to force players to have mat_monitorgamma set to 2.2. This could cause problems with non-calibrated screens so, whatever.
 -- It forces people to use flashlights instead of whoring the video settings to make it brighter.
@@ -128,15 +129,15 @@ FORCE_NORMAL_GAMMA = false
 -- Turn this to true if you don't want humans to be able to camp inside of vents and other hard to reach areas. They will die
 -- if they are in a vent for 60 seconds or more.
 -- Changing this means you're an idiot.
-ANTI_VENT_CAMP = true
+ANTI_VENT_CAMP = cvars.Bool("zs_anti_vent_camp", true)
 
 -- Set this to true to allow humans to shove other humans by pressing USE. Great for door blocking tards.
 -- Changing this means you're an idiot.
-ALLOW_SHOVE = true
+ALLOW_SHOVE = cvars.Bool("zs_allow_shove", true)
 
 -- Set this to true if you want your admins to be able to use the 'noclip' concommand.
 -- If they already have rcon then it's pointless to set this to false.
-ALLOW_ADMIN_NOCLIP = true
+ALLOW_ADMIN_NOCLIP = cvars.Bool("zs_allow_admin_noclip", true)
 
 -- Sound to play for last human.
 LASTHUMANSOUND = "lasthuman.mp3"
@@ -157,19 +158,19 @@ HUMANWINSOUND = "humanwin.mp3"
 -- Sound played to a person when they die as a human.
 DEATHSOUND = "music/stingers/HL1_stinger_song28.mp3"
 
+-- Turn off/on the redeeming system.
+REDEEM = cvars.Bool("zs_allow_redeeming", true)
+
 -- Human kills needed for a zombie player to redeem (resurrect). Do not set this to 0. If you want to turn this
 -- system off, set AUTOREDEEM to false.
-REDEEM_KILLS = 4
-
--- Turn off/on the redeeming system.
-REDEEM = true
+REDEEM_KILLS = cvars.Number("zs_redeem_kills", 4)
 
 -- Players don't have a choice if they want to redeem or not. Setting to false makes them press F2.
-AUTOREDEEM = true
+AUTOREDEEM = cvars.Bool("zs_autoredeem", true)
 
-WARMUP_THRESHOLD = 4
 -- If a person dies when there are less than the above amount of people, don't set them on the undead team if this is true. This should generally be true on public / big servers.
-WARMUP_MODE = true
+WARMUP_MODE = cvars.Bool("zs_warmup_mode", true)
+WARMUP_THRESHOLD = cvars.Number("zs_warmup_threshold", 4)
 
 -- Missing config - Xala
 SURVIVALMODE = false

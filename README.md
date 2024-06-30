@@ -31,29 +31,25 @@ Clone this repo and place it in your addons folder or subscribe to the gamemode 
 
 # Settings
 
-For now, to control ZS v1.11 settings you're supposed to edit the file ``gamemode/zs_options.lua`` -- it's an old gamemode after all.
+In the original ZS v1.11 the settings were supposed be manually changed in ``gamemode/zs_options.lua``, but I exposed most of them through the main menu (when starting a new game) and console commands (check zs_options.lua).
+
+![image](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/assets/5098527/29238b84-26fa-4935-b200-35f60a02f368)
 
 I recommend the following settings for a 10 player game:
 
-```lua
-GM.Rewards = {} -- Leave this.
-GM.Rewards[2] = {"weapon_zs_deagle", "weapon_zs_deagle", "weapon_zs_glock3", "weapon_zs_glock3", "weapon_zs_magnum"}
-GM.Rewards[4] = {"_Heal", "_Heal", "_Shell"}
-GM.Rewards[6] = {"weapon_zs_uzi", "weapon_zs_uzi", "weapon_zs_crossbow", "weapon_zs_smg"}
-GM.Rewards[8] = {"weapon_zs_sweepershotgun", "weapon_zs_slugrifle"}
-GM.Rewards[10] = {"weapon_zs_barricadekit"}
-GM.Rewards[12] = {"_Regeneration", "_Heal"}
-GM.Rewards[14] = {"weapon_slam"}
-
-AMMO_REGENERATE_RATE = 40
-
-ROUNDTIME = 600 -- 10 minutes
-
-INTERMISSION_TIME = 25
-
-REDEEM_KILLS = 3
-
-WARMUP_THRESHOLD = 2
+```
+zs_rewards_1 2
+zs_rewards_2 4
+zs_rewards_3 6
+zs_rewards_4 8
+zs_rewards_5 10
+zs_rewards_6 12
+zs_rewards_7 14
+zs_ammo_regenerate_rate 40
+zs_roundtime 600
+zs_intermission_time 25
+zs_redeem_kills 3
+zs_warmup_threshold 2
 ```
 
 # Original files and gameplay
@@ -76,7 +72,8 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 
 ```
 Changes from v1.11 -> v1.11 Fix
-    * Added support for replacement weapons, so the gamemode doesn't require CSS
+    * Added gamemode setting to the game main menu
+    * Added support for replacement weapons, so the ZS doesn't require CSS
     * Added missing config SURVIVALMODE to zs_options.lua
     * Added ZS gamemode icon
     * Added command zs_unlock_all_classes and zs_unlock_all_weapons to help development
@@ -92,7 +89,7 @@ Changes from v1.11 -> v1.11 Fix
     * Changed umsg lib to net
     * Changed Kill the player after he picks a new zombie class (to avoid animation bugs)
     * Changed poison zombie green particles effect is reenabled
-    * Fixed animations (backported and adapted from the latest ZS - Comparison: https://youtu.be/gOrt6uQwQig)
+    * Fixed animations (backported and adapted from the latest ZS)
     * Fixed film grain post processing effect flickering due to two frames being too white
     * Fixed add missing IsValid checks to every timer
     * Fixed poison headcrab was missing the damage variable to calculate the attack knockback

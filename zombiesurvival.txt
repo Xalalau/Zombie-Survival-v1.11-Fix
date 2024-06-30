@@ -12,5 +12,235 @@
 
 	"settings"
 	{
+		1
+		{
+			"name"		"zs_difficulty"
+			"text"		"Difficulty"
+			"help"		"Good values are 1 to 3. 0.5 is about the same as the default HL2. 1 is about ZS difficulty. This is mainly for NPC healths and damages."
+			"type"		"Numeric"
+			"default"	"1.5"
+			"singleplayer" "1"
+		}
+
+		2
+		{
+			"name"		"zs_warmup_mode"
+			"text"		"Warmup mode"
+			"help"		"If a person dies when there are less than the above amount of people, don't set them on the undead team if this is true. This should generally be true on public / big servers. If max players is less than 3, it'll always be turned off."
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+
+		3
+		{
+			"name"		"zs_warmup_threshold"
+			"text"		"Warmup threshold"
+			"help"		"How many players should be in the game until they start turning into zombies after dying."
+			"type"		"Numeric"
+			"default"	"4"
+		}
+
+		4
+		{
+			"name"		"zs_allow_map_npcs"
+			"text"		"Allow map NPCs"
+			"help"		"NPC's will only spawn in maps that actually were built to have them in the first place. This gamemode won't create it's own."
+			"type"		"CheckBox"
+			"default"	"0"
+		}
+
+		5
+		{
+			"name"		"zs_npcs_count_as_kills"
+			"text"		"NPCs count as kills"
+			"help"		"Set this to true if you want people to get 'kills' from killing NPC's."
+			"type"		"CheckBox"
+			"default"	"0"
+		}
+
+		6
+		{
+			"name"		"zs_allow_redeeming"
+			"text"		"Allow redeeming (resurrection)"
+			"help"		"Turn off/on the redeeming system."
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+
+		7
+		{
+			"name"		"zs_autoredeem"
+			"text"		"The players redeem automatically"
+			"help"		"Players don't have a choice if they want to redeem or not. Setting to false makes them press F2."
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+
+		8
+		{
+			"name"		"zs_redeem_kills"
+			"text"		"Redeem kills"
+			"help"		"Human kills needed for a zombie player to redeem (resurrect). Do not set this to 0. If you want to turn this"
+			"type"		"Numeric"
+			"default"	"4"
+		}
+
+		9
+		{
+			"name"		"zs_ammo_regenerate_rate"
+			"text"		"Ammo regenerate rate"
+			"help"		"In seconds, repeatatively, the gamemode gives all humans get a box of whatever ammo of the weapon they use. Min 1."
+			"type"		"Numeric"
+			"default"	"100"
+			"singleplayer" "1"
+		}
+
+		10
+		{
+			"name"		"zs_roundtime"
+			"text"		"Round time"
+			"help"		"In seconds, how long humans need to survive."
+			"type"		"Numeric"
+			"default"	"1200"
+			"singleplayer" "1"
+		}
+
+		11
+		{
+			"name"		"zs_intermission_time"
+			"text"		"Intermission time"
+			"help"		"Time in seconds between end round and next map.."
+			"type"		"Numeric"
+			"default"	"35"
+			"singleplayer" "1"
+		}
+
+		12
+		{
+			"name"		"zs_human_deadline"
+			"text"		"Late new players are zombies"
+			"help"		"New joining players will be put on the Undead team if the round is half over."
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+
+		13
+		{
+			"name"		"zs_destroy_doors"
+			"text"		"Remove doors from the map"
+			"help"		"Set this to true to destroy all brush-based doors that aren't based on phys_hinge and func_physbox or whatever. For door campers."
+			"type"		"CheckBox"
+			"default"	"1"
+			"singleplayer" "1"
+		}
+
+		14
+		{
+			"name"		"zs_destroy_prop_doors"
+			"text"		"Remove prop doors from the map"
+			"help"		"Set this to true to destroy all prop-based doors. Not recommended since some doors have boards on them and what-not. Only for true door camping whores."
+			"type"		"CheckBox"
+			"default"	"0"
+			"singleplayer" "1"
+		}
+
+		15
+		{
+			"name"		"zs_anti_vent_camp"
+			"text"		"Anti vent camp"
+			"help"		"Turn this to true if you don't want humans to be able to camp inside of vents and other hard to reach areas. They will die if they are in a vent for 60 seconds or more."
+			"type"		"CheckBox"
+			"default"	"1"
+			"singleplayer" "1"
+		}
+
+		16
+		{
+			"name"		"zs_allow_shove"
+			"text"		"Allow shove"
+			"help"		"Set this to true to allow humans to shove other humans by pressing USE. Great for door blocking tards."
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+
+		17
+		{
+			"name"		"zs_allow_admin_noclip"
+			"text"		"Allow admin noclip"
+			"help"		"Set this to true if you want your admins to be able to use the 'noclip' concommand."
+			"type"		"CheckBox"
+			"default"	"1"
+			"singleplayer" "1"
+		}
+
+		18
+		{
+			"name"		"zs_rewards_1"
+			"text"		"Kills to get a level 1 reward"
+			"help"		"How many zombies the player needs to kill in order to get a level 1 reward"
+			"type"		"Numeric"
+			"default"	"5"
+			"singleplayer" "1"
+		}
+
+		19
+		{
+			"name"		"zs_rewards_2"
+			"text"		"Kills to get a level 2 reward"
+			"help"		"How many zombies the player needs to kill in order to get a level 2 reward"
+			"type"		"Numeric"
+			"default"	"10"
+			"singleplayer" "1"
+		}
+
+		20
+		{
+			"name"		"zs_rewards_3"
+			"text"		"Kills to get a level 3 reward"
+			"help"		"How many zombies the player needs to kill in order to get a level 3 reward"
+			"type"		"Numeric"
+			"default"	"15"
+			"singleplayer" "1"
+		}
+
+		21
+		{
+			"name"		"zs_rewards_4"
+			"text"		"Kills to get a level 4 reward"
+			"help"		"How many zombies the player needs to kill in order to get a level 4 reward"
+			"type"		"Numeric"
+			"default"	"28"
+			"singleplayer" "1"
+		}
+
+		22
+		{
+			"name"		"zs_rewards_5"
+			"text"		"Kills to get a level 5 reward"
+			"help"		"How many zombies the player needs to kill in order to get a level 5 reward"
+			"type"		"Numeric"
+			"default"	"35"
+			"singleplayer" "1"
+		}
+
+		23
+		{
+			"name"		"zs_rewards_6"
+			"text"		"Kills to get a level 6 reward"
+			"help"		"How many zombies the player needs to kill in order to get a level 6 reward"
+			"type"		"Numeric"
+			"default"	"60"
+			"singleplayer" "1"
+		}
+
+		24
+		{
+			"name"		"zs_rewards_7"
+			"text"		"Kills to get a level 7 reward"
+			"help"		"How many zombies the player needs to kill in order to get a level 7 reward"
+			"type"		"Numeric"
+			"default"	"75"
+			"singleplayer" "1"
+		}
 	}
 }
