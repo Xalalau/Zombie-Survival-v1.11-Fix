@@ -77,7 +77,7 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 # v1.11 Fix by Xalalau & collaborators changelog
 
 ```
-Changes from v1.11 -> v1.11 Fix
+Changes from v1.11 -> v1.11 Fix 1
     * Added gamemode setting to the game main menu
     * Added support for replacement weapons, so the ZS doesn't require CSS
     * Added missing config SURVIVALMODE to zs_options.lua
