@@ -37,7 +37,7 @@
 			"text"		"Warmup threshold"
 			"help"		"How many players should be in the game until they start turning into zombies after dying."
 			"type"		"Numeric"
-			"default"	"4"
+			"default"	"2"
 		}
 
 		4
@@ -82,7 +82,7 @@
 			"text"		"Redeem kills"
 			"help"		"Human kills needed for a zombie player to redeem (resurrect). Do not set this to 0. If you want to turn this"
 			"type"		"Numeric"
-			"default"	"4"
+			"default"	"3"
 		}
 
 		9
@@ -91,7 +91,7 @@
 			"text"		"Ammo regenerate rate"
 			"help"		"In seconds, repeatatively, the gamemode gives all humans get a box of whatever ammo of the weapon they use. Min 1."
 			"type"		"Numeric"
-			"default"	"100"
+			"default"	"50"
 			"singleplayer" "1"
 		}
 
@@ -101,7 +101,7 @@
 			"text"		"Round time"
 			"help"		"In seconds, how long humans need to survive."
 			"type"		"Numeric"
-			"default"	"1200"
+			"default"	"600"
 			"singleplayer" "1"
 		}
 
@@ -111,7 +111,7 @@
 			"text"		"Intermission time"
 			"help"		"Time in seconds between end round and next map.."
 			"type"		"Numeric"
-			"default"	"35"
+			"default"	"25"
 			"singleplayer" "1"
 		}
 
@@ -179,7 +179,7 @@
 			"text"		"Kills to get a level 1 reward"
 			"help"		"How many zombies the player needs to kill in order to get a level 1 reward"
 			"type"		"Numeric"
-			"default"	"5"
+			"default"	"2"
 			"singleplayer" "1"
 		}
 
@@ -189,7 +189,7 @@
 			"text"		"Kills to get a level 2 reward"
 			"help"		"How many zombies the player needs to kill in order to get a level 2 reward"
 			"type"		"Numeric"
-			"default"	"10"
+			"default"	"4"
 			"singleplayer" "1"
 		}
 
@@ -199,7 +199,7 @@
 			"text"		"Kills to get a level 3 reward"
 			"help"		"How many zombies the player needs to kill in order to get a level 3 reward"
 			"type"		"Numeric"
-			"default"	"15"
+			"default"	"6"
 			"singleplayer" "1"
 		}
 
@@ -209,7 +209,7 @@
 			"text"		"Kills to get a level 4 reward"
 			"help"		"How many zombies the player needs to kill in order to get a level 4 reward"
 			"type"		"Numeric"
-			"default"	"28"
+			"default"	"8"
 			"singleplayer" "1"
 		}
 
@@ -219,7 +219,7 @@
 			"text"		"Kills to get a level 5 reward"
 			"help"		"How many zombies the player needs to kill in order to get a level 5 reward"
 			"type"		"Numeric"
-			"default"	"35"
+			"default"	"10"
 			"singleplayer" "1"
 		}
 
@@ -229,7 +229,7 @@
 			"text"		"Kills to get a level 6 reward"
 			"help"		"How many zombies the player needs to kill in order to get a level 6 reward"
 			"type"		"Numeric"
-			"default"	"60"
+			"default"	"12"
 			"singleplayer" "1"
 		}
 
@@ -239,7 +239,7 @@
 			"text"		"Kills to get a level 7 reward"
 			"help"		"How many zombies the player needs to kill in order to get a level 7 reward"
 			"type"		"Numeric"
-			"default"	"75"
+			"default"	"14"
 			"singleplayer" "1"
 		}
 	}

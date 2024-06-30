@@ -38,13 +38,13 @@ GM.STARTLOADOUTS = {
 -- Changing these means you're most likely an idiot.
 
 GM.Rewards = {} -- Leave this.
-GM.Rewards[cvars.Number("zs_rewards_1", 5)] = {"weapon_zs_deagle", "weapon_zs_deagle", "weapon_zs_glock3", "weapon_zs_glock3", "weapon_zs_magnum"}
-GM.Rewards[cvars.Number("zs_rewards_2", 10)] = {"_Heal", "_Heal", "_Shell"}
-GM.Rewards[cvars.Number("zs_rewards_3", 15)] = {"weapon_zs_uzi", "weapon_zs_uzi", "weapon_zs_crossbow", "weapon_zs_smg"}
-GM.Rewards[cvars.Number("zs_rewards_4", 28)] = {"weapon_zs_sweepershotgun", "weapon_zs_slugrifle"}
-GM.Rewards[cvars.Number("zs_rewards_5", 35)] = {"weapon_zs_barricadekit"}
-GM.Rewards[cvars.Number("zs_rewards_6", 60)] = {"_Regeneration", "_Heal"}
-GM.Rewards[cvars.Number("zs_rewards_7", 75)] = {"weapon_slam"}
+GM.Rewards[cvars.Number("zs_rewards_1", 2)] = {"weapon_zs_deagle", "weapon_zs_deagle", "weapon_zs_glock3", "weapon_zs_glock3", "weapon_zs_magnum"}
+GM.Rewards[cvars.Number("zs_rewards_2", 4)] = {"_Heal", "_Heal", "_Shell"}
+GM.Rewards[cvars.Number("zs_rewards_3", 6)] = {"weapon_zs_uzi", "weapon_zs_uzi", "weapon_zs_crossbow", "weapon_zs_smg"}
+GM.Rewards[cvars.Number("zs_rewards_4", 8)] = {"weapon_zs_sweepershotgun", "weapon_zs_slugrifle"}
+GM.Rewards[cvars.Number("zs_rewards_5", 10)] = {"weapon_zs_barricadekit"}
+GM.Rewards[cvars.Number("zs_rewards_6", 12)] = {"_Regeneration", "_Heal"}
+GM.Rewards[cvars.Number("zs_rewards_7", 14)] = {"weapon_slam"}
 
 ----------------------------------
 --		AMMO REGENERATION		--
@@ -104,14 +104,13 @@ CUSTOM_FOOTSTEPS = true
 
 -- In seconds, repeatatively, the gamemode gives all humans get a box of whatever ammo of the weapon they use.
 -- if you set this number to something stupid like 0, you'll have some lag issues.
--- Changing this means you're an idiot.
-AMMO_REGENERATE_RATE = cvars.Number("zs_ammo_regenerate_rate", 100)
+AMMO_REGENERATE_RATE = cvars.Number("zs_ammo_regenerate_rate", 50)
 
 -- In seconds, how long humans need to survive.
-ROUNDTIME = cvars.Number("zs_roundtime", 1200) -- 20 minutes
+ROUNDTIME = cvars.Number("zs_roundtime", 600) -- 10 minutes
 
 -- Time in seconds between end round and next map.
-INTERMISSION_TIME = cvars.Number("zs_intermission_time", 35)
+INTERMISSION_TIME = cvars.Number("zs_intermission_time", 25)
 
 -- New joining players will be put on the Undead team if the round is half over.
 HUMAN_DEADLINE = cvars.Bool("zs_human_deadline", true)
@@ -128,11 +127,9 @@ FORCE_NORMAL_GAMMA = false
 
 -- Turn this to true if you don't want humans to be able to camp inside of vents and other hard to reach areas. They will die
 -- if they are in a vent for 60 seconds or more.
--- Changing this means you're an idiot.
 ANTI_VENT_CAMP = cvars.Bool("zs_anti_vent_camp", true)
 
 -- Set this to true to allow humans to shove other humans by pressing USE. Great for door blocking tards.
--- Changing this means you're an idiot.
 ALLOW_SHOVE = cvars.Bool("zs_allow_shove", true)
 
 -- Set this to true if you want your admins to be able to use the 'noclip' concommand.
@@ -163,14 +160,14 @@ REDEEM = cvars.Bool("zs_allow_redeeming", true)
 
 -- Human kills needed for a zombie player to redeem (resurrect). Do not set this to 0. If you want to turn this
 -- system off, set AUTOREDEEM to false.
-REDEEM_KILLS = cvars.Number("zs_redeem_kills", 4)
+REDEEM_KILLS = cvars.Number("zs_redeem_kills", 3)
 
 -- Players don't have a choice if they want to redeem or not. Setting to false makes them press F2.
 AUTOREDEEM = cvars.Bool("zs_autoredeem", true)
 
 -- If a person dies when there are less than the above amount of people, don't set them on the undead team if this is true. This should generally be true on public / big servers.
 WARMUP_MODE = cvars.Bool("zs_warmup_mode", true)
-WARMUP_THRESHOLD = cvars.Number("zs_warmup_threshold", 4)
+WARMUP_THRESHOLD = cvars.Number("zs_warmup_threshold", 2)
 
 -- Missing config - Xala
 SURVIVALMODE = false

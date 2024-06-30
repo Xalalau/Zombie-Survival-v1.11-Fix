@@ -41,23 +41,6 @@ I also like to install [Ultimate Workshop Downloader](https://steamcommunity.com
 
 In the original ZS v1.11 the settings were supposed be manually changed in ``gamemode/zs_options.lua``, but I exposed most of them through the main menu (when starting a new game) and console commands (check zs_options.lua).
 
-I recommend the following settings for a 10 player game:
-
-```
-zs_rewards_1 2
-zs_rewards_2 4
-zs_rewards_3 6
-zs_rewards_4 8
-zs_rewards_5 10
-zs_rewards_6 12
-zs_rewards_7 14
-zs_ammo_regenerate_rate 40
-zs_roundtime 600
-zs_intermission_time 25
-zs_redeem_kills 3
-zs_warmup_threshold 2
-```
-
 # Original files and gameplay
 
 By [Soldier](http://steamcommunity.com/profiles/76561198325469923):
@@ -96,6 +79,19 @@ Changes from v1.11 -> v1.11 Fix 1
     * Changed Kill the player after he picks a new zombie class (to avoid animation bugs)
     * Changed poison zombie green particles effect is reenabled
     * Changed license to JBGM
+    * Changed the settings for a 10 player game (tested):
+        - changed zs_rewards_1 from 5 to 2
+        - changed zs_rewards_2 from 10 to 4
+        - changed zs_rewards_3 from 15 to 6
+        - changed zs_rewards_4 from 28 to 8
+        - changed zs_rewards_5 from 35 to 10
+        - changed zs_rewards_6 from 60 to 12
+        - changed zs_rewards_7 from 75 to 14
+        - changed zs_ammo_regenerate_rate from 100 to 50
+        - changed zs_roundtime from 1200 to 600
+        - changed zs_intermission_time from 35 to 25
+        - changed zs_redeem_kills from 4 to 3
+        - changed zs_warmup_threshold from 4 to 2
     * Fixed animations (backported and adapted from the latest ZS)
     * Fixed film grain post processing effect flickering due to two frames being too white
     * Fixed add missing IsValid checks to every timer
