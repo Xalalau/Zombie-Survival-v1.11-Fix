@@ -41,8 +41,6 @@ I also like to install [Ultimate Workshop Downloader](https://steamcommunity.com
 
 In the original ZS v1.11 the settings were supposed be manually changed in ``gamemode/zs_options.lua``, but I exposed most of them through the main menu (when starting a new game) and console commands (check zs_options.lua).
 
-![image](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/assets/5098527/29238b84-26fa-4935-b200-35f60a02f368)
-
 I recommend the following settings for a 10 player game:
 
 ```
