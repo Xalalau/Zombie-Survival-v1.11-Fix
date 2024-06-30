@@ -16,6 +16,12 @@ And thank you all very much!
 -Do you have the map zs_windmill_hut_v2? **Send it to me immediately!**
 ```
 
+Footage:
+- https://www.youtube.com/watch?v=b-koaN5Knys
+- https://www.youtube.com/watch?v=CYc4Dkcusng
+- https://youtu.be/0dB5ZBX3fd4
+
+
 # REQUIREMENTS
 
 - ``Counter-Strike: Source`` downloaded and mounted in GMod OR [this addon](https://steamcommunity.com/sharedfiles/filedetails/?id=3278214014) (CSS should be the right option anyway as many maps need it).
