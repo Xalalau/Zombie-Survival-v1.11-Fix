@@ -97,6 +97,7 @@ Changes from v1.11 -> v1.11 Fix
     * Changed umsg lib to net
     * Changed Kill the player after he picks a new zombie class (to avoid animation bugs)
     * Changed poison zombie green particles effect is reenabled
+    * Changed license to JBGM
     * Fixed animations (backported and adapted from the latest ZS)
     * Fixed film grain post processing effect flickering due to two frames being too white
     * Fixed add missing IsValid checks to every timer
