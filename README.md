@@ -33,7 +33,9 @@ Footage:
 
 # Installation
 
-Clone this repo and place it in your addons folder or subscribe to the gamemode in the Steam Workshop.
+Clone this repo and place it in your addons folder or subscribe to the gamemode [in the Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3278538690).
+
+I also like to install [Ultimate Workshop Downloader](https://steamcommunity.com/sharedfiles/filedetails/?id=2214712098), so new players get the required server files automatically.
 
 # Settings
 
