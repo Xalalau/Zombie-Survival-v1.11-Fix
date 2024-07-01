@@ -4,7 +4,7 @@ Hey! I was there, in 2008, playing on the classic ZS servers, and I saw the day 
 
 So here we are! I want to give my HUGE appreciation and thanks to [Yushe](http://steamcommunity.com/profiles/76561198360846296) and [Soldier](http://steamcommunity.com/profiles/76561198325469923), who have kept a lot of original files **to this day** and still maintain a classic ZS server with a proprietary fixed version. Thanks to their kindness in granting my request to reopen the original ZS to the public, I was able to begin my effort on this repository! After that, all I needed was free time, and over the weekends the work gradually got done.
 
-I consider my changes a Fix to the original gamemode and also a light Adaptation of the code. I really needed to change some details in order to get the gamemode in a playable state, check the changelog below. So, yes... Forget that hammer entity, waves, GUI markers, zombies spawning nests... It's all gone here!
+I consider my changes a Fix to the original gamemode and also a light Adaptation of the code. I really needed to change some details in order to get this old version in a playable state (check the changelog below), and I recon that getting this checkpoint and making code improvements is a great idea. So, yes... Forget that hammer entity, waves, GUI markers, zombies spawning nests and crazy cages... It's all gone here!
 
 And thank you all very much! I hope you enjoy this gamemode as much as I do.
 
