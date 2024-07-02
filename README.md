@@ -87,7 +87,7 @@ Changes from v1.11 -> v1.11 Fix 1
         - changed zs_rewards_5 from 35 to 10
         - changed zs_rewards_6 from 60 to 12
         - changed zs_rewards_7 from 75 to 14
-        - changed zs_ammo_regenerate_rate from 100 to 50
+        - changed zs_ammo_regenerate_rate from 100 to 75
         - changed zs_roundtime from 1200 to 600
         - changed zs_intermission_time from 35 to 25
         - changed zs_redeem_kills from 4 to 3
