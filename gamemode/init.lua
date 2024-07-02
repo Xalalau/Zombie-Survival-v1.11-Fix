@@ -609,6 +609,7 @@ function GM:EndRound(winner)
 	if ENDROUND then return end
 	ENDROUND = true
 	timer.Simple(INTERMISSION_TIME, game.LoadNextMap)
+	timer.Simple(INTERMISSION_TIME * 0.3, function() hook.Run("LoadNextMap") end)
 	local nextmap = game.GetMapNext()
 
 	timer.Simple(1, function()
