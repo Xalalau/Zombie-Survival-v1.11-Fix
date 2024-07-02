@@ -91,7 +91,7 @@
 			"text"		"Ammo regenerate rate"
 			"help"		"In seconds, repeatatively, the gamemode gives all humans get a box of whatever ammo of the weapon they use. Min 1."
 			"type"		"Numeric"
-			"default"	"50"
+			"default"	"75"
 			"singleplayer" "1"
 		}
 

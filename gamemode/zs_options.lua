@@ -104,7 +104,7 @@ CUSTOM_FOOTSTEPS = true
 
 -- In seconds, repeatatively, the gamemode gives all humans get a box of whatever ammo of the weapon they use.
 -- if you set this number to something stupid like 0, you'll have some lag issues.
-AMMO_REGENERATE_RATE = cvars.Number("zs_ammo_regenerate_rate", 50)
+AMMO_REGENERATE_RATE = cvars.Number("zs_ammo_regenerate_rate", 75)
 
 -- In seconds, how long humans need to survive.
 ROUNDTIME = cvars.Number("zs_roundtime", 600) -- 10 minutes
