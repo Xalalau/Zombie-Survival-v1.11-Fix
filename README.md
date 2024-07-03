@@ -60,6 +60,24 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 # v1.11 Fix by Xalalau & collaborators changelog
 
 ```
+Changes from v1.11 Fix 1 -> v1.11 Fix 2
+    * Added support for votemap addons
+    * Changed the settings for a 10 player game (tested):
+        - changed zs_rewards_1 from 5 to 2
+        - changed zs_rewards_2 from 10 to 4
+        - changed zs_rewards_3 from 15 to 6
+        - changed zs_rewards_4 from 28 to 8
+        - changed zs_rewards_5 from 35 to 10
+        - changed zs_rewards_6 from 60 to 12
+        - changed zs_rewards_7 from 75 to 14
+        - changed zs_ammo_regenerate_rate from 100 to 75
+        - changed zs_roundtime from 1200 to 600
+        - changed zs_intermission_time from 35 to 25
+        - changed zs_redeem_kills from 4 to 3
+        - changed zs_warmup_threshold from 4 to 2
+    
+    ... Ongoing
+
 Changes from v1.11 -> v1.11 Fix 1
     * Added gamemode setting to the game main menu
     * Added support for replacement weapons, so the ZS doesn't require CSS
@@ -79,19 +97,6 @@ Changes from v1.11 -> v1.11 Fix 1
     * Changed Kill the player after he picks a new zombie class (to avoid animation bugs)
     * Changed poison zombie green particles effect is reenabled
     * Changed license to JBGM
-    * Changed the settings for a 10 player game (tested):
-        - changed zs_rewards_1 from 5 to 2
-        - changed zs_rewards_2 from 10 to 4
-        - changed zs_rewards_3 from 15 to 6
-        - changed zs_rewards_4 from 28 to 8
-        - changed zs_rewards_5 from 35 to 10
-        - changed zs_rewards_6 from 60 to 12
-        - changed zs_rewards_7 from 75 to 14
-        - changed zs_ammo_regenerate_rate from 100 to 75
-        - changed zs_roundtime from 1200 to 600
-        - changed zs_intermission_time from 35 to 25
-        - changed zs_redeem_kills from 4 to 3
-        - changed zs_warmup_threshold from 4 to 2
     * Fixed animations (backported and adapted from the latest ZS)
     * Fixed film grain post processing effect flickering due to two frames being too white
     * Fixed add missing IsValid checks to every timer
