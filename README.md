@@ -62,6 +62,7 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 ```
 Changes from v1.11 Fix 1 -> v1.11 Fix 2
     * Added support for votemap addons
+    * Changed put spectators in the undead team and spawn them
     * Changed the settings for a 10 player game (tested):
         - changed zs_rewards_1 from 5 to 2
         - changed zs_rewards_2 from 10 to 4

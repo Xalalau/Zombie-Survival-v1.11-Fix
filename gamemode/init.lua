@@ -1200,6 +1200,15 @@ VoiceSetTranslate["models/player/male_03.mdl"] = "male"
 VoiceSetTranslate["models/player/male_08.mdl"] = "male"
 
 function GM:PlayerSpawn(ply)
+	local plyteam = ply:Team()
+
+	if plyteam == TEAM_SPECTATOR then
+		ply:SetTeam(TEAM_UNDEAD)
+		ply:UnSpectate()
+		ply:Spawn()
+		plyteam = TEAM_UNDEAD
+	end
+
 	ply:SetRenderMode(RENDERMODE_NORMAL)
 	ply:DrawShadow(true)
 	ply:SetColor(Color(255, 255, 255, 255))
@@ -1207,10 +1216,9 @@ function GM:PlayerSpawn(ply)
 	ply.Gibbed = false
 	timer.Remove(ply:UserID().."SpawnProtection")
 
-	local plyteam = ply:Team()
 	ply:ShouldDropWeapon(plyteam == TEAM_HUMAN)
 
-	if plyteam == TEAM_UNDEAD then
+	if plyteam == TEAM_UNDEAD then	
 		if ply.DeathClass then
 			ply:SetZombieClass(ply.DeathClass)
 			ply.DeathClass = nil
