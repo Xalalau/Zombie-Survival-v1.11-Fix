@@ -78,8 +78,7 @@ Changes from v1.11 Fix 1 -> v1.11 Fix 2
         - changed zs_intermission_time from 35 to 25
         - changed zs_redeem_kills from 4 to 3
         - changed zs_warmup_threshold from 4 to 2
-    
-    ... Ongoing
+    * Fixed headcrab, fastheadcrab, poisonheadcrab and fastzombie damage detection
 
 Changes from v1.11 -> v1.11 Fix 1
     * Added gamemode setting to the game main menu
