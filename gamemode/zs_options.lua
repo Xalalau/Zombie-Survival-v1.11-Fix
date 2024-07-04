@@ -486,8 +486,10 @@ ZombieClasses[9] =
 
 -- Add models to this table to prevent human players from using them (Zombie skins and such).
 
-GM.RestrictedModels = {}
-GM.RestrictedModels["models/player/classic.mdl"] = true -- This is the only one that really looks like a zombie.
-GM.RestrictedModels["models/player/zombine.mdl"] = true
-GM.RestrictedModels["models/player/zombie_soldier.mdl"] = true
-GM.RestrictedModels["models/player/zombiefast.mdl"] = true
+GM.RestrictedModels = {
+	["models/player/corpse1.mdl"] = true, -- This is the only one that really looks like a zombie.
+	["models/player/skeleton.mdl"] = true,
+	["models/player/zombie_classic.mdl"] = true,
+	["models/player/zombie_soldier.mdl"] = true,
+	["models/player/zombie_fast.mdl"] = true
+}
