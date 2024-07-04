@@ -782,6 +782,17 @@ function GM:PlayerDeathThink(ply)
 	end
 end
 
+function GM:PlayerHurt(victim, attacker, healthRemaining, damageTaken)
+	if victim:Team() == TEAM_HUMAN then
+		for i=1, math.ceil(math.min(3, damageTaken * 0.05)) do
+			local effectdata = EffectData()
+				effectdata:SetOrigin(victim:GetPos() + Vector(0,0,48))
+				effectdata:SetMagnitude(math.random(1, 3))
+			util.Effect("bloodstream", effectdata, true, true)
+		end
+	end
+end
+
 function GM:EntityTakeDamage(ent, attacker, inflictor, damage)
 	if not damage then return end
 
@@ -790,15 +801,6 @@ function GM:EntityTakeDamage(ent, attacker, inflictor, damage)
 		if attacker.SendLua and attacker:Team() ~= entteam then
 			local myteam = attacker:Team()
 			attacker.DamageDealt[myteam] = attacker.DamageDealt[myteam] + damage
-
-			/*if entteam == TEAM_HUMAN then
-				for i=1, math.ceil(math.min(3, damage * 0.05)) do
-					local effectdata = EffectData()
-						effectdata:SetOrigin(ent:GetPos() + Vector(0,0,48))
-						effectdata:SetMagnitude(math.random(1, 3))
-					util.Effect("bloodstream", effectdata, true, true)
-				end
-			end*/
 		end
 	end
 
