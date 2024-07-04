@@ -62,7 +62,7 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 ```
 Changes from v1.11 Fix 1 -> v1.11 Fix 2
     * Added support for votemap addons
-    * Changed humans to shed blood again when hit (better zombie attack feedback)
+    * Changed humans back to shed blood when hit (better zombie attack feedback)
     * Changed player blacklisted models to the current GMod zombie models
     * Changed put spectators in the undead team and spawn them
     * Changed fastzombies now climb walls by jumping on them and pressing W
