@@ -65,6 +65,7 @@ Changes from v1.11 Fix 1 -> v1.11 Fix 2
     * Changed humans to shed blood again when hit (better zombie attack feedback)
     * Changed player blacklisted models to the current GMod zombie models
     * Changed put spectators in the undead team and spawn them
+    * Changed fastzombies now climb walls by jumping on them and pressing W
     * Changed the settings for a 10 player game (tested):
         - changed zs_rewards_1 from 5 to 2
         - changed zs_rewards_2 from 10 to 4
