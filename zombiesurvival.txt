@@ -101,7 +101,7 @@
 			"text"		"Round time"
 			"help"		"In seconds, how long humans need to survive."
 			"type"		"Numeric"
-			"default"	"600"
+			"default"	"720"
 			"singleplayer" "1"
 		}
 

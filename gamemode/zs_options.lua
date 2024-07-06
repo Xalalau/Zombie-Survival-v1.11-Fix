@@ -108,7 +108,7 @@ local function InitConfigs()
 	AMMO_REGENERATE_RATE = cvars.Number("zs_ammo_regenerate_rate", 75)
 
 	-- In seconds, how long humans need to survive.
-	ROUNDTIME = cvars.Number("zs_roundtime", 600) -- 10 minutes
+	ROUNDTIME = cvars.Number("zs_roundtime", 720) -- 12 minutes
 
 	-- Time in seconds between end round and next map.
 	INTERMISSION_TIME = cvars.Number("zs_intermission_time", 25)
