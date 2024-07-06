@@ -62,15 +62,13 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 ```
 Changes from v1.11 Fix 2 -> v1.11 Fix 3
     * Changed new cvar values are applied to the next match (requested by Dx0M | Epp307)
-    * Changed fastzombie attack area to better hit moving players
+    * Fixed fastzombie attack area to better hit moving players
 
 Changes from v1.11 Fix 1 -> v1.11 Fix 2
     * Added support for votemap addons
-    * Changed humans back to shed blood when hit (better zombie attack feedback)
-    * Changed player blacklisted models to the current GMod zombie models
-    * Changed put spectators in the undead team and spawn them
+    * Changed humans to shed blood when hit (better zombie attack feedback, a disabled feature)
     * Changed fastzombies now climb walls by jumping on them and pressing W
-    * Changed the settings for a 10 player game (tested):
+    * Changed the settings for a 10 player game (adaptation to the current days main demand):
         - changed zs_rewards_1 from 5 to 2
         - changed zs_rewards_2 from 10 to 4
         - changed zs_rewards_3 from 15 to 6
@@ -84,6 +82,8 @@ Changes from v1.11 Fix 1 -> v1.11 Fix 2
         - changed zs_redeem_kills from 4 to 3
         - changed zs_warmup_threshold from 4 to 2
     * Fixed headcrab, fastheadcrab, poisonheadcrab and fastzombie damage detection
+    * Fixed put spectators in the undead team and spawn them instead of kicking them
+    * Fixed player blacklisted models to the current GMod zombie models
 
 Changes from v1.11 -> v1.11 Fix 1
     * Added gamemode setting to the game main menu
