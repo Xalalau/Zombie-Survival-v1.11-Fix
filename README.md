@@ -60,6 +60,9 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 # v1.11 Fix by Xalalau & collaborators changelog
 
 ```
+Changes from v1.11 Fix 2 -> v1.11 Fix 3
+    * Changed new cvar values are applied to the next match (requested by Dx0M | Epp307)
+
 Changes from v1.11 Fix 1 -> v1.11 Fix 2
     * Added support for votemap addons
     * Changed humans back to shed blood when hit (better zombie attack feedback)

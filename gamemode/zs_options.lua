@@ -81,97 +81,105 @@ GM.AmmoRegeneration["helicoptergun"] = 100
 --		SERVER OPTIONS		--
 ------------------------------
 
--- If you like NPC's. NPC's will only spawn in maps that actually were built to have them in the first place. This gamemode won't create it's own.
-USE_NPCS = cvars.Bool("zs_allow_map_npcs", false)
+local function InitConfigs()
+	-- If you like NPC's. NPC's will only spawn in maps that actually were built to have them in the first place. This gamemode won't create it's own.
+	USE_NPCS = cvars.Bool("zs_allow_map_npcs", false)
 
--- Set this to true if you want people to get 'kills' from killing NPC's.
--- IT IS STRONGLY SUGGESTED THAT YOU EDIT THE REWARDS TABLE TO
--- MAKE THE REWARDS REQUIRE MORE KILLS AND/OR MAKE THE DIFFICULTY HIGHER IF YOU DO THIS!!!
--- Example, change Rewards[6] to Rewards[15]. The number represents the kills.
-NPCS_COUNT_AS_KILLS = cvars.Bool("zs_npcs_count_as_kills", false)
+	-- Set this to true if you want people to get 'kills' from killing NPC's.
+	-- IT IS STRONGLY SUGGESTED THAT YOU EDIT THE REWARDS TABLE TO
+	-- MAKE THE REWARDS REQUIRE MORE KILLS AND/OR MAKE THE DIFFICULTY HIGHER IF YOU DO THIS!!!
+	-- Example, change Rewards[6] to Rewards[15]. The number represents the kills.
+	NPCS_COUNT_AS_KILLS = cvars.Bool("zs_npcs_count_as_kills", false)
 
--- Auto apply NPC configs if the player is in singleplayer mode
-if game.SinglePlayer() then
-	USE_NPCS = true
-	NPCS_COUNT_AS_KILLS = true
+	-- Auto apply NPC configs if the player is in singleplayer mode
+	if game.SinglePlayer() then
+		USE_NPCS = true
+		NPCS_COUNT_AS_KILLS = true
+	end
+
+	-- Good values are 1 to 3. 0.5 is about the same as the default HL2. 1 is about ZS difficulty. This is mainly for NPC healths and damages.
+	DIFFICULTY = cvars.Number("zs_difficulty", 1.5)
+
+	-- Use Zombie Survival's custom footstep sounds? I'm not sure how bad it might lag considering you're potentially sending a lot of data on heavily packed servers.
+	CUSTOM_FOOTSTEPS = true
+
+	-- In seconds, repeatatively, the gamemode gives all humans get a box of whatever ammo of the weapon they use.
+	-- if you set this number to something stupid like 0, you'll have some lag issues.
+	AMMO_REGENERATE_RATE = cvars.Number("zs_ammo_regenerate_rate", 75)
+
+	-- In seconds, how long humans need to survive.
+	ROUNDTIME = cvars.Number("zs_roundtime", 600) -- 10 minutes
+
+	-- Time in seconds between end round and next map.
+	INTERMISSION_TIME = cvars.Number("zs_intermission_time", 25)
+
+	-- New joining players will be put on the Undead team if the round is half over.
+	HUMAN_DEADLINE = cvars.Bool("zs_human_deadline", true)
+
+	-- Set this to true to destroy all brush-based doors that aren't based on phys_hinge and func_physbox or whatever. For door campers.
+	DESTROY_DOORS = cvars.Bool("zs_destroy_doors", true)
+
+	-- Set this to true to destroy all prop-based doors. Not recommended since some doors have boards on them and what-not. Only for true door camping whores.
+	DESTROY_PROP_DOORS = cvars.Bool("zs_destroy_prop_doors", false)
+
+	-- Set this to true to force players to have mat_monitorgamma set to 2.2. This could cause problems with non-calibrated screens so, whatever.
+	-- It forces people to use flashlights instead of whoring the video settings to make it brighter.
+	FORCE_NORMAL_GAMMA = false
+
+	-- Turn this to true if you don't want humans to be able to camp inside of vents and other hard to reach areas. They will die
+	-- if they are in a vent for 60 seconds or more.
+	ANTI_VENT_CAMP = cvars.Bool("zs_anti_vent_camp", true)
+
+	-- Set this to true to allow humans to shove other humans by pressing USE. Great for door blocking tards.
+	ALLOW_SHOVE = cvars.Bool("zs_allow_shove", true)
+
+	-- Set this to true if you want your admins to be able to use the 'noclip' concommand.
+	-- If they already have rcon then it's pointless to set this to false.
+	ALLOW_ADMIN_NOCLIP = cvars.Bool("zs_allow_admin_noclip", true)
+
+	-- Sound to play for last human.
+	LASTHUMANSOUND = "lasthuman.mp3"
+
+	-- In seconds, the length of the above file. It's important to have this correct or you may get delayed or overlapping music.
+	LASTHUMANSOUNDLENGTH = 119
+
+	-- Sound to play for ambient Un-Life music.
+	UNLIFESOUND = "unlife1.mp3"
+	UNLIFESOUNDLENGTH = 210
+
+	-- Sound played to a person when they lose.
+	ALLLOSESOUND = "lose_test.mp3"
+
+	-- Sound played to a person when they win.
+	HUMANWINSOUND = "humanwin.mp3"
+
+	-- Sound played to a person when they die as a human.
+	DEATHSOUND = "music/stingers/HL1_stinger_song28.mp3"
+
+	-- Turn off/on the redeeming system.
+	REDEEM = cvars.Bool("zs_allow_redeeming", true)
+
+	-- Human kills needed for a zombie player to redeem (resurrect). Do not set this to 0. If you want to turn this
+	-- system off, set AUTOREDEEM to false.
+	REDEEM_KILLS = cvars.Number("zs_redeem_kills", 3)
+
+	-- Players don't have a choice if they want to redeem or not. Setting to false makes them press F2.
+	AUTOREDEEM = cvars.Bool("zs_autoredeem", true)
+
+	-- If a person dies when there are less than the above amount of people, don't set them on the undead team if this is true. This should generally be true on public / big servers.
+	WARMUP_MODE = cvars.Bool("zs_warmup_mode", true)
+	WARMUP_THRESHOLD = cvars.Number("zs_warmup_threshold", 2)
+
+	-- Missing config - Xala
+	SURVIVALMODE = false
 end
 
--- Good values are 1 to 3. 0.5 is about the same as the default HL2. 1 is about ZS difficulty. This is mainly for NPC healths and damages.
-DIFFICULTY = cvars.Number("zs_difficulty", 1.5)
+InitConfigs()
 
--- Use Zombie Survival's custom footstep sounds? I'm not sure how bad it might lag considering you're potentially sending a lot of data on heavily packed servers.
-CUSTOM_FOOTSTEPS = true
-
--- In seconds, repeatatively, the gamemode gives all humans get a box of whatever ammo of the weapon they use.
--- if you set this number to something stupid like 0, you'll have some lag issues.
-AMMO_REGENERATE_RATE = cvars.Number("zs_ammo_regenerate_rate", 75)
-
--- In seconds, how long humans need to survive.
-ROUNDTIME = cvars.Number("zs_roundtime", 600) -- 10 minutes
-
--- Time in seconds between end round and next map.
-INTERMISSION_TIME = cvars.Number("zs_intermission_time", 25)
-
--- New joining players will be put on the Undead team if the round is half over.
-HUMAN_DEADLINE = cvars.Bool("zs_human_deadline", true)
-
--- Set this to true to destroy all brush-based doors that aren't based on phys_hinge and func_physbox or whatever. For door campers.
-DESTROY_DOORS = cvars.Bool("zs_destroy_doors", true)
-
--- Set this to true to destroy all prop-based doors. Not recommended since some doors have boards on them and what-not. Only for true door camping whores.
-DESTROY_PROP_DOORS = cvars.Bool("zs_destroy_prop_doors", false)
-
--- Set this to true to force players to have mat_monitorgamma set to 2.2. This could cause problems with non-calibrated screens so, whatever.
--- It forces people to use flashlights instead of whoring the video settings to make it brighter.
-FORCE_NORMAL_GAMMA = false
-
--- Turn this to true if you don't want humans to be able to camp inside of vents and other hard to reach areas. They will die
--- if they are in a vent for 60 seconds or more.
-ANTI_VENT_CAMP = cvars.Bool("zs_anti_vent_camp", true)
-
--- Set this to true to allow humans to shove other humans by pressing USE. Great for door blocking tards.
-ALLOW_SHOVE = cvars.Bool("zs_allow_shove", true)
-
--- Set this to true if you want your admins to be able to use the 'noclip' concommand.
--- If they already have rcon then it's pointless to set this to false.
-ALLOW_ADMIN_NOCLIP = cvars.Bool("zs_allow_admin_noclip", true)
-
--- Sound to play for last human.
-LASTHUMANSOUND = "lasthuman.mp3"
-
--- In seconds, the length of the above file. It's important to have this correct or you may get delayed or overlapping music.
-LASTHUMANSOUNDLENGTH = 119
-
--- Sound to play for ambient Un-Life music.
-UNLIFESOUND = "unlife1.mp3"
-UNLIFESOUNDLENGTH = 210
-
--- Sound played to a person when they lose.
-ALLLOSESOUND = "lose_test.mp3"
-
--- Sound played to a person when they win.
-HUMANWINSOUND = "humanwin.mp3"
-
--- Sound played to a person when they die as a human.
-DEATHSOUND = "music/stingers/HL1_stinger_song28.mp3"
-
--- Turn off/on the redeeming system.
-REDEEM = cvars.Bool("zs_allow_redeeming", true)
-
--- Human kills needed for a zombie player to redeem (resurrect). Do not set this to 0. If you want to turn this
--- system off, set AUTOREDEEM to false.
-REDEEM_KILLS = cvars.Number("zs_redeem_kills", 3)
-
--- Players don't have a choice if they want to redeem or not. Setting to false makes them press F2.
-AUTOREDEEM = cvars.Bool("zs_autoredeem", true)
-
--- If a person dies when there are less than the above amount of people, don't set them on the undead team if this is true. This should generally be true on public / big servers.
-WARMUP_MODE = cvars.Bool("zs_warmup_mode", true)
-WARMUP_THRESHOLD = cvars.Number("zs_warmup_threshold", 2)
-
--- Missing config - Xala
-SURVIVALMODE = false
-
+-- I added this so if the server owner changes the cvars above the new values are applied for the next match - Xala
+hook.Add("ShutDown", "ZSBeforeChangelevelRefreshConfigs", function()
+    InitConfigs()
+end)
 
 if game.MaxPlayers() < 4 then
 	WARMUP_MODE = false
