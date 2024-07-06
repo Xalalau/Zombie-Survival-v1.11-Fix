@@ -10,18 +10,6 @@ And thank you all very much! I hope you enjoy this gamemode as much as I do.
 
 > 4 the Devs: would you like to contribute to this base with **new features**? Well, fork it and create your own ZS!! I won't accept these PRs here because they'll actually ruin the restoration. Advances must be made elsewhere! But if you want to contribute following the repo main goals, go ahead. Here are the commits golden rules: 1) Commits cannot change the original experience, even if you want to fix bugs like moonwalk; 2) We can fix bugs that prevent the game from running; 3) We must port deprecated code from GMod 11 to the current GMod; 4) We may change internal code to make our lives easier, but don't try to fix the spaghetti because I won't accept it.
 
-# WANTED DEAD OR ALIVE
-
-```diff
--Do you have the map zs_windmill_hut_v2? **Send it to me immediately!**
-```
-
-Footage:
-- https://www.youtube.com/watch?v=b-koaN5Knys
-- https://www.youtube.com/watch?v=CYc4Dkcusng
-- https://youtu.be/0dB5ZBX3fd4
-
-
 # REQUIREMENTS
 
 - ``Counter-Strike: Source`` downloaded and mounted in GMod OR [this addon](https://steamcommunity.com/sharedfiles/filedetails/?id=3278214014) (CSS should be the right option anyway as many maps need it).
