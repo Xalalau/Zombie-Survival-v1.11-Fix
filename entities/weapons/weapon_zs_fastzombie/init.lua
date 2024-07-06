@@ -48,7 +48,7 @@ function SWEP:CalcHitArea()
 		aimvectormultilier = 35
 	end
 
-	for _, fin in ipairs(ents.FindInSphere(owner:GetPos() + Vector(0, 0, 55) + owner:GetAimVector() * aimvectormultilier + updown, 6)) do
+	for _, fin in ipairs(ents.FindInSphere(owner:GetPos() + Vector(0, 0, 55) + owner:GetAimVector() * aimvectormultilier + updown, 12)) do
 		if fin:IsPlayer() and fin:Team() ~= owner:Team() and fin:Alive() then
 			ent = fin
 			break

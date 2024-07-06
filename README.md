@@ -62,6 +62,7 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 ```
 Changes from v1.11 Fix 2 -> v1.11 Fix 3
     * Changed new cvar values are applied to the next match (requested by Dx0M | Epp307)
+    * Changed fastzombie attack area to better hit moving players
 
 Changes from v1.11 Fix 1 -> v1.11 Fix 2
     * Added support for votemap addons
