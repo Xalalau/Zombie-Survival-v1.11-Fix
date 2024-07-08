@@ -18,6 +18,8 @@ function SWEP:Deploy()
 
 	local effectdata = EffectData()
 		effectdata:SetEntity(self:GetOwner())
+		effectdata:SetOrigin(self:GetPos())
+		effectdata:SetNormal(self:GetVelocity():GetNormalized())
 	util.Effect("chemzombieambient", effectdata)
 end
 

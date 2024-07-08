@@ -55,6 +55,7 @@ Changes from v1.11 Fix 2 -> v1.11 Fix 3
     * Changed fastzombies back to climbing walls with the secondary attack
     * Fixed fastzombie attack area to better hit moving players
     * Fixed some cvars were still not being applied after changed
+    * Fixed chemzombie not spawning with his green particles
 
 Changes from v1.11 Fix 1 -> v1.11 Fix 2
     * Added support for votemap addons
