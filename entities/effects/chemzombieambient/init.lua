@@ -11,6 +11,11 @@ function EFFECT:Think()
 	local ent = self.Ent
 	if not (ent:IsValid() and ent:IsPlayer() and ent:Alive()) then return false end
 
+	if ent:GetModel() ~= "models/zombie/poison.mdl" then
+		self:Remove()
+		return false
+	end
+
 	self.Entity:SetPos(ent:GetPos() + Vector(0,0,40))
 
 	return true
