@@ -95,10 +95,6 @@ function SWEP:Think()
 
 	if self:GetClimbing() and CurTime() >= self.NextClimb then
 		self:SetClimbing(false)
-	else
-		if owner:KeyDown(IN_FORWARD) then
-			self:Climb()
-		end
 	end
 
 	if self:GetPounceTime() > 0 and CurTime() >= self:GetPounceTime() then
@@ -195,7 +191,7 @@ function SWEP:PrimaryAttack()
 end
 
 SWEP.NextClimb = 0
-function SWEP:Climb()
+function SWEP:SecondaryAttack()
 	if self.Leaping or self:GetSwinging() then return end
 	local onground = self:GetOwner():OnGround()
 	if CurTime() >= self.NextClimb and not onground then
@@ -219,11 +215,6 @@ function SWEP:Climb()
 			return
 		end
 	end
-end
-
-function SWEP:SecondaryAttack()
-	if self.Leaping or self:GetSwinging() then return end
-	local onground = self:GetOwner():OnGround()
 
 	if CurTime() < self:GetPounceTime() then return end
 	if not onground then return end
