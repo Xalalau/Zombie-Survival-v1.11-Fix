@@ -65,13 +65,12 @@ GM.AmmoTranslations["weapon_stunstick"] = "pistol"
 
 LASTHUMAN = false
 CAPPED_INFLICTION = 0
-HEAD_NPC_SCALE = math.Clamp(3 - DIFFICULTY, 1.5, 4)
 ROUNDWINNER = NULL
 
 local LastHumanSpawnPoint = NULL
 local LastZombieSpawnPoint = NULL
 local DeadSteamIDs = {}
-local NextAmmoDropOff = AMMO_REGENERATE_RATE
+local NextAmmoDropOff = cvars.Number("zs_ammo_regenerate_rate")
 
 if file.Exists("gamemodes/zombiesurvival/gamemode/maps/"..game.GetMap()..".lua", "GAME") then
 	include("maps/"..game.GetMap()..".lua")
@@ -84,6 +83,10 @@ BroadcastLua = BroadcastLua or function(lua)
 end
 
 function GM:PlayerLoadout(ply)
+end
+
+function GM:GetHeadNPCScale()
+	return math.Clamp(3 - cvars.Number("zs_difficulty"), 1.5, 4)
 end
 
 function GM:Initialize()
@@ -184,7 +187,7 @@ end
 concommand.Add("gm_help", function(sender, command, arguments) GAMEMODE:ShowHelp(sender) end)
 
 function GM:ShowTeam(ply)
-	if REDEEM and not AUTOREDEEM and ply:Team() == TEAM_UNDEAD and ply:Frags() >= REDEEM_KILLS then
+	if cvars.Bool("zs_allow_redeeming") and not cvars.Bool("zs_autoredeem") and ply:Team() == TEAM_UNDEAD and ply:Frags() >= cvars.Number("zs_redeem_kills") then
 		ply:Redeem()
 	end
 end
@@ -236,22 +239,22 @@ function GM:InitPostEntity()
 		self.UndeadSpawnPoints = ents.FindByClass("info_player_start")
 	end
 
-	RunConsoleCommand("sk_zombie_health", math.ceil(50 + 50 * DIFFICULTY))
-	RunConsoleCommand("sk_zombie_dmg_one_slash", math.ceil(20 + DIFFICULTY * 10))
-	RunConsoleCommand("sk_zombie_dmg_both_slash", math.ceil(30 + DIFFICULTY * 12))
+	RunConsoleCommand("sk_zombie_health", math.ceil(50 + 50 * cvars.Number("zs_difficulty")))
+	RunConsoleCommand("sk_zombie_dmg_one_slash", math.ceil(20 + cvars.Number("zs_difficulty") * 10))
+	RunConsoleCommand("sk_zombie_dmg_both_slash", math.ceil(30 + cvars.Number("zs_difficulty") * 12))
 
 	local destroying = ents.FindByClass("prop_ragdoll") // These seem to cause server crashes if a zombie attacks them. They cause pointless lag, too.
-	if not USE_NPCS then
+	if not cvars.Bool("zs_allow_map_npcs") then
 		destroying = table.Add(destroying, ents.FindByClass("npc_zombie"))
 		destroying = table.Add(destroying, ents.FindByClass("npc_maker"))
 		destroying = table.Add(destroying, ents.FindByClass("npc_template_maker"))
 		destroying = table.Add(destroying, ents.FindByClass("npc_maker_template"))
 	end
-	if DESTROY_DOORS then
+	if cvars.Bool("zs_destroy_doors") then
 		destroying = table.Add(destroying, ents.FindByClass("func_door_rotating"))
 		destroying = table.Add(destroying, ents.FindByClass("func_door"))
 	end
-	if DESTROY_PROP_DOORS then
+	if cvars.Bool("zs_destroy_prop_doors") then
 		destroying = table.Add(destroying, ents.FindByClass("prop_door_rotating"))
 	end
 	destroying = table.Add(destroying, ents.FindByClass("weapon_physicscannon"))
@@ -388,7 +391,7 @@ end
 function GM:Think()
 	local tim = CurTime()
 
-	if ROUNDTIME < tim then
+	if cvars.Number("zs_roundtime") < tim then
 		self:EndRound(TEAM_HUMAN)
 	elseif NextAmmoDropOff < tim then
 		if SURVIVALMODE then
@@ -396,8 +399,8 @@ function GM:Think()
 			return
 		end
 
-		NextAmmoDropOff = CurTime() + AMMO_REGENERATE_RATE
-		INFLICTION = math.max(INFLICTION, CurTime() / ROUNDTIME)
+		NextAmmoDropOff = CurTime() + cvars.Number("zs_ammo_regenerate_rate")
+		INFLICTION = math.max(INFLICTION, CurTime() / cvars.Number("zs_roundtime"))
 		CAPPED_INFLICTION = INFLICTION
 
 		self:SendInfliction()
@@ -608,8 +611,8 @@ end
 function GM:EndRound(winner)
 	if ENDROUND then return end
 	ENDROUND = true
-	timer.Simple(INTERMISSION_TIME, game.LoadNextMap)
-	timer.Simple(INTERMISSION_TIME * 0.3, function() hook.Run("LoadNextMap") end)
+	timer.Simple(cvars.Number("zs_intermission_time"), game.LoadNextMap)
+	timer.Simple(cvars.Number("zs_intermission_time") * 0.3, function() hook.Run("LoadNextMap") end)
 	local nextmap = game.GetMapNext()
 
 	timer.Simple(1, function()
@@ -713,7 +716,7 @@ function GM:PlayerInitialSpawn(ply)
 		if ply ~= newply then
 			ply:SetTeam(TEAM_HUMAN)
 		end
-	elseif INFLICTION >= 0.5 or (CurTime() > ROUNDTIME*0.5 and HUMAN_DEADLINE) or LASTHUMAN then
+	elseif INFLICTION >= 0.5 or (CurTime() > cvars.Number("zs_roundtime")*0.5 and cvars.Bool("zs_human_deadline")) or LASTHUMAN then
 		ply:SetTeam(TEAM_UNDEAD)
 		DeadSteamIDs[ply:SteamID()] = true
 	else
@@ -747,7 +750,7 @@ function GM:CheckPlayerScore(ply)
 end
 
 function GM:PlayerNoClip(ply, on)
-	return ply:IsAdmin() and ALLOW_ADMIN_NOCLIP
+	return ply:IsAdmin() and cvars.Bool("zs_allow_admin_noclip")
 end
 
 function GM:OnPhysgunFreeze(weapon, phys, ent, ply)
@@ -896,7 +899,7 @@ function GM:PlayerDeathSound()
 end
 
 function GM:CanPlayerSuicide(ply)
-	if SUPPRESS_SUICIDE and ply:Team() == TEAM_HUMAN and CurTime() < ROUNDTIME * 0.1 then
+	if SUPPRESS_SUICIDE and ply:Team() == TEAM_HUMAN and CurTime() < cvars.Number("zs_roundtime") * 0.1 then
 		ply:PrintMessage(4, "Give others time to spawn before suiciding.")
 		return false
 	end
@@ -939,8 +942,8 @@ local function ChemBomb(ply, refrag)
 	if refrag then
 		ply:AddFrags(100)
 	end
-	if REDEEM and AUTOREDEEM then
-		if ply:Frags() >= REDEEM_KILLS then
+	if cvars.Bool("zs_allow_redeeming") and cvars.Bool("zs_autoredeem") then
+		if ply:Frags() >= cvars.Number("zs_redeem_kills") then
 			ply:Redeem()
 			timer.Remove("Survivalist")
 		end
@@ -1077,8 +1080,8 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		if attacker:IsPlayer() and attacker ~= ply then
 			attacker:AddFrags(1)
 			attacker.BrainsEaten = attacker.BrainsEaten + 1
-			if REDEEM and AUTOREDEEM then
-				if attacker:Frags() >= REDEEM_KILLS or INFINITEREDEEMS then
+			if cvars.Bool("zs_allow_redeeming") and cvars.Bool("zs_autoredeem") then
+				if attacker:Frags() >= cvars.Number("zs_redeem_kills") or INFINITEREDEEMS then
 					if INFINITEREDEEMS then
 						BroadcastLua([[InfRed("]]..attacker:Name()..[[")]])
 					end
@@ -1095,8 +1098,8 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 				end)
 			end
 		end
-		if WARMUP_MODE and #player.GetHumans() < WARMUP_THRESHOLD then
-			ply:PrintMessage(HUD_PRINTTALK, "There are not enough people playing for you to change to the Undead. Set WARMUP_MODE in zs_options.lua to false to change this.")
+		if cvars.Bool("zs_warmup_mode") and #player.GetHumans() < cvars.Number("zs_warmup_threshold") then
+			ply:PrintMessage(HUD_PRINTTALK, "There are not enough people playing for you to change to the Undead. Set zs_warmup_mode in zs_options.lua to false to change this.")
 		else
 			ply:SetTeam(TEAM_UNDEAD)
 			DeadSteamIDs[ply:SteamID()] = true
@@ -1269,7 +1272,7 @@ end
 
 function GM:ScaleNPCDamage(npc, hitgroup, dmginfo)
     if hitgroup == HITGROUP_HEAD then
-		dmginfo:ScaleDamage(HEAD_NPC_SCALE)
+		dmginfo:ScaleDamage(self:GetHeadNPCScale())
 	end
 	return dmginfo
 end
@@ -1388,7 +1391,7 @@ end)
 
 util.PrecacheSound("ambient/voices/citizen_punches2.wav")
 concommand.Add("Shove", function(sender, command, arguments)
-	if not ALLOW_SHOVE then return end
+	if not cvars.Bool("zs_allow_shove") then return end
 	if not (sender:Alive() and sender:Team() == TEAM_HUMAN and CurTime() >= sender.NextShove) then return end
 	local ent = Entity(tonumber(arguments[1]))
 	if not (ent and ent:IsValid() and ent:IsPlayer() and ent:Team() == TEAM_HUMAN) then return end

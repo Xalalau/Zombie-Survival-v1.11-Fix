@@ -132,17 +132,20 @@ function GM:ResetWaterAndCramps()
 	CRAMP_METER_TIME = 0
 end
 
-local NextAmmoDropOff = AMMO_REGENERATE_RATE
+local NextAmmoDropOff = cvars.Number("zs_ammo_regenerate_rate")
 
 local COLOR_HUD_OK = Color(0, 150, 0, 255)
 local COLOR_HUD_SCRATCHED = Color(35, 130, 0, 255)
 local COLOR_HUD_HURT = Color(160, 160, 0, 255)
 local COLOR_HUD_CRITICAL = Color(220, 0, 0, 255)
 
-function GM:InitPostEntity()
-	NextAmmoDropOff = math.ceil(CurTime() / AMMO_REGENERATE_RATE) * AMMO_REGENERATE_RATE
+local function GetNextAmmoRegenerate()
+	return math.ceil(CurTime() / cvars.Number("zs_ammo_regenerate_rate")) * cvars.Number("zs_ammo_regenerate_rate")
 end
 
+function GM:InitPostEntity()
+	NextAmmoDropOff = GetNextAmmoRegenerate()
+end
 local NextHordeCalculate = 0
 local DisplayHorde = 0
 local ActualHorde = 0
@@ -237,7 +240,7 @@ function GM:Think()
 			end
 		end
 
-		if ANTI_VENT_CAMP then
+		if cvars.Bool("zs_anti_vent_camp") then
 			local cramped = util.TraceLine({start = mypos, endpos = mypos + Vector(0,0,64), filter = ply, mask=COLLISION_GROUP_DEBRIS}).HitWorld
 			if cramped then
 				CRAMP_METER_TIME = math.min(CRAMP_METER_TIME + FrameTime(), 60)
@@ -299,7 +302,7 @@ function GM:HumanHUD(ply, killedposx, killedposy)
 			local TimeLeft = NextAmmoDropOff - curtime
 
 			if TimeLeft < 0 then
-				NextAmmoDropOff = math.ceil(curtime / AMMO_REGENERATE_RATE) * AMMO_REGENERATE_RATE
+				NextAmmoDropOff = GetNextAmmoRegenerate()
 			end
 			draw.DrawText("Ammo Regeneration: "..ToMinutesSeconds(TimeLeft), "HUDFontTinyAA", 8, h - 90, COLOR_GRAY, TEXT_ALIGN_LEFT)
 		end
@@ -386,33 +389,36 @@ function GM:ZombieHUD(ply, actionposx, actionposy, killedposx, killedposy)
 	draw.SimpleText(ZombieHordeText[rounded], "HUDFontTinyAA", 128, h - 42, COLOR_GRAY, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 	local killz = ply:Frags()
+	local allow_redeeming = cvars.Bool("zs_allow_redeeming")
+	local redeem_kills = cvars.Number("zs_redeem_kills")
+	local autoredeem = cvars.Bool("zs_autoredeem")
 	if SMALL_HUD then
-		draw.DrawText("Feed: "..ToMinutesSeconds(ROUNDTIME - CurTime()), "HUDFontSmall", actionposx, actionposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+		draw.DrawText("Feed: "..ToMinutesSeconds(cvars.Number("zs_roundtime") - CurTime()), "HUDFontSmall", actionposx, actionposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 
-		if REDEEM then
-			if AUTOREDEEM then
-				draw.DrawText("Redemption: " .. REDEEM_KILLS - killz, "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+		if allow_redeeming then
+			if autoredeem then
+				draw.DrawText("Redemption: " .. redeem_kills - killz, "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 			else
-				if REDEEM_KILLS <= killz then
+				if redeem_kills <= killz then
 					draw.DrawText("Redeem: F2!", "HUDFontSmall", killedposx, killedposy, COLOR_WHITE, TEXT_ALIGN_LEFT)
 				else
-					draw.DrawText("Redemption: " .. REDEEM_KILLS - killz, "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+					draw.DrawText("Redemption: " .. redeem_kills - killz, "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 				end
 			end
 		else
 			draw.DrawText("Brains: "..killz, "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 		end
 	else
-		draw.DrawText("Feed: "..ToMinutesSeconds(ROUNDTIME - CurTime()), "HUDFontSmall", actionposx, actionposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+		draw.DrawText("Feed: "..ToMinutesSeconds(cvars.Number("zs_roundtime") - CurTime()), "HUDFontSmall", actionposx, actionposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 
-		if REDEEM then
-			if AUTOREDEEM then
-				draw.DrawText("Redemption: " .. REDEEM_KILLS - killz, "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+		if allow_redeeming then
+			if autoredeem then
+				draw.DrawText("Redemption: " .. redeem_kills - killz, "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 			else
-				if REDEEM_KILLS <= killz then
+				if redeem_kills <= killz then
 					draw.DrawText("Redeem: F2!", "HUDFontSmall", killedposx, killedposy, COLOR_WHITE, TEXT_ALIGN_LEFT)
 				else
-					draw.DrawText("Redemption: " .. REDEEM_KILLS - killz, "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+					draw.DrawText("Redemption: " .. redeem_kills - killz, "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 				end
 			end
 		else

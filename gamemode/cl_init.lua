@@ -370,7 +370,7 @@ function GM:HUDPaint()
 	else
 		self:HumanHUD(ply, killedposx, killedposy)
 		
-		draw.DrawText("Survive: "..ToMinutesSeconds(ROUNDTIME - CurTime()), "HUDFontSmallAA", actionposx, actionposy, COLOR_GRAY, TEXT_ALIGN_LEFT)
+		draw.DrawText("Survive: "..ToMinutesSeconds(cvars.Number("zs_roundtime") - CurTime()), "HUDFontSmallAA", actionposx, actionposy, COLOR_GRAY, TEXT_ALIGN_LEFT)
 	end
 
 	-- Infliction
@@ -534,7 +534,7 @@ function Intermission(nextmap, winner)
 			end
 		end
 
-		local time = ENDTIME + INTERMISSION_TIME - CurTime()
+		local time = ENDTIME + cvars.Number("zs_intermission_time") - CurTime()
 		draw.DrawText("Next: "..ToMinutesSeconds(time >= 0 and time or 0), "HUDFontSmall", w*0.5, h*0.7, COLOR_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 	if winner == TEAM_UNDEAD then

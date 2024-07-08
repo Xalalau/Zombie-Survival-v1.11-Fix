@@ -2,8 +2,8 @@
 
 hook.Add("InitPostEntity", "DestroyDoor", function()
 	hook.Remove("InitPostEntity", "DestroyDoor")
-	DESTROY_PROP_DOORS = false
-	DESTROY_DOORS = false
+	RunConsoleCommand("zs_destroy_doors", false)
+	RunConsoleCommand("zs_destroy_prop_doors", false)
 	local doors = ents.FindByClass("prop_door_rotating")
 	if doors[2] then
 		doors[2]:Remove()
