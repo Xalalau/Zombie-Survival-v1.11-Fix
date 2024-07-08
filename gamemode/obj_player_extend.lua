@@ -7,7 +7,11 @@ end
 
 function meta:SetZombieClass(cl)
 	self.Class = cl
-	BroadcastLua("ents.GetByIndex(" .. self:EntIndex() .. ").Class="..cl)
+	local index = self:EntIndex()
+
+	timer.Simple(1, function()
+		BroadcastLua("ents.GetByIndex(" .. index .. ").Class="..cl)
+	end)
 end
 
 function meta:TraceLine(distance, _mask)
