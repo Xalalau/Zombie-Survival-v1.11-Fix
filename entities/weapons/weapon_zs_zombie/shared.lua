@@ -1,30 +1,11 @@
-SWEP.Author = "JetBoom"
-SWEP.Contact = ""
-SWEP.Purpose = ""
-SWEP.Instructions = ""
+SWEP.Base = "weapon_zs_base_enemy"
 
 SWEP.ViewModel = "models/Weapons/v_zombiearms.mdl"
 SWEP.WorldModel = "models/weapons/w_knife_t.mdl"
 
-SWEP.Spawnable = true
-SWEP.AdminSpawnable = true
-
-SWEP.Primary.ClipSize = -1
-SWEP.Primary.DefaultClip = -1
-SWEP.Primary.Automatic = true
-SWEP.Primary.Ammo = "none"
 SWEP.Primary.Delay = 1.2
 
-SWEP.Secondary.ClipSize = -1
-SWEP.Secondary.DefaultClip = -1
-SWEP.Secondary.Automatic = true
-SWEP.Secondary.Ammo = "none"
-
 SWEP.YellTime = 2
-
-function SWEP:Reload()
-	return false
-end
 
 function SWEP:Precache()
 	util.PrecacheSound("npc/zombie/zombie_voice_idle1.wav")

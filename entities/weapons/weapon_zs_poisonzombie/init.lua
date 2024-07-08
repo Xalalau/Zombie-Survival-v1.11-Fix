@@ -3,10 +3,6 @@ AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
-SWEP.Weight = 5
-SWEP.AutoSwitchTo = true
-SWEP.AutoSwitchFrom = false
-
 SWEP.Headcrabs = 2
 
 function SWEP:SetThrowAnimTime(time)
@@ -102,8 +98,4 @@ function SWEP:SecondaryAttack()
 			ThrowHeadcrab(self:GetOwner(), self)
 		end
 	end)
-end
-
-function SWEP:Reload()
-	return false
 end

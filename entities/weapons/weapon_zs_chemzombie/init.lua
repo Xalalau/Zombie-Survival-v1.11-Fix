@@ -3,10 +3,6 @@ AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
-SWEP.Weight = 5
-SWEP.AutoSwitchTo = true
-SWEP.AutoSwitchFrom = false
-
 SWEP.Deployed = false
 
 function SWEP:Deploy()
@@ -21,17 +17,4 @@ function SWEP:Deploy()
 		effectdata:SetOrigin(self:GetPos())
 		effectdata:SetNormal(self:GetVelocity():GetNormalized())
 	util.Effect("chemzombieambient", effectdata)
-end
-
-function SWEP:Think()
-end
-
-function SWEP:PrimaryAttack()
-end
-
-function SWEP:SecondaryAttack()
-end
-
-function SWEP:Reload()
-	return false
 end

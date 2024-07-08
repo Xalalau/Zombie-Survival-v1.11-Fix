@@ -3,10 +3,6 @@ AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
-SWEP.Weight = 5
-SWEP.AutoSwitchTo = true
-SWEP.AutoSwitchFrom = false
-
 SWEP.SwapAnims = false
 
 function SWEP:SetClimbing(climbing)
@@ -32,64 +28,6 @@ function SWEP:Deploy()
 	self:SetNextSwing(0)
 end
 
-function SWEP:CalcHitArea()
-	local ent
-	local owner = self:GetOwner()
-	local updown = owner:GetForward().z
-	local aimvectormultilier
-	if updown > 0.8 then
-		updown = Vector(0, 0, owner:GetForward().z * 20)
-		aimvectormultilier = 5
-	elseif updown < -0.85 then
-		updown = Vector(0, 0, owner:GetForward().z * 55)
-		aimvectormultilier = 5
-	else
-		updown = Vector(0, 0, 0)
-		aimvectormultilier = 35
-	end
-
-	for _, fin in ipairs(ents.FindInSphere(owner:GetPos() + Vector(0, 0, 55) + owner:GetAimVector() * aimvectormultilier + updown, 12)) do
-		if fin:IsPlayer() and fin:Team() ~= owner:Team() and fin:Alive() then
-			ent = fin
-			break
-		end
-	end
-
-	return ent
-end
-
-function SWEP:CalcHitLeaping()
-	local owner = self:GetOwner()
-	local vStart = owner:GetViewOffset() + owner:GetPos()
-	local tr = {}
-	local ang = owner:GetAimVector()
-	ang.z = 0
-
-	tr.start = vStart
-	tr.endpos = vStart + ang * 5
-	tr.filter = owner
-	local trace = util.TraceLine(tr)
-	local ent = trace.Entity
-
-	if not ent:IsValid() then
-		ent = self:CalcHitArea()
-	end
-
-	return trace, ent
-end
-
-function SWEP:CalcHitSwinging()
-	local owner = self:GetOwner()
-	local trace = owner:TraceLine(85, MASK_SHOT)
-	local ent = trace.Entity
-
-	if not ent:IsValid() then
-		ent = self:CalcHitArea()
-	end
-
-	return trace, ent
-end
-
 function SWEP:Think()
 	local owner = self:GetOwner()
 
@@ -107,7 +45,7 @@ function SWEP:Think()
 			self:SetPounceTime(CurTime() + 1)
 			--self:GetOwner():SetViewOffset(self.OriginalViewOffset)
 		else
-			local trace, ent = self:CalcHitLeaping()
+			local trace, ent = self:CalcHit()
 
 			if ent and ent:IsValid() then
 				if ent:GetClass() == "func_breakable_surf" then
@@ -149,7 +87,7 @@ function SWEP:Think()
 		return
 	end
 
-	local trace, ent = self:CalcHitSwinging()
+	local trace, ent = self:CalcHit()
 
 	local damage = 5 + 5 * math.min(GetZombieFocus(owner:GetPos(), 300, 0.001, 0) - 0.3, 1)
 
@@ -238,8 +176,4 @@ function SWEP:SecondaryAttack()
 	self.Leaping = true
 	self:GetOwner():EmitSound("npc/fast_zombie/fz_scream1.wav")
 	self:GetOwner():Fire("IgnoreFallDamage", "", 0)
-end
-
-function SWEP:Reload()
-	return false
 end

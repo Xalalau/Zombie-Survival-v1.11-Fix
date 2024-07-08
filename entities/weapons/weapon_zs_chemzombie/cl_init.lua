@@ -1,26 +1,6 @@
 include("shared.lua")
 
 SWEP.PrintName = "Chem-Zombie"
-SWEP.DrawAmmo = false
-SWEP.DrawCrosshair = true
-SWEP.ViewModelFOV = 70
-SWEP.ViewModelFlip = false
-SWEP.CSMuzzleFlashes = false
-
-function SWEP:CanPrimaryAttack()
-	return false
-end
-
-function SWEP:CanSecondaryAttack()
-	return false
-end
-
-function SWEP:Reload()
-	return false
-end
-
-function SWEP:Think()
-end
 
 function SWEP:DrawWeaponSelection(x, y, wide, tall, alpha)
 	draw.SimpleText(self.PrintName, "HUDFontSmallAA", x + wide * 0.5, y + tall * 0.5, COLOR_LIMEGREEN, TEXT_ALIGN_CENTER)

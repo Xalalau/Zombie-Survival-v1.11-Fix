@@ -3,10 +3,6 @@ AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
-SWEP.Weight = 5
-SWEP.AutoSwitchTo = true
-SWEP.AutoSwitchFrom = false
-
 SWEP.SwapAnims = false
 
 function SWEP:Deploy()
@@ -83,11 +79,4 @@ function SWEP:PrimaryAttack()
 	if trace.HitNonWorld then
 		self.PreHit = trace.Entity
 	end
-end
-
-function SWEP:SecondaryAttack()
-end
-
-function SWEP:Reload()
-	return false
 end

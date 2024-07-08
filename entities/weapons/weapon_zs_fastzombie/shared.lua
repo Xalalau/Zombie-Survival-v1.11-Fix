@@ -1,29 +1,26 @@
-SWEP.Author = "JetBoom"
-SWEP.Contact = ""
-SWEP.Purpose = ""
-SWEP.Instructions = ""
+SWEP.Base = "weapon_zs_base_enemy"
 
 SWEP.ViewModel = "models/weapons/v_fza.mdl"
 SWEP.WorldModel = "models/weapons/w_knife_t.mdl"
 
-SWEP.Spawnable = true
-SWEP.AdminSpawnable = true
-
-SWEP.Primary.ClipSize = -1
-SWEP.Primary.DefaultClip = -1
-SWEP.Primary.Automatic = true
-SWEP.Primary.Ammo = "none"
 SWEP.Primary.Delay = 0.4
 
-SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.Delay = 0.22
-SWEP.Secondary.DefaultClip = -1
-SWEP.Secondary.Automatic = true
-SWEP.Secondary.Ammo = "none"
 
-function SWEP:Reload()
-	return false
-end
+SWEP.HitDetection = {
+	traceForwardLenght = 35,
+	traceForwardHeight = 35,
+	entHeight = 55,
+	hitScanRadius = 12,
+	upZThreshold = 0.8,
+	upZLenght = 20,
+	upZAimLenght = 5,
+	downZThreshold = -0.85,
+	downZLenght = 55,
+	downZAimLenght = 5,
+	midZLenght = 0,
+	midZAimLenght = 35
+}
 
 -- Shutup.
 function SWEP:Precache()

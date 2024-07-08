@@ -3,10 +3,6 @@ AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
-SWEP.Weight = 5
-SWEP.AutoSwitchTo = true
-SWEP.AutoSwitchFrom = false
-
 function SWEP:Deploy()
 	self.CloakFail = 0
 
@@ -127,8 +123,4 @@ function SWEP:SecondaryAttack()
 	if CurTime() < self.NextYell then return end
 	self.NextYell = CurTime() + 6
 	self:GetOwner():EmitSound("wraithdeath"..math.random(1, 4)..".wav")
-end
-
-function SWEP:Reload()
-	return false
 end

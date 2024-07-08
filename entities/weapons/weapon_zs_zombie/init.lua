@@ -3,10 +3,6 @@ AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
-SWEP.Weight = 5
-SWEP.AutoSwitchTo = true
-SWEP.AutoSwitchFrom = false
-
 -- This is to get around that dumb thing where the view anims don't play right.
 SWEP.SwapAnims = false
 
@@ -94,8 +90,4 @@ function SWEP:SecondaryAttack()
 
 	self:GetOwner():EmitSound("npc/zombie/zombie_voice_idle"..math.random(1, 14)..".wav")
 	self:SetNextYell(CurTime() + self.YellTime)
-end
-
-function SWEP:Reload()
-	return false
 end
