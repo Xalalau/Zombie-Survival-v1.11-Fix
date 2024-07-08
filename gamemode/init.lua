@@ -896,7 +896,7 @@ function GM:PlayerDeathSound()
 end
 
 function GM:CanPlayerSuicide(ply)
-	if ply:Team() == TEAM_HUMAN and CurTime() < ROUNDTIME * 0.1 then
+	if SUPPRESS_SUICIDE and ply:Team() == TEAM_HUMAN and CurTime() < ROUNDTIME * 0.1 then
 		ply:PrintMessage(4, "Give others time to spawn before suiciding.")
 		return false
 	end

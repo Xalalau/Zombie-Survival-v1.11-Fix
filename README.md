@@ -50,6 +50,7 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 ```
 Changes from v1.11 Fix 2 -> v1.11 Fix 3
     * Changed new cvar values are applied to the next match (requested by Dx0M | Epp307)
+    * Added internal configuration to allow early game suicides
     * Changed zs_roundtime from 600 to 710
     * Changed fastzombies back to climbing walls with the secondary attack
     * Fixed fastzombie attack area to better hit moving players

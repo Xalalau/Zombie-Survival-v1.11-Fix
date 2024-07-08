@@ -172,6 +172,9 @@ local function InitConfigs()
 
 	-- Missing config - Xala
 	SURVIVALMODE = false
+
+	-- Do not allow players to suicide until 10% of the round time has passed - Xala
+	SUPPRESS_SUICIDE = true
 end
 
 InitConfigs()
