@@ -57,7 +57,7 @@ Changes from v1.11 Fix 2 -> v1.11 Fix 3
     * Fixed fastzombie attack area to better hit moving players
     * Fixed some cvars were still not being applied after changed
     * Fixed chemzombie not spawning with his green particles
-    * Fixed player redeeming with chemzombie particlex
+    * Fixed player redeeming with chemzombie particles
     * Fixed all the remaining zombies damage detection
 
 Changes from v1.11 Fix 1 -> v1.11 Fix 2
