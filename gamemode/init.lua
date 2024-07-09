@@ -141,7 +141,7 @@ function GM:Initialize()
 end
 
 function GM:UnlockAllWeapons(sender)
-	if sender:IsAdmin() then
+	if sender.IsAdmin and sender:IsAdmin() then
 		for _, scoreweapons in pairs(self.Rewards) do
 			for __, weapon in ipairs(scoreweapons) do
 				for ___, ply in ipairs(player.GetHumans()) do
@@ -173,7 +173,7 @@ end
 concommand.Add("zs_unlock_all_weapons", function(sender, command, arguments) GAMEMODE:UnlockAllWeapons(sender) end)
 
 function GM:UnlockAllClasses(sender)
-	if sender:IsAdmin() then
+	if sender.IsAdmin and sender:IsAdmin() then
 		print("All zombie classes are unlocked")
 		for _,class in ipairs(ZombieClasses) do class.Unlocked=true end
 			BroadcastLua("for _,class in ipairs(ZombieClasses) do class['Threshold']=0 print('Unlocked ' .. class['Name']) end GAMEMODE:SplitMessage(h * 0.7, '<color=red><font=HUDFontAA>All zombies unlocked!</font></color>')")
