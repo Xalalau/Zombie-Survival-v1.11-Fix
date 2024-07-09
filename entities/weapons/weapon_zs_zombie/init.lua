@@ -28,7 +28,7 @@ function SWEP:Think()
 
 	local ply = self:GetOwner()
 
-	local trace, ent = self:CalcHit()
+	local trace, ent = self:CalcMeleeHit()
 	if not ent and self.PreHit and self.PreHit:IsValid() and self.PreHit:GetPos():Distance(ply:GetShootPos()) < 125 then
 		ent = self.PreHit
 		trace.Hit = true
@@ -74,7 +74,7 @@ function SWEP:PrimaryAttack()
 	self:GetOwner():EmitSound("npc/zombie/zo_attack"..math.random(1, 2)..".wav")
 	self.NextSwing = CurTime() + self.Primary.Delay
 	self.NextHit = CurTime() + 0.6
-	local trace, ent = self:CalcHit()
+	local trace, ent = self:CalcMeleeHit()
 	if ent then
 		self.PreHit = ent
 	end

@@ -7,7 +7,7 @@ SWEP.Primary.Delay = 0.4
 
 SWEP.Secondary.Delay = 0.22
 
-SWEP.HitDetection = {
+SWEP.MeleeHitDetection = {
 	traceStartGet = "GetShootPos",
 	traceEndGetNormal = "GetAimVector", 
 	traceEndDistance = 55,

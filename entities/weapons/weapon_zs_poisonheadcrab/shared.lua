@@ -10,7 +10,7 @@ SWEP.Secondary.Delay = 0.22
 SWEP.SpitWindUp = 1.25
 SWEP.PounceWindUp = 1.25
 
-SWEP.HitDetection = {
+SWEP.MeleeHitDetection = {
 	traceEndDistance = 35,
 	traceEndExtraHeight = 10,
 	hitScanHeight = 1.7,

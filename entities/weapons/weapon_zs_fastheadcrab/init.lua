@@ -20,7 +20,7 @@ function SWEP:Think()
 			self.NextLeap = CurTime() + 0.75
 			--self:GetOwner():SetViewOffset(self.OriginalViewOffset)
 		else
-			local trace, ent = self:CalcHit()
+			local trace, ent = self:CalcMeleeHit()
 
 			if ent:IsValid() then
 				if ent:GetClass() == "func_breakable_surf" then

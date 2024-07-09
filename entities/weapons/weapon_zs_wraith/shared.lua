@@ -5,7 +5,7 @@ SWEP.WorldModel = "models/weapons/w_knife_t.mdl"
 
 SWEP.Primary.Delay = 2
 
-SWEP.HitDetection = {
+SWEP.MeleeHitDetection = {
 	traceStartGet = "GetShootPos",
 	traceEndDistance = 75,
 	traceEndExtraHeight = 0,

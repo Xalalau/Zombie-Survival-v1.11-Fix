@@ -18,7 +18,7 @@ SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = true
 SWEP.Secondary.Ammo = "none"
 
-SWEP.HitDetection = {
+SWEP.MeleeHitDetection = {
 	traceStartGet = nil, -- string ply callback name. Default "GetPos"
 	traceStartExtraHeight = nil, -- number
 	traceEndGetNormal = nil, -- string ply callback name. Default nil, then we use the ply weapon forward vec
@@ -51,9 +51,9 @@ if CLIENT then
 	SWEP.CSMuzzleFlashes = false
 end
 
-function SWEP:CalcHit()
+function SWEP:CalcMeleeHit()
 	local tr = {}
-	local hit = self.HitDetection
+	local hit = self.MeleeHitDetection
 	local owner = self:GetOwner()
 	local vStart = owner[hit.traceStartGet or "GetPos"](owner)
 	local vEnd = hit.traceEndGetNormal and owner[hit.traceEndGetNormal](owner) or self:GetForward()
@@ -125,8 +125,8 @@ if CLIENT then
 		local owner = LocalPlayer()
 		local wep = owner:GetActiveWeapon()
 
-		if not wep:IsValid() or not wep.HitDetection or wep.HitDetection.hitScanHeight == nil then return end
-		local hit = wep.HitDetection
+		if not wep:IsValid() or not wep.MeleeHitDetection or wep.MeleeHitDetection.hitScanHeight == nil then return end
+		local hit = wep.MeleeHitDetection
 		local tr = {}
 		local owner = wep:GetOwner()
 		local vStart = owner[hit.traceStartGet or "GetPos"](owner)

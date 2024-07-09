@@ -29,7 +29,7 @@ function SWEP:Think()
 
 	self.NextHit = nil
 
-	local trace, ent = self:CalcHit()
+	local trace, ent = self:CalcMeleeHit()
 	if not ent and self.PreHit and self.PreHit:IsValid() and self.PreHit:GetPos():Distance(owner:GetShootPos()) < 135 then
 		ent = self.PreHit
 		trace.Hit = true
@@ -74,7 +74,7 @@ function SWEP:PrimaryAttack()
 	self.NextSwing = CurTime() + self.Primary.Delay
 	self.NextSwingAnim = CurTime() + 0.6
 	self.NextHit = CurTime() + 1
-	local trace, ent = self:CalcHit()
+	local trace, ent = self:CalcMeleeHit()
 	if ent then
 		self.PreHit = ent
 	end

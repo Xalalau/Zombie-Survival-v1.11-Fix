@@ -61,7 +61,7 @@ function SWEP:Think()
 			self:SetLeaping(false)
 			self:SetNextPrimaryFire(CurTime() + 0.8)
 		else
-			local trace, ent = self:CalcHit()
+			local trace, ent = self:CalcMeleeHit()
 
 			if ent:IsValid() then
 				local phys = ent:GetPhysicsObject()

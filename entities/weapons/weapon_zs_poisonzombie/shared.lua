@@ -7,7 +7,7 @@ SWEP.Primary.Delay = 2
 
 SWEP.ThrowAnimBaseTime = 2
 
-SWEP.HitDetection = {
+SWEP.MeleeHitDetection = {
 	traceStartGet = "GetShootPos",
 	traceEndDistance = 95,
 	traceEndExtraHeight = 0,
