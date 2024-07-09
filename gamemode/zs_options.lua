@@ -11,7 +11,7 @@
 ]]
 
 -- Don't change this. If you change this then you're an IDIOT.
-GM.Version  = "v1.11 Fix 3 dev"
+GM.Version  = "v1.11 Fix 3"
 -- Change this if you're not going to use the default install and/or settings. If you edit this file then it will automatically set it to Unofficial.
 GM.SubVersion = "Unofficial"
 
@@ -176,7 +176,7 @@ local function InitConfigs()
 	SURVIVALMODE = false
 
 	-- Do not allow players to suicide until 10% of the round time has passed - Xala
-	SUPPRESS_SUICIDE = true
+	SUPPRESS_SUICIDE = false
 end
 
 InitConfigs()
