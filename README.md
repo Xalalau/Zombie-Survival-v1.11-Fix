@@ -59,6 +59,7 @@ Changes from v1.11 Fix 2 -> v1.11 Fix 3
     * Fixed chemzombie not spawning with his green particles
     * Fixed player redeeming with chemzombie particles
     * Fixed all the remaining zombies damage detection
+    * Fixed knife damage detection
 
 Changes from v1.11 Fix 1 -> v1.11 Fix 2
     * Added support for votemap addons

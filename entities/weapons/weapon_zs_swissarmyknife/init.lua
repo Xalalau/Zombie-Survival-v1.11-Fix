@@ -36,6 +36,7 @@ function SWEP:PrimaryAttack()
 	if CurTime() < self:GetNetworkedFloat("LastShootTime", -100) + self.Primary.Delay then return end
 
 	local owner = self:GetOwner()
+	local trace, ent = owner:CalcMeleeHit(self.MeleeHitDetection)
 
 	if trace.Hit then
 		if trace.MatType == MAT_FLESH or trace.MatType == MAT_BLOODYFLESH or trace.MatType == MAT_ANTLION or trace.MatType == MAT_ALIENFLESH then
@@ -45,6 +46,9 @@ function SWEP:PrimaryAttack()
 			owner:EmitSound("weapons/knife/knife_hitwall1.wav")
 			util.Decal("ManhackCut", trace.HitPos + trace.HitNormal * 8, trace.HitPos - trace.HitNormal * 8)
 		end
+	elseif ent:IsValid() then
+		owner:EmitSound("weapons/knife/knife_hit"..math.random(1,4)..".wav")
+		util.Decal("Blood", ent:GetPos() + ent:GetAngles():Forward() * 8, ent:GetPos() - ent:GetAngles():Forward() * 8)
 	end
 
 	if self.Alternate then

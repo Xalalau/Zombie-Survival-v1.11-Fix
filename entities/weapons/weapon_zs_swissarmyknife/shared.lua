@@ -28,6 +28,23 @@ SWEP.Secondary.Ammo = "none"
 
 SWEP.WalkSpeed = 215
 
+SWEP.MeleeHitDetection = {
+	traceStartGet = "GetShootPos",
+	traceEndGetNormal = "GetAimVector",
+	traceEndDistance = 65,
+	traceEndExtraHeight = 0,
+	hitScanHeight = 55,
+	hitScanRadius = 8,
+	upZThreshold = 0.8,
+	upZHeight = 20,
+	upZaimDistance = 5,
+	downZThreshold = -0.85,
+	downZHeight = 45,
+	downZaimDistance = 5,
+	midZHeight = 0,
+	midZaimDistance = 13
+}
+
 function SWEP:Reload()
 	return false
 end
