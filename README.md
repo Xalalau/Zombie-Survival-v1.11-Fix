@@ -61,6 +61,7 @@ Changes from v1.11 Fix 2 -> v1.11 Fix 3
     * Fixed knife damage detection
     * Fixed headshot effect not working due to a nil access
     * Fixed playergib trying to remove nil emitter
+    * Fixed the scoreboard didn't truncate servers with big names
 
 Changes from v1.11 Fix 1 -> v1.11 Fix 2
     * Added support for votemap addons

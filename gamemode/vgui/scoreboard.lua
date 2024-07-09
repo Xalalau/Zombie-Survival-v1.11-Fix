@@ -13,6 +13,14 @@ function PANEL:Init()
 	self.Elements = {}
 end
 
+local function TruncateText(text, maxLength)
+    if string.len(text) > maxLength then
+        return string.sub(text, 1, maxLength - 3) .. "..."
+    else
+        return text
+    end
+end
+
 function PANEL:Paint()
 	local tall, wide = self:GetTall(), self:GetWide()
 	local posx, posy = self:GetPos()
@@ -33,7 +41,7 @@ function PANEL:Paint()
 	surface.SetFont("HUDFontBig")
 	local gmw, gmh = surface.GetTextSize("Zombie Survival")
 	draw.DrawText("("..GAMEMODE.Version.." "..GAMEMODE.SubVersion..")", "DefaultSmall", gmw, gmh - 10, COLOR_GRAY, TEXT_ALIGN_LEFT)
-	draw.DrawText(GetGlobalString("servername"), "HUDFont2", wide * 0.5, gmh + 10, COLOR_GRAY, TEXT_ALIGN_CENTER)
+	draw.DrawText(TruncateText(GetGlobalString("servername"), 36), "HUDFont2", wide * 0.5, gmh + 10, COLOR_GRAY, TEXT_ALIGN_CENTER)
 
 	local colHuman = team.GetColor(TEAM_HUMAN)
 	local colUndead = team.GetColor(TEAM_UNDEAD)
