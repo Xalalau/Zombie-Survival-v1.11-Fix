@@ -47,8 +47,8 @@ function SWEP:Think()
 			eyeangles.pitch = -0.15
 			eyeangles.z = -0.1
 			local ang = owner:GetAimVector() ang.z = 0
-			self:GetOwner():GetViewOffset(ang * 45)
-			self:GetOwner():GetAngles(Vector(0,0,6))
+			owner:GetViewOffset(ang * 45)
+			owner:GetAngles(Vector(0,0,6))
 			owner:SetGroundEntity(NULL)
 			owner:SetLocalVelocity(vel)
 
@@ -61,8 +61,7 @@ function SWEP:Think()
 			self:SetLeaping(false)
 			self:SetNextPrimaryFire(CurTime() + 0.8)
 		else
-			local trace, ent = self:CalcMeleeHit()
-
+			local trace, ent = owner:CalcMeleeHit(self.MeleeHitDetection)
 			if ent:IsValid() then
 				local phys = ent:GetPhysicsObject()
 				local damage = 18 + 18 * math.min(GetZombieFocus(owner:GetPos(), 300, 0.001, 0) - 0.3, 1)

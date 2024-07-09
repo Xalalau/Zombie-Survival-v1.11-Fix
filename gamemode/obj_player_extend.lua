@@ -19,6 +19,127 @@ function meta:TraceLine(distance, _mask)
 	return util.TraceLine({start=vStart, endpos = vStart + self:GetAimVector() * distance, filter = self, mask = _mask})
 end
 
+--[[
+hitData = {
+	traceStartGet = nil, -- string ply callback name. Default "GetPos"
+	traceStartExtraHeight = nil, -- number
+	traceEndGetNormal = nil, -- string ply callback name. Default nil, then we use the ply weapon forward vec
+	traceEndDistance = nil, -- number
+	traceEndExtraHeight = nil, -- number
+	traceMask = nil, -- MASK enum. Default MASK_SOLID
+	hitScanHeight = nil, -- number
+	hitScanRadius = nil, -- number
+	upZThreshold = nil, -- number
+	upZHeight = nil, -- number
+	upZaimDistance = nil, -- number
+	downZThreshold = nil, -- number
+	downZHeight = nil, -- number
+	downZaimDistance = nil, -- number
+	midZHeight = nil, -- number
+	midZaimDistance = nil -- number
+}
+]]
+function meta:CalcMeleeHit(hitData)
+	local tr = {}
+	local vStart = self[hitData.traceStartGet or "GetPos"](self)
+	local vEnd = hitData.traceEndGetNormal and self[hitData.traceEndGetNormal](self) or self:GetActiveWeapon():GetForward()
+
+	tr.start = vStart + Vector(0, 0, hitData.traceStartExtraHeight)
+	tr.endpos = vStart + vEnd * hitData.traceEndDistance + Vector(0, 0, hitData.traceEndExtraHeight)
+	tr.filter = self
+	tr.mask = hitData.traceMask or MASK_SOLID
+	local trace = util.TraceLine(tr)
+	local ent = trace.Entity
+
+	if not ent:IsValid() or not trace.HitNonWorld then
+		local curZ = self:GetForward().z
+		local aimDistance
+
+		if curZ > hitData.upZThreshold then
+			curZ = Vector(0, 0, self:GetForward().z * hitData.upZHeight)
+			aimDistance = hitData.upZaimDistance
+		elseif curZ <= hitData.downZThreshold then
+			curZ = Vector(0, 0, self:GetForward().z * hitData.downZHeight)
+			aimDistance = hitData.downZaimDistance
+		else
+			curZ = Vector(0, 0, self:GetForward().z * hitData.midZHeight)
+			aimDistance = hitData.midZaimDistance
+		end		
+
+		local searchPos = self:GetPos() + Vector(0, 0, hitData.hitScanHeight) + self:GetAimVector() * aimDistance + curZ
+
+		for _, fin in ipairs(ents.FindInSphere(searchPos, hitData.hitScanRadius)) do
+			if fin:IsPlayer() and fin:Team() ~= self:Team() and fin:Alive() then
+				ent = fin
+				break
+			end
+		end
+	end
+
+	if ent == nil then
+		ent = NULL
+	end
+
+	return trace, ent
+end
+
+--[[
+-- use sv_cheats 1 and thirdperson to see the generated areas
+hook.Add("PostDrawTranslucentRenderables", "TestDamage", function()
+	local owner = LocalPlayer()
+	local wep = owner:GetActiveWeapon()
+
+	if not wep:IsValid() or not wep.MeleeHitDetection or wep.MeleeHitDetection.hitScanHeight == nil then return end
+	local hitData = wep.MeleeHitDetection
+	local tr = {}
+	local owner = wep:GetOwner()
+	local vStart = owner[hitData.traceStartGet or "GetPos"](owner)
+	local vEnd = hitData.traceEndGetNormal and owner[hitData.traceEndGetNormal](owner) or wep:GetForward()
+
+	tr.start = vStart + Vector(0, 0, hitData.traceStartExtraHeight)
+	tr.endpos = vStart + vEnd * hitData.traceEndDistance + Vector(0, 0, hitData.traceEndExtraHeight)
+	tr.filter = owner
+	tr.mask = hitData.traceMask or MASK_SOLID
+	local trace = util.TraceLine(tr)
+	local ent = trace.Entity
+
+	render.DrawLine(tr.start, tr.endpos, Color(255, 0, 0))
+
+	if IsValid(ent) then
+		print("Detected trace", ent)
+	end
+
+	if not ent:IsValid() or not trace.HitNonWorld then
+		local curZ = owner:GetForward().z
+		local aimVectorMultiplier
+
+		if curZ > hitData.upZThreshold then
+			curZ = Vector(0, 0, owner:GetForward().z * hitData.upZHeight)
+			aimDistance = hitData.upZaimDistance
+		elseif curZ <= hitData.downZThreshold then
+			curZ = Vector(0, 0, owner:GetForward().z * hitData.downZHeight)
+			aimDistance = hitData.downZaimDistance
+		else
+			curZ = Vector(0, 0, owner:GetForward().z * hitData.midZHeight)
+			aimDistance = hitData.midZaimDistance
+		end
+
+		local searchPos = owner:GetPos() + Vector(0, 0, hitData.hitScanHeight) + owner:GetAimVector() * aimDistance + curZ
+
+		for _, fin in ipairs(ents.FindInSphere(searchPos, hitData.hitScanRadius)) do
+			if fin:IsPlayer() and fin:Team() ~= owner:Team() and fin:Alive() then
+				ent = fin
+				print("Detected sphere", ent)
+				break
+			end
+		end
+
+		render.SetColorMaterial()
+		render.DrawSphere(searchPos, hitData.hitScanRadius, 30, 30, Color(0, 175, 175, 100))
+	end
+end)
+--]]
+
 function meta:LegsGib()
 	self:EmitSound("physics/flesh/flesh_bloody_break.wav", 100, 75)
 	local ent = ents.Create("prop_dynamic_override")

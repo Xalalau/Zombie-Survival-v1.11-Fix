@@ -45,9 +45,9 @@ function SWEP:Think()
 			self:SetPounceTime(CurTime() + 1)
 			--self:GetOwner():SetViewOffset(self.OriginalViewOffset)
 		else
-			local trace, ent = self:CalcMeleeHit()
+			local trace, ent = owner:CalcMeleeHit(self.MeleeHitDetection)
 
-			if ent and ent:IsValid() then
+			if ent:IsValid() then
 				if ent:GetClass() == "func_breakable_surf" then
 					ent:Fire("break", "", 0)
 				else
@@ -87,11 +87,11 @@ function SWEP:Think()
 		return
 	end
 
-	local trace, ent = self:CalcMeleeHit()
+	local trace, ent = owner:CalcMeleeHit(self.MeleeHitDetection)
 
 	local damage = 5 + 5 * math.min(GetZombieFocus(owner:GetPos(), 300, 0.001, 0) - 0.3, 1)
 
-	if ent and ent:IsValid() then
+	if ent:IsValid() then
 		if ent:GetClass() == "func_breakable_surf" then
 			ent:Fire("break", "", 0)
 		else

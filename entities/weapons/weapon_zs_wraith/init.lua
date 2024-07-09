@@ -60,8 +60,8 @@ function SWEP:Think()
 
 	self.NextHit = nil
 
-	local trace, ent = self:CalcMeleeHit()
-	if not ent and self.PreHit and self.PreHit:IsValid() and self.PreHit:GetPos():Distance(owner:GetShootPos()) < 115 then
+	local trace, ent = owner:CalcMeleeHit(self.MeleeHitDetection)
+	if not ent:IsValid() and self.PreHit and self.PreHit:IsValid() and self.PreHit:GetPos():Distance(owner:GetShootPos()) < 115 then
 		ent = self.PreHit
 		trace.Hit = true
 	end
@@ -109,8 +109,8 @@ function SWEP:PrimaryAttack()
 	self:GetOwner():EmitSound("npc/antlion/distract1.wav")
 	self.NextSwingAnim = 0
 	self.NextHit = CurTime() + 0.75
-	local trace, ent = self:CalcMeleeHit()
-	if ent then
+	local trace, ent = self:GetOwner():CalcMeleeHit(self.MeleeHitDetection)
+	if ent:IsValid() then
 		self.PreHit = ent
 	end
 	GAMEMODE:SetPlayerSpeed(self:GetOwner(), 1)
