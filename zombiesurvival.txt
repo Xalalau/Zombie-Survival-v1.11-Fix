@@ -111,7 +111,7 @@
 			"text"		"Intermission time"
 			"help"		"Time in seconds between end round and next map.."
 			"type"		"Numeric"
-			"default"	"25"
+			"default"	"35"
 			"singleplayer" "1"
 		}
 

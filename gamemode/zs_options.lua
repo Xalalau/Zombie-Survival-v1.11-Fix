@@ -113,7 +113,7 @@ local function InitConfigs()
 	--		zs_roundtime (def. 720) -- 12 minutes
 
 	-- Time in seconds between end round and next map.
-	-- 		zs_intermission_time (def. 25)
+	-- 		zs_intermission_time (def. 35)
 
 	-- New joining players will be put on the Undead team if the round is half over.
 	-- 		zs_human_deadline (def. true)

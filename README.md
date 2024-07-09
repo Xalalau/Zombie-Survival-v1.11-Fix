@@ -48,6 +48,9 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 # v1.11 Fix by Xalalau & collaborators changelog
 
 ```
+Changes from v1.11 Fix 3 -> v1.11 Fix 4
+    * Changed zs_intermission_time back to 35
+
 Changes from v1.11 Fix 2 -> v1.11 Fix 3
     * Added internal configuration to allow early game suicides
     * Added internal base for zombie weapons
