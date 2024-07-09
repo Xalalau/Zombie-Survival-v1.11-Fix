@@ -4,7 +4,7 @@ function EFFECT:Init(data)
 	local mag = data:GetMagnitude()
 	local ent = data:GetEntity()
 	if ent:IsValid() and ent:IsPlayer() then
-		pos = ent:GetAttachment(1).Pos
+		pos = ent:GetAttachment(1) and ent:GetAttachment(1).Pos
 	end
 
 	EmitSound("physics/flesh/flesh_bloody_break.wav", pos, 0, CHAN_AUTO, 1, 80, 0, math.random(50, 100))

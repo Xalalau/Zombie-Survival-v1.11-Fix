@@ -59,6 +59,7 @@ Changes from v1.11 Fix 2 -> v1.11 Fix 3
     * Fixed player redeeming with chemzombie particles
     * Fixed all the remaining zombies damage detection
     * Fixed knife damage detection
+    * Fixed headshot effect not working due to a nil access
 
 Changes from v1.11 Fix 1 -> v1.11 Fix 2
     * Added support for votemap addons
