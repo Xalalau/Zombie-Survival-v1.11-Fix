@@ -51,11 +51,10 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 Changes from v1.11 Fix 2 -> v1.11 Fix 3
     * Added internal configuration to allow early game suicides
     * Added internal base for zombie weapons
-    * Changed new cvar values are applied to the next match (requested by Dx0M | Epp307)
+    * Changed new cvar values are instantly applied (requested by Dx0M | Epp307)
     * Changed zs_roundtime from 600 to 720
     * Changed fastzombies back to climbing walls with the secondary attack
     * Fixed fastzombie attack area to better hit moving players
-    * Fixed some cvars were still not being applied after changed
     * Fixed chemzombie not spawning with his green particles
     * Fixed player redeeming with chemzombie particles
     * Fixed all the remaining zombies damage detection
