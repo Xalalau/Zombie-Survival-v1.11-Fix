@@ -7,6 +7,24 @@ SWEP.Primary.Delay = 1.2
 
 SWEP.YellTime = 2
 
+SWEP.HitDetection = {
+	traceStartGet = "GetShootPos",
+	traceEndDistance = 85,
+	traceEndExtraHeight = 0,
+	traceEndGetNormal = "GetAimVector", 
+	traceMask = MASK_SHOT,
+	hitScanHeight = 55,
+	hitScanRadius = 5,
+	upZThreshold = 0.8,
+	upZHeight = 20,
+	upZaimDistance = 5,
+	downZThreshold = -0.85,
+	downZHeight = 45,
+	downZaimDistance = 5,
+	midZHeight = 0,
+	midZaimDistance = 13
+}
+
 function SWEP:Precache()
 	util.PrecacheSound("npc/zombie/zombie_voice_idle1.wav")
 	util.PrecacheSound("npc/zombie/zombie_voice_idle2.wav")

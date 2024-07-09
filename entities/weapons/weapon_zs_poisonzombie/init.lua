@@ -25,17 +25,17 @@ function SWEP:Think()
 
 	if CurTime() < self.NextHit then return end
 
+	local owner = self:GetOwner()
+
 	self.NextHit = nil
-	local trace = self:GetOwner():TraceLine(95, MASK_SHOT)
-	local ent
-	if trace.HitNonWorld then
-		ent = trace.Entity
-	elseif self.PreHit and self.PreHit:IsValid() and self.PreHit:GetPos():Distance(self:GetOwner():GetShootPos()) < 135 then
+
+	local trace, ent = self:CalcHit()
+	if not ent and self.PreHit and self.PreHit:IsValid() and self.PreHit:GetPos():Distance(owner:GetShootPos()) < 135 then
 		ent = self.PreHit
 		trace.Hit = true
 	end
 
-	local damage = 45 + 45 * math.min(GetZombieFocus(self:GetOwner():GetPos(), 300, 0.001, 0) - 0.3, 1)
+	local damage = 45 + 45 * math.min(GetZombieFocus(owner:GetPos(), 300, 0.001, 0) - 0.3, 1)
 
 	if ent and ent:IsValid() then
 		if ent:GetClass() == "func_breakable_surf" then
@@ -44,25 +44,25 @@ function SWEP:Think()
 			local phys = ent:GetPhysicsObject()
 			if ent:IsPlayer() then
 				if ent:Team() == TEAM_UNDEAD then
-					local vel = self:GetOwner():EyeAngles():Forward() * 500
+					local vel = owner:EyeAngles():Forward() * 500
 					vel.z = 120
 					ent:SetVelocity(vel)
 				end
 			elseif phys:IsValid() and not ent:IsNPC() and phys:IsMoveable() then
-				local vel = damage * 600 * self:GetOwner():EyeAngles():Forward()
+				local vel = damage * 600 * owner:EyeAngles():Forward()
 
-				phys:ApplyForceOffset(vel, (ent:NearestPoint(self:GetOwner():GetShootPos()) + ent:GetPos() * 2) / 3)
-				ent:SetPhysicsAttacker(self:GetOwner())
+				phys:ApplyForceOffset(vel, (ent:NearestPoint(owner:GetShootPos()) + ent:GetPos() * 2) / 3)
+				ent:SetPhysicsAttacker(owner)
 			end
-			ent:TakeDamage(damage, self:GetOwner())
+			ent:TakeDamage(damage, owner)
 		end
 	end
 
  	if trace.Hit then
-		self:GetOwner():EmitSound("npc/zombie/claw_strike"..math.random(1, 3)..".wav", 90, 80)
+		owner:EmitSound("npc/zombie/claw_strike"..math.random(1, 3)..".wav", 90, 80)
 	end
 
-	self:GetOwner():EmitSound("npc/zombie/claw_miss"..math.random(1, 2)..".wav", 90, 80)
+	owner:EmitSound("npc/zombie/claw_miss"..math.random(1, 2)..".wav", 90, 80)
 	self.PreHit = nil
 end
 
@@ -74,9 +74,9 @@ function SWEP:PrimaryAttack()
 	self.NextSwing = CurTime() + self.Primary.Delay
 	self.NextSwingAnim = CurTime() + 0.6
 	self.NextHit = CurTime() + 1
-	local trace = self:GetOwner():TraceLine(95, MASK_SHOT)
-	if trace.HitNonWorld then
-		self.PreHit = trace.Entity
+	local trace, ent = self:CalcHit()
+	if ent then
+		self.PreHit = ent
 	end
 end
 

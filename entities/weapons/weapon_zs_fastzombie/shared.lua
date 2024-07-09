@@ -8,18 +8,20 @@ SWEP.Primary.Delay = 0.4
 SWEP.Secondary.Delay = 0.22
 
 SWEP.HitDetection = {
-	traceForwardLenght = 35,
-	traceForwardHeight = 35,
-	entHeight = 55,
-	hitScanRadius = 12,
+	traceStartGet = "GetShootPos",
+	traceEndGetNormal = "GetAimVector", 
+	traceEndDistance = 55,
+	traceEndExtraHeight = 0,
+	hitScanHeight = 55,
+	hitScanRadius = 7,
 	upZThreshold = 0.8,
-	upZLenght = 20,
-	upZAimLenght = 5,
+	upZHeight = 20,
+	upZaimDistance = 5,
 	downZThreshold = -0.85,
-	downZLenght = 55,
-	downZAimLenght = 5,
-	midZLenght = 0,
-	midZAimLenght = 35
+	downZHeight = 45,
+	downZaimDistance = 5,
+	midZHeight = 0,
+	midZaimDistance = 13
 }
 
 -- Shutup.

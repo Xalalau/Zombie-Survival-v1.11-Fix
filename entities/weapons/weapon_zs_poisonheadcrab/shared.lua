@@ -11,18 +11,16 @@ SWEP.SpitWindUp = 1.25
 SWEP.PounceWindUp = 1.25
 
 SWEP.HitDetection = {
-	traceForwardLenght = 35,
-	traceForwardHeight = 10,
-	entHeight = 1.7,
+	traceEndDistance = 35,
+	traceEndExtraHeight = 10,
+	hitScanHeight = 1.7,
 	hitScanRadius = 10,
 	upZThreshold = 0.25,
-	upZLenght = 47,
-	upZAimLenght = 1,
+	upZHeight = 47,
+	upZaimDistance = 1,
 	downZThreshold = 0.25,
-	downZLenght = 0,
-	downZAimLenght = 10,
-	midZLenght = nil,
-	midZAimLenght = nil
+	downZHeight = 0,
+	downZaimDistance = 10
 }
 
 function SWEP:Precache()

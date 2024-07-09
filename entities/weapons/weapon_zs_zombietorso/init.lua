@@ -22,18 +22,12 @@ function SWEP:Think()
 
 	local ply = self:GetOwner()
 
-	local vStart = ply:EyePos() + Vector(0, 0, -30)
-	//local trace = ply:TraceLine(65)
-	local trace = util.TraceLine({start=vStart, endpos = vStart + ply:GetAimVector() * 65, filter = ply, mask = MASK_SHOT})
-
-	local ent = nil
-	if trace.HitNonWorld then
-		ent = trace.Entity
-	elseif self.PreHit and self.PreHit:IsValid() and self.PreHit:GetPos():Distance(vStart) < 110 then
+	local trace, ent = self:CalcHit()
+	if not ent and self.PreHit and self.PreHit:IsValid() and self.PreHit:GetPos():Distance(ply:GetPos()) < 110 then
 		ent = self.PreHit
 		trace.Hit = true
 	end
-
+	
 	local damage = 20 + 20 * math.min(GetZombieFocus(ply:GetPos(), 300, 0.001, 0) - 0.3, 1)
 
 	if ent and ent:IsValid() then
@@ -74,9 +68,8 @@ function SWEP:PrimaryAttack()
 	self:GetOwner():EmitSound("npc/zombie/zo_attack"..math.random(1, 2)..".wav")
 	self.NextSwing = CurTime() + self.Primary.Delay
 	self.NextHit = CurTime() + 0.4
-	local vStart = self:GetOwner():EyePos() + Vector(0, 0, -30)
-	local trace = util.TraceLine({start=vStart, endpos = vStart + self:GetOwner():GetAimVector() * 65, filter = self:GetOwner(), mask = MASK_SHOT})
-	if trace.HitNonWorld then
-		self.PreHit = trace.Entity
+	local trace, ent = self:CalcHit()
+	if ent then
+		self.PreHit = ent
 	end
 end

@@ -59,11 +59,9 @@ function SWEP:Think()
 	if CurTime() < self.NextHit then return end
 
 	self.NextHit = nil
-	local trace = owner:TraceLine(50, MASK_SHOT)
-	local ent = nil
-	if trace.HitNonWorld then
-		ent = trace.Entity
-	elseif self.PreHit and self.PreHit:IsValid() and self.PreHit:GetPos():Distance(owner:GetShootPos()) < 115 then
+
+	local trace, ent = self:CalcHit()
+	if not ent and self.PreHit and self.PreHit:IsValid() and self.PreHit:GetPos():Distance(owner:GetShootPos()) < 115 then
 		ent = self.PreHit
 		trace.Hit = true
 	end
@@ -111,9 +109,9 @@ function SWEP:PrimaryAttack()
 	self:GetOwner():EmitSound("npc/antlion/distract1.wav")
 	self.NextSwingAnim = 0
 	self.NextHit = CurTime() + 0.75
-	local trace = self:GetOwner():TraceLine(75, MASK_SHOT)
-	if trace.HitNonWorld then
-		self.PreHit = trace.Entity
+	local trace, ent = self:CalcHit()
+	if ent then
+		self.PreHit = ent
 	end
 	GAMEMODE:SetPlayerSpeed(self:GetOwner(), 1)
 end
