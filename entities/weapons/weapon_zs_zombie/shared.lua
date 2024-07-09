@@ -9,9 +9,9 @@ SWEP.YellTime = 2
 
 SWEP.MeleeHitDetection = {
 	traceStartGet = "GetShootPos",
+	traceEndGetNormal = "GetAimVector",
 	traceEndDistance = 85,
 	traceEndExtraHeight = 0,
-	traceEndGetNormal = "GetAimVector", 
 	traceMask = MASK_SHOT,
 	hitScanHeight = 55,
 	hitScanRadius = 5,

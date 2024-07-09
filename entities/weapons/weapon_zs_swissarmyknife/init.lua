@@ -8,14 +8,15 @@ SWEP.AutoSwitchTo = false
 SWEP.AutoSwitchFrom = false
 
 function SWEP:Deploy()
-	if self.WalkSpeed < self:GetOwner().WalkSpeed then
-		GAMEMODE:SetPlayerSpeed(self:GetOwner(), self.WalkSpeed)
-	elseif self.WalkSpeed > self:GetOwner().WalkSpeed then
-		local timername = tostring(self:GetOwner()).."speedchange"
+	local owner = self:GetOwner()
+	if self.WalkSpeed < owner.WalkSpeed then
+		GAMEMODE:SetPlayerSpeed(owner, self.WalkSpeed)
+	elseif self.WalkSpeed > owner.WalkSpeed then
+		local timername = tostring(owner).."speedchange"
 		timer.Remove(timername)
 		timer.Create(timername, 1, 1, function()
-			if IsValid(self) and IsValid(self:GetOwner()) then
-				GAMEMODE:SetPlayerSpeed(self:GetOwner(), self.WalkSpeed)
+			if IsValid(self) and IsValid(owner) then
+				GAMEMODE:SetPlayerSpeed(owner, self.WalkSpeed)
 			end
 		end)
 	end
@@ -34,19 +35,14 @@ function SWEP:PrimaryAttack()
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	if CurTime() < self:GetNetworkedFloat("LastShootTime", -100) + self.Primary.Delay then return end
 
-	local trace = self:GetOwner():TraceLine(62)
-	local ent
-
-	if trace.HitNonWorld then
-		ent = trace.Entity
-	end
+	local owner = self:GetOwner()
 
 	if trace.Hit then
 		if trace.MatType == MAT_FLESH or trace.MatType == MAT_BLOODYFLESH or trace.MatType == MAT_ANTLION or trace.MatType == MAT_ALIENFLESH then
-			self:GetOwner():EmitSound("weapons/knife/knife_hit"..math.random(1,4)..".wav")
+			owner:EmitSound("weapons/knife/knife_hit"..math.random(1,4)..".wav")
 			util.Decal("Blood", trace.HitPos + trace.HitNormal * 8, trace.HitPos - trace.HitNormal * 8)
 		else
-			self:GetOwner():EmitSound("weapons/knife/knife_hitwall1.wav")
+			owner:EmitSound("weapons/knife/knife_hitwall1.wav")
 			util.Decal("ManhackCut", trace.HitPos + trace.HitNormal * 8, trace.HitPos - trace.HitNormal * 8)
 		end
 	end
@@ -58,14 +54,14 @@ function SWEP:PrimaryAttack()
 	end
 	self.Alternate = not self.Alternate
 
-	self:GetOwner():EmitSound("weapons/knife/knife_slash"..math.random(1,2)..".wav")
-	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
+	owner:EmitSound("weapons/knife/knife_slash"..math.random(1,2)..".wav")
+	owner:SetAnimation(PLAYER_ATTACK1)
 
 	if ent and ent:IsValid() then
 		if ent:GetClass() == "func_breakable_surf" then
 			ent:Fire("break", "", 0)
 		else
-			ent:TakeDamage(self.Primary.Damage, self:GetOwner())
+			ent:TakeDamage(self.Primary.Damage, owner)
 		end
 	end
 end
