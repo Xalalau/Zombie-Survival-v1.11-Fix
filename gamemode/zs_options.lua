@@ -38,13 +38,13 @@ GM.STARTLOADOUTS = {
 -- Changing these means you're most likely an idiot.
 
 GM.Rewards = {} -- Leave this.
-GM.Rewards[cvars.Number("zs_rewards_1", 2)] = {"weapon_zs_deagle", "weapon_zs_deagle", "weapon_zs_glock3", "weapon_zs_glock3", "weapon_zs_magnum"}
-GM.Rewards[cvars.Number("zs_rewards_2", 4)] = {"_Heal", "_Heal", "_Shell"}
-GM.Rewards[cvars.Number("zs_rewards_3", 6)] = {"weapon_zs_uzi", "weapon_zs_uzi", "weapon_zs_crossbow", "weapon_zs_smg"}
-GM.Rewards[cvars.Number("zs_rewards_4", 8)] = {"weapon_zs_sweepershotgun", "weapon_zs_slugrifle"}
-GM.Rewards[cvars.Number("zs_rewards_5", 10)] = {"weapon_zs_barricadekit"}
-GM.Rewards[cvars.Number("zs_rewards_6", 12)] = {"_Regeneration", "_Heal"}
-GM.Rewards[cvars.Number("zs_rewards_7", 14)] = {"weapon_slam"}
+GM.Rewards[GetConVar("zs_rewards_1", 2):GetInt()] = {"weapon_zs_deagle", "weapon_zs_deagle", "weapon_zs_glock3", "weapon_zs_glock3", "weapon_zs_magnum"}
+GM.Rewards[GetConVar("zs_rewards_2", 4):GetInt()] = {"_Heal", "_Heal", "_Shell"}
+GM.Rewards[GetConVar("zs_rewards_3", 6):GetInt()] = {"weapon_zs_uzi", "weapon_zs_uzi", "weapon_zs_crossbow", "weapon_zs_smg"}
+GM.Rewards[GetConVar("zs_rewards_4", 8):GetInt()] = {"weapon_zs_sweepershotgun", "weapon_zs_slugrifle"}
+GM.Rewards[GetConVar("zs_rewards_5", 10):GetInt()] = {"weapon_zs_barricadekit"}
+GM.Rewards[GetConVar("zs_rewards_6", 12):GetInt()] = {"_Regeneration", "_Heal"}
+GM.Rewards[GetConVar("zs_rewards_7", 14):GetInt()] = {"weapon_slam"}
 
 ----------------------------------
 --		AMMO REGENERATION		--
@@ -196,9 +196,9 @@ if CLIENT then
 end
 
 local shit = ""
-if cvars.Bool("zs_allow_redeeming") then
+if GetConVar("zs_allow_redeeming"):GetBool() then
 	shit = [[You must hurry and redeem yourself before the round ends!]] ..
-	[[@To redeem yourself, kill ]]..cvars.Number("zs_redeem_kills")..[[ humans and you will respawn as a human.]]
+	[[@To redeem yourself, kill ]]..GetConVar("zs_redeem_kills"):GetInt()..[[ humans and you will respawn as a human.]]
 end
 
 if CLIENT then
@@ -237,7 +237,7 @@ if CLIENT then
 
 	HELP_TEXT =
 		[[^gWelcome to Zombie Survival v1.11 Fix @^gBy JetBoom (2008). Adapted to GMod March 2024 Update+ by Xalalau.@ @^b          -- HUMANS --@^bSurvive for ]] ..
-		ToMinutesSeconds(cvars.Number("zs_roundtime")) ..
+		ToMinutesSeconds(GetConVar("zs_roundtime"):GetInt()) ..
 		[[ to win the match.@If you get killed by a zombie, you become one! ]] ..
 		shit .. 
 		[[@ @Watch the infliction bar. The bigger it is, the more humans are dead!@The bar at the bottom ]] ..
@@ -255,7 +255,7 @@ if CLIENT then
 
 	HELP_TEXT_SURVIVALMODE =
 		[[^rWelcome to Zombie Survival v1.11 Fix @^rBy JetBoom (2008). Adapted to GMod March 2024 Update+ by Xalalau.@ @^b          -- HUMANS --@^bSurvive for ]] ..
-		ToMinutesSeconds(cvars.Number("zs_roundtime")) ..
+		ToMinutesSeconds(GetConVar("zs_roundtime"):GetInt()) ..
 		[[ to win the match.@If you get killed by a zombie, you become one! ]] ..
 		shit ..
 		[[@ @Watch the infliction bar. The bigger it is, the more humans are dead!@The bar at the bottom of the screen ]] ..

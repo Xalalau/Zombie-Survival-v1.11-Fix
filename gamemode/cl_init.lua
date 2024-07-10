@@ -51,6 +51,9 @@ ENDTIME = 0
 NearZombies = 0
 ActualNearZombies = 0
 
+local cvar_zs_roundtime = GetConVar("zs_roundtime")
+local cvar_zs_intermission_time = GetConVar("zs_intermission_time")
+
 local Top = {}
 local TopZ = {}
 local TopZD = {}
@@ -370,7 +373,7 @@ function GM:HUDPaint()
 	else
 		self:HumanHUD(ply, killedposx, killedposy)
 		
-		draw.DrawText("Survive: "..ToMinutesSeconds(cvars.Number("zs_roundtime") - CurTime()), "HUDFontSmallAA", actionposx, actionposy, COLOR_GRAY, TEXT_ALIGN_LEFT)
+		draw.DrawText("Survive: "..ToMinutesSeconds(cvar_zs_roundtime:GetInt() - CurTime()), "HUDFontSmallAA", actionposx, actionposy, COLOR_GRAY, TEXT_ALIGN_LEFT)
 	end
 
 	-- Infliction
@@ -534,7 +537,7 @@ function Intermission(nextmap, winner)
 			end
 		end
 
-		local time = ENDTIME + cvars.Number("zs_intermission_time") - CurTime()
+		local time = ENDTIME + cvar_zs_intermission_time:GetInt() - CurTime()
 		draw.DrawText("Next: "..ToMinutesSeconds(time >= 0 and time or 0), "HUDFontSmall", w*0.5, h*0.7, COLOR_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 	if winner == TEAM_UNDEAD then

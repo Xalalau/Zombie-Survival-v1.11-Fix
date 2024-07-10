@@ -50,6 +50,7 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 ```
 Changes from v1.11 Fix 3 -> v1.11 Fix 4
     * Changed zs_intermission_time back to 35
+    * Fixed gamemode failing to get cvar values
 
 Changes from v1.11 Fix 2 -> v1.11 Fix 3
     * Added internal configuration to allow early game suicides

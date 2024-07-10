@@ -132,7 +132,14 @@ function GM:ResetWaterAndCramps()
 	CRAMP_METER_TIME = 0
 end
 
-local NextAmmoDropOff = cvars.Number("zs_ammo_regenerate_rate")
+local cvar_zs_ammo_regenerate_rate = GetConVar("zs_ammo_regenerate_rate")
+local cvar_zs_anti_vent_camp = GetConVar("zs_anti_vent_camp")
+local cvar_zs_allow_redeeming = GetConVar("zs_allow_redeeming")
+local cvar_zs_redeem_kills = GetConVar("zs_redeem_kills")
+local cvar_zs_autoredeem = GetConVar("zs_autoredeem")
+local cvar_zs_roundtime = GetConVar("zs_roundtime")
+
+local NextAmmoDropOff = cvar_zs_ammo_regenerate_rate:GetInt()
 
 local COLOR_HUD_OK = Color(0, 150, 0, 255)
 local COLOR_HUD_SCRATCHED = Color(35, 130, 0, 255)
@@ -140,7 +147,7 @@ local COLOR_HUD_HURT = Color(160, 160, 0, 255)
 local COLOR_HUD_CRITICAL = Color(220, 0, 0, 255)
 
 local function GetNextAmmoRegenerate()
-	return math.ceil(CurTime() / cvars.Number("zs_ammo_regenerate_rate")) * cvars.Number("zs_ammo_regenerate_rate")
+	return math.ceil(CurTime() / cvar_zs_ammo_regenerate_rate:GetInt()) * cvar_zs_ammo_regenerate_rate:GetInt()
 end
 
 function GM:InitPostEntity()
@@ -240,7 +247,7 @@ function GM:Think()
 			end
 		end
 
-		if cvars.Bool("zs_anti_vent_camp") then
+		if cvar_zs_anti_vent_camp:GetBool() then
 			local cramped = util.TraceLine({start = mypos, endpos = mypos + Vector(0,0,64), filter = ply, mask=COLLISION_GROUP_DEBRIS}).HitWorld
 			if cramped then
 				CRAMP_METER_TIME = math.min(CRAMP_METER_TIME + FrameTime(), 60)
@@ -389,11 +396,11 @@ function GM:ZombieHUD(ply, actionposx, actionposy, killedposx, killedposy)
 	draw.SimpleText(ZombieHordeText[rounded], "HUDFontTinyAA", 128, h - 42, COLOR_GRAY, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 	local killz = ply:Frags()
-	local allow_redeeming = cvars.Bool("zs_allow_redeeming")
-	local redeem_kills = cvars.Number("zs_redeem_kills")
-	local autoredeem = cvars.Bool("zs_autoredeem")
+	local allow_redeeming = cvar_zs_allow_redeeming:GetBool()
+	local redeem_kills = cvar_zs_redeem_kills:GetInt()
+	local autoredeem = cvar_zs_autoredeem:GetBool()
 	if SMALL_HUD then
-		draw.DrawText("Feed: "..ToMinutesSeconds(cvars.Number("zs_roundtime") - CurTime()), "HUDFontSmall", actionposx, actionposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+		draw.DrawText("Feed: "..ToMinutesSeconds(cvar_zs_roundtime:GetInt() - CurTime()), "HUDFontSmall", actionposx, actionposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 
 		if allow_redeeming then
 			if autoredeem then
@@ -409,7 +416,7 @@ function GM:ZombieHUD(ply, actionposx, actionposy, killedposx, killedposy)
 			draw.DrawText("Brains: "..killz, "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 		end
 	else
-		draw.DrawText("Feed: "..ToMinutesSeconds(cvars.Number("zs_roundtime") - CurTime()), "HUDFontSmall", actionposx, actionposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
+		draw.DrawText("Feed: "..ToMinutesSeconds(cvar_zs_roundtime:GetInt() - CurTime()), "HUDFontSmall", actionposx, actionposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 
 		if allow_redeeming then
 			if autoredeem then

@@ -67,10 +67,26 @@ LASTHUMAN = false
 CAPPED_INFLICTION = 0
 ROUNDWINNER = NULL
 
+local cvar_zs_ammo_regenerate_rate = GetConVar("zs_ammo_regenerate_rate")
+local cvar_zs_difficulty = GetConVar("zs_difficulty")
+local cvar_zs_roundtime = GetConVar("zs_roundtime")
+local cvar_zs_allow_map_npcs = GetConVar("zs_allow_map_npcs")
+local cvar_zs_destroy_doors = GetConVar("zs_destroy_doors")
+local cvar_zs_destroy_prop_doors = GetConVar("zs_destroy_prop_doors")
+local cvar_zs_allow_redeeming = GetConVar("zs_allow_redeeming")
+local cvar_zs_autoredeem = GetConVar("zs_autoredeem")
+local cvar_zs_redeem_kills = GetConVar("zs_redeem_kills")
+local cvar_zs_warmup_mode = GetConVar("zs_warmup_mode")
+local cvar_zs_warmup_threshold = GetConVar("zs_warmup_threshold")
+local cvar_zs_allow_admin_noclip = GetConVar("zs_allow_admin_noclip")
+local cvar_zs_human_deadline = GetConVar("zs_human_deadline")
+local cvar_zs_intermission_time = GetConVar("zs_intermission_time")
+local cvar_zs_allow_shove = GetConVar("zs_allow_shove")
+
 local LastHumanSpawnPoint = NULL
 local LastZombieSpawnPoint = NULL
 local DeadSteamIDs = {}
-local NextAmmoDropOff = cvars.Number("zs_ammo_regenerate_rate")
+local NextAmmoDropOff = cvar_zs_ammo_regenerate_rate:GetInt()
 
 if file.Exists("gamemodes/zombiesurvival/gamemode/maps/"..game.GetMap()..".lua", "GAME") then
 	include("maps/"..game.GetMap()..".lua")
@@ -86,7 +102,7 @@ function GM:PlayerLoadout(ply)
 end
 
 function GM:GetHeadNPCScale()
-	return math.Clamp(3 - cvars.Number("zs_difficulty"), 1.5, 4)
+	return math.Clamp(3 - cvar_zs_difficulty:GetInt(), 1.5, 4)
 end
 
 function GM:Initialize()
@@ -187,7 +203,7 @@ end
 concommand.Add("gm_help", function(sender, command, arguments) GAMEMODE:ShowHelp(sender) end)
 
 function GM:ShowTeam(ply)
-	if cvars.Bool("zs_allow_redeeming") and not cvars.Bool("zs_autoredeem") and ply:Team() == TEAM_UNDEAD and ply:Frags() >= cvars.Number("zs_redeem_kills") then
+	if cvar_zs_allow_redeeming:GetBool() and not cvar_zs_autoredeem:GetBool() and ply:Team() == TEAM_UNDEAD and ply:Frags() >= cvar_zs_redeem_kills:GetInt() then
 		ply:Redeem()
 	end
 end
@@ -239,22 +255,22 @@ function GM:InitPostEntity()
 		self.UndeadSpawnPoints = ents.FindByClass("info_player_start")
 	end
 
-	RunConsoleCommand("sk_zombie_health", math.ceil(50 + 50 * cvars.Number("zs_difficulty")))
-	RunConsoleCommand("sk_zombie_dmg_one_slash", math.ceil(20 + cvars.Number("zs_difficulty") * 10))
-	RunConsoleCommand("sk_zombie_dmg_both_slash", math.ceil(30 + cvars.Number("zs_difficulty") * 12))
+	RunConsoleCommand("sk_zombie_health", math.ceil(50 + 50 * cvar_zs_difficulty:GetInt()))
+	RunConsoleCommand("sk_zombie_dmg_one_slash", math.ceil(20 + cvar_zs_difficulty:GetInt() * 10))
+	RunConsoleCommand("sk_zombie_dmg_both_slash", math.ceil(30 + cvar_zs_difficulty:GetInt() * 12))
 
 	local destroying = ents.FindByClass("prop_ragdoll") // These seem to cause server crashes if a zombie attacks them. They cause pointless lag, too.
-	if not cvars.Bool("zs_allow_map_npcs") then
+	if not cvar_zs_allow_map_npcs:GetBool() then
 		destroying = table.Add(destroying, ents.FindByClass("npc_zombie"))
 		destroying = table.Add(destroying, ents.FindByClass("npc_maker"))
 		destroying = table.Add(destroying, ents.FindByClass("npc_template_maker"))
 		destroying = table.Add(destroying, ents.FindByClass("npc_maker_template"))
 	end
-	if cvars.Bool("zs_destroy_doors") then
+	if cvar_zs_destroy_doors:GetBool() then
 		destroying = table.Add(destroying, ents.FindByClass("func_door_rotating"))
 		destroying = table.Add(destroying, ents.FindByClass("func_door"))
 	end
-	if cvars.Bool("zs_destroy_prop_doors") then
+	if cvar_zs_destroy_prop_doors:GetBool() then
 		destroying = table.Add(destroying, ents.FindByClass("prop_door_rotating"))
 	end
 	destroying = table.Add(destroying, ents.FindByClass("weapon_physicscannon"))
@@ -391,7 +407,7 @@ end
 function GM:Think()
 	local tim = CurTime()
 
-	if cvars.Number("zs_roundtime") < tim then
+	if cvar_zs_roundtime:GetInt() < tim then
 		self:EndRound(TEAM_HUMAN)
 	elseif NextAmmoDropOff < tim then
 		if SURVIVALMODE then
@@ -399,8 +415,8 @@ function GM:Think()
 			return
 		end
 
-		NextAmmoDropOff = CurTime() + cvars.Number("zs_ammo_regenerate_rate")
-		INFLICTION = math.max(INFLICTION, CurTime() / cvars.Number("zs_roundtime"))
+		NextAmmoDropOff = CurTime() + cvar_zs_ammo_regenerate_rate:GetInt()
+		INFLICTION = math.max(INFLICTION, CurTime() / cvar_zs_roundtime:GetInt())
 		CAPPED_INFLICTION = INFLICTION
 
 		self:SendInfliction()
@@ -611,8 +627,8 @@ end
 function GM:EndRound(winner)
 	if ENDROUND then return end
 	ENDROUND = true
-	timer.Simple(cvars.Number("zs_intermission_time"), game.LoadNextMap)
-	timer.Simple(cvars.Number("zs_intermission_time") * 0.3, function() hook.Run("LoadNextMap") end)
+	timer.Simple(cvar_zs_intermission_time:GetInt(), game.LoadNextMap)
+	timer.Simple(cvar_zs_intermission_time:GetInt() * 0.3, function() hook.Run("LoadNextMap") end)
 	local nextmap = game.GetMapNext()
 
 	timer.Simple(1, function()
@@ -716,7 +732,7 @@ function GM:PlayerInitialSpawn(ply)
 		if ply ~= newply then
 			ply:SetTeam(TEAM_HUMAN)
 		end
-	elseif INFLICTION >= 0.5 or (CurTime() > cvars.Number("zs_roundtime")*0.5 and cvars.Bool("zs_human_deadline")) or LASTHUMAN then
+	elseif INFLICTION >= 0.5 or (CurTime() > cvar_zs_roundtime:GetInt()*0.5 and cvar_zs_human_deadline:GetBool()) or LASTHUMAN then
 		ply:SetTeam(TEAM_UNDEAD)
 		DeadSteamIDs[ply:SteamID()] = true
 	else
@@ -750,7 +766,7 @@ function GM:CheckPlayerScore(ply)
 end
 
 function GM:PlayerNoClip(ply, on)
-	return ply:IsAdmin() and cvars.Bool("zs_allow_admin_noclip")
+	return ply:IsAdmin() and cvar_zs_allow_admin_noclip:GetBool()
 end
 
 function GM:OnPhysgunFreeze(weapon, phys, ent, ply)
@@ -899,7 +915,7 @@ function GM:PlayerDeathSound()
 end
 
 function GM:CanPlayerSuicide(ply)
-	if SUPPRESS_SUICIDE and ply:Team() == TEAM_HUMAN and CurTime() < cvars.Number("zs_roundtime") * 0.1 then
+	if SUPPRESS_SUICIDE and ply:Team() == TEAM_HUMAN and CurTime() < cvar_zs_roundtime:GetInt() * 0.1 then
 		ply:PrintMessage(4, "Give others time to spawn before suiciding.")
 		return false
 	end
@@ -942,8 +958,8 @@ local function ChemBomb(ply, refrag)
 	if refrag then
 		ply:AddFrags(100)
 	end
-	if cvars.Bool("zs_allow_redeeming") and cvars.Bool("zs_autoredeem") then
-		if ply:Frags() >= cvars.Number("zs_redeem_kills") then
+	if cvar_zs_allow_redeeming:GetBool() and cvar_zs_autoredeem:GetBool() then
+		if ply:Frags() >= cvar_zs_redeem_kills:GetInt() then
 			ply:Redeem()
 			timer.Remove("Survivalist")
 		end
@@ -1080,8 +1096,8 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		if attacker:IsPlayer() and attacker ~= ply then
 			attacker:AddFrags(1)
 			attacker.BrainsEaten = attacker.BrainsEaten + 1
-			if cvars.Bool("zs_allow_redeeming") and cvars.Bool("zs_autoredeem") then
-				if attacker:Frags() >= cvars.Number("zs_redeem_kills") or INFINITEREDEEMS then
+			if cvar_zs_allow_redeeming:GetBool() and cvar_zs_autoredeem:GetBool() then
+				if attacker:Frags() >= cvar_zs_redeem_kills:GetInt() or INFINITEREDEEMS then
 					if INFINITEREDEEMS then
 						BroadcastLua([[InfRed("]]..attacker:Name()..[[")]])
 					end
@@ -1098,7 +1114,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 				end)
 			end
 		end
-		if cvars.Bool("zs_warmup_mode") and #player.GetHumans() < cvars.Number("zs_warmup_threshold") then
+		if cvar_zs_warmup_mode:GetBool() and #player.GetHumans() < cvar_zs_warmup_threshold:GetInt() then
 			ply:PrintMessage(HUD_PRINTTALK, "There are not enough people playing for you to change to the Undead. Set zs_warmup_mode in zs_options.lua to false to change this.")
 		else
 			ply:SetTeam(TEAM_UNDEAD)
@@ -1391,7 +1407,7 @@ end)
 
 util.PrecacheSound("ambient/voices/citizen_punches2.wav")
 concommand.Add("Shove", function(sender, command, arguments)
-	if not cvars.Bool("zs_allow_shove") then return end
+	if not cvar_zs_allow_shove:GetBool() then return end
 	if not (sender:Alive() and sender:Team() == TEAM_HUMAN and CurTime() >= sender.NextShove) then return end
 	local ent = Entity(tonumber(arguments[1]))
 	if not (ent and ent:IsValid() and ent:IsPlayer() and ent:Team() == TEAM_HUMAN) then return end
