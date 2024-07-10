@@ -5,6 +5,7 @@
 	"maps"				"^zs_"
 	"category"			"pvp"
 	"menusystem"		"1"
+	"workshopid"		"3278538690"
 
 	"author_name"		"William 'JetBoom' Moodhe - Restoration by Xalalau Xubilozo"
 	"author_email"		"williammoodhe@gmail.com"

@@ -49,6 +49,7 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 
 ```
 Changes from v1.11 Fix 3 -> v1.11 Fix 4
+    * Added workshop wsid to the gamemode config file
     * Changed zs_intermission_time back to 35
     * Fixed gamemode failing to get cvar values
 
