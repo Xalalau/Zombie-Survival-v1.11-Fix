@@ -320,6 +320,14 @@ function GM:HUDPaint()
 
 	if not ply:IsValid() then return end
 
+	if not cvar_zs_roundtime then
+		cvar_zs_roundtime = GetConVar("zs_roundtime")
+	end
+
+	if not cvar_zs_intermission_time then
+		cvar_zs_intermission_time = GetConVar("zs_intermission_time")
+	end
+
 	-- Width, height
 	h = ScrH()
 	w = ScrW()
@@ -369,9 +377,13 @@ function GM:HUDPaint()
 	local killedposy = hunit/2 
 
 	if myteam == TEAM_UNDEAD then
-		self:ZombieHUD(ply, actionposx, actionposy, killedposx, killedposy)
+		if self.ZombieHUD then
+			self:ZombieHUD(ply, actionposx, actionposy, killedposx, killedposy)
+		end
 	else
-		self:HumanHUD(ply, killedposx, killedposy)
+		if self.HumanHUD then
+			self:HumanHUD(ply, killedposx, killedposy)
+		end
 		
 		draw.DrawText("Survive: "..ToMinutesSeconds(cvar_zs_roundtime:GetInt() - CurTime()), "HUDFontSmallAA", actionposx, actionposy, COLOR_GRAY, TEXT_ALIGN_LEFT)
 	end
