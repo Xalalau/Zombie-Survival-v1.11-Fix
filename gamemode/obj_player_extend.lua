@@ -155,7 +155,7 @@ function meta:LegsGib()
 end
 
 function meta:Redeem()
-	for _, ply in ipairs(player.GetHumans()) do
+	for _, ply in ipairs(player.GetAll()) do
 		ply:PrintMessage(3, self:Name().." redeemed themself.")
 	end
 

@@ -438,7 +438,7 @@ function GM:ZombieHUD(ply, actionposx, actionposy, killedposx, killedposy)
 		local mypos = ply:GetPos()
 		local cap = 0
 		local auras = {}
-		for _, curPly in ipairs(player.GetHumans()) do
+		for _, curPly in ipairs(player.GetAll()) do
 			if 10 <= cap then break end
 
 			if curPly:Team() == TEAM_HUMAN and curPly:Alive() then

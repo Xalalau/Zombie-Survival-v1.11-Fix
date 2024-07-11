@@ -67,7 +67,7 @@ local matZomboHeadID = surface.GetTextureID("zombohead")
 function GetZombieFocus2(mypos, range, multiplier, maxper)
 	local zombies = 0
 
-	for _, curPly in ipairs(player.GetHumans()) do
+	for _, curPly in ipairs(player.GetAll()) do
 		if curPly ~= LocalPlayer() and curPly:Team() == TEAM_UNDEAD and curPly:Alive() then
 			local dist = curPly:GetPos():Distance(mypos)
 			if dist < range then
@@ -344,7 +344,7 @@ function GM:HUDPaint()
 	-- Team Count
 	local zombies = 0
 	local humans = 0
-	for _, ply in ipairs(player.GetHumans()) do
+	for _, ply in ipairs(player.GetAll()) do
 		if ply:Team() == TEAM_ZOMBIE then
 			zombies = zombies + 1
 		else
@@ -466,7 +466,7 @@ function GM:OnChatTab(str)
 
 	if LastWord == nil then return str end
 
-	for k, v in ipairs(player.GetHumans()) do
+	for k, v in ipairs(player.GetAll()) do
 		local nickname = v:Nick()
 		if string.len(LastWord) < string.len(nickname) and string.find(string.lower(nickname), string.lower(LastWord)) == 1 then
 			str = string.sub(str, 1, (string.len(LastWord) * -1)-1)

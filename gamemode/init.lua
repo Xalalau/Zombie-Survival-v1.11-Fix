@@ -107,7 +107,7 @@ local function FixCLCvars(ply)
 end
 
 BroadcastLua = BroadcastLua or function(lua)
-	for _, ply in ipairs(player.GetHumans()) do
+	for _, ply in ipairs(player.GetAll()) do
 		ply:SendLua(lua)
 	end
 end
@@ -174,7 +174,7 @@ function GM:UnlockAllWeapons(sender)
 	if sender.IsAdmin and sender:IsAdmin() then
 		for _, scoreweapons in pairs(self.Rewards) do
 			for __, weapon in ipairs(scoreweapons) do
-				for ___, ply in ipairs(player.GetHumans()) do
+				for ___, ply in ipairs(player.GetAll()) do
 					if ply:Team() ~= TEAM_HUMAN then
 						continue
 					end
@@ -435,8 +435,8 @@ function GM:Think()
 
 		self:SendInfliction()
 
-		local plays = player.GetHumans()
-		if 0.75 <= INFLICTION then plays = table.Add(plays, player.GetHumans()) end -- Double ammo on horde conditions
+		local plays = player.GetAll()
+		if 0.75 <= INFLICTION then plays = table.Add(plays, player.GetAll()) end -- Double ammo on horde conditions
 
 		for _, ply in pairs(plays) do
 			if ply:Team() == TEAM_HUMAN then
@@ -468,7 +468,7 @@ function GM:CalculateInfliction()
 
 	local players = 0
 	local zombies = 0
-	for _, ply in ipairs(player.GetHumans()) do
+	for _, ply in ipairs(player.GetAll()) do
 		if ply:Team() == TEAM_UNDEAD then
 			zombies = zombies + 1
 		end
@@ -507,7 +507,7 @@ end
 function GM:SendTopTimes(to)
 	local PlayerSorted = {}
 
-	for k, v in ipairs(player.GetHumans()) do
+	for k, v in ipairs(player.GetAll()) do
 		if v.SurvivalTime then
 			table.insert(PlayerSorted, v)
 		end
@@ -538,7 +538,7 @@ end
 function GM:SendTopZombies(to)
 	local PlayerSorted = {}
 
-	for k, v in ipairs(player.GetHumans()) do
+	for k, v in ipairs(player.GetAll()) do
 		if v.BrainsEaten and v.BrainsEaten > 0 then
 			table.insert(PlayerSorted, v)
 		end
@@ -572,7 +572,7 @@ end
 function GM:SendTopHumanDamages(to)
 	local PlayerSorted = {}
 
-	for _, ply in ipairs(player.GetHumans()) do
+	for _, ply in ipairs(player.GetAll()) do
 		if ply.DamageDealt and ply.DamageDealt[TEAM_HUMAN] and ply.DamageDealt[TEAM_HUMAN] > 0 then
 			table.insert(PlayerSorted, ply)
 		end
@@ -607,7 +607,7 @@ end
 function GM:SendTopZombieDamages(to)
 	local PlayerSorted = {}
 
-	for _, ply in ipairs(player.GetHumans()) do
+	for _, ply in ipairs(player.GetAll()) do
 		if ply.DamageDealt and ply.DamageDealt[TEAM_UNDEAD] and ply.DamageDealt[TEAM_UNDEAD] > 0 then
 			table.insert(PlayerSorted, ply)
 		end
@@ -668,7 +668,7 @@ function GM:EndRound(winner)
 	end
 	ROUNDWINNER = winner
 	if winner == TEAM_HUMAN then
-		for _, ply in ipairs(player.GetHumans()) do
+		for _, ply in ipairs(player.GetAll()) do
 			if ply.SpawnedTime and ply:Team() == TEAM_HUMAN then
 				ply.SurvivalTime = CurTime() - ply.SpawnedTime
 			end
@@ -676,7 +676,7 @@ function GM:EndRound(winner)
 	end
 	local damtoundead = 0
 	local damtohumans = 0
-	for _, ply in ipairs(player.GetHumans()) do
+	for _, ply in ipairs(player.GetAll()) do
 		if ply.DamageDealt then
 			if ply.DamageDealt[TEAM_HUMAN] then
 				damtoundead = damtoundead + ply.DamageDealt[TEAM_HUMAN]
@@ -687,7 +687,7 @@ function GM:EndRound(winner)
 		end
 	end
 
-	for _, ply in ipairs(player.GetHumans()) do
+	for _, ply in ipairs(player.GetAll()) do
 		ply:Lock()
 		ply.NextSpawnTime = 99999
 	end
@@ -1130,7 +1130,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 				end)
 			end
 		end
-		if cvar_zs_warmup_mode:GetBool() and #player.GetHumans() < cvar_zs_warmup_threshold:GetInt() then
+		if cvar_zs_warmup_mode:GetBool() and #player.GetAll() < cvar_zs_warmup_threshold:GetInt() then
 			ply:PrintMessage(HUD_PRINTTALK, "There are not enough people playing for you to change to the Undead. Set zs_warmup_mode in zs_options.lua to false to change this.")
 		else
 			ply:SetTeam(TEAM_UNDEAD)
@@ -1354,7 +1354,7 @@ function ThrowHeadcrab(owner, wep)
 				ent:Remove()
 				return
 			end
-			for _, ply in ipairs(player.GetHumans()) do
+			for _, ply in ipairs(player.GetAll()) do
 				if ply:Team() == TEAM_UNDEAD then
 					ent:AddEntityRelationship(ply, D_LI, 99)
 				else
@@ -1406,7 +1406,7 @@ end)
 concommand.Add("cramped_death", function(sender, command, arguments)
 	if sender:Alive() then
 		sender:TakeDamage(200, NULL)
-		for _, ply in ipairs(player.GetHumans()) do
+		for _, ply in ipairs(player.GetAll()) do
 			ply:PrintMessage(HUD_PRINTTALK, sender:Name().."'s spine crumbled in to dust.")
 		end
 	end
@@ -1415,7 +1415,7 @@ end)
 concommand.Add("glitched_death", function(sender, command, arguments)
 	if sender:Alive() then
 		sender:TakeDamage(200, NULL)
-		for _, ply in ipairs(player.GetHumans()) do
+		for _, ply in ipairs(player.GetAll()) do
 			ply:PrintMessage(HUD_PRINTTALK, sender:Name().." fell off the edge of the world.")
 		end
 	end

@@ -137,7 +137,7 @@ UNLIFE = false
 
 function GetZombieFocus(mypos, range, multiplier, maxper)
 	local zombies = 0
-	for _, ply in ipairs(player.GetHumans()) do
+	for _, ply in ipairs(player.GetAll()) do
 		if ply:Team() == TEAM_UNDEAD and ply:Alive() then
 			local dist = ply:GetPos():Distance(mypos)
 			if dist < range then
