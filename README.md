@@ -10,24 +10,19 @@ And thank you all very much! I hope you enjoy this gamemode as much as I do.
 
 > 4 the Devs: would you like to contribute to this base with **new features**? Well, fork it and create your own ZS!! I won't accept these PRs here because they'll actually ruin the restoration. Advances must be made elsewhere! But if you want to contribute following the repo main goals, go ahead. Here are the commits golden rules: 1) Commits cannot change the original experience, even if you want to fix bugs like moonwalk; 2) We can fix bugs that prevent the game from running; 3) We must port deprecated code from GMod 11 to the current GMod; 4) We may change internal code to make our lives easier, but don't try to fix the spaghetti because I won't accept it.
 
-# REQUIREMENTS
+# How to install and use
 
-- ``Counter-Strike: Source`` downloaded and mounted in GMod OR [this addon](https://steamcommunity.com/sharedfiles/filedetails/?id=3278214014) (CSS should be the right option anyway as many maps need it).
+Everything is in the Steam Worskhop! Get the base addon and take a look at its description:
 
-- Get some maps! You can:
-  - use [this pack](https://steamcommunity.com/sharedfiles/filedetails/?id=3278214930); or
-  - select some files from [here](https://github.com/MOHAA2002/zombiesurvival-map-archive-update); or
-  - get newer maps from the Workshop if they exist.
+- [Zombie Survival v1.11 Fix](https://steamcommunity.com/sharedfiles/filedetails/?id=3278538690)
 
-# Installation
+Extra downloads (for a complete experience):
 
-Clone this repo and place it in your addons folder or subscribe to the gamemode [in the Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3278538690).
-
-I also like to install [Ultimate Workshop Downloader](https://steamcommunity.com/sharedfiles/filedetails/?id=2214712098), so new players get the required server files automatically.
-
-# Settings
-
-In the original ZS v1.11 the settings were supposed be manually changed in ``gamemode/zs_options.lua``, but I exposed most of them through the main menu (when starting a new game) and console commands (check zs_options.lua).
+- [ZS v1.11 CSS Weapons Replacement](https://steamcommunity.com/workshop/filedetails/?id=3278214014)
+- [ZS v1.11 Map Pack](https://steamcommunity.com/workshop/filedetails/?id=3278214930)
+- [ZS v1.11 Mapvote](https://steamcommunity.com/workshop/filedetails/?id=3285251001)
+- [ZS v1.11 Gamemode Content](https://steamcommunity.com/workshop/filedetails/?id=3285258150)
+- [ZS v1.11 LeadBots](https://steamcommunity.com/sharedfiles/filedetails/?id=3286664671)
 
 # Original files and gameplay
 
