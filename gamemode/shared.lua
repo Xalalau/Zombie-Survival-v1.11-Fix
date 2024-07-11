@@ -1,3 +1,54 @@
+-- HACK: force init the cvars when the gamemode is not installed in the client!
+--       they don't init even if he downloads the gamemode while joining the server.
+--       after creating the cvars locally I get their real values from the server - Xala
+ZSPlzFixCvars = {
+	["zs_difficulty"] = 1, -- temp values
+	["zs_warmup_mode"] = 1,
+	["zs_warmup_threshold"] = 2,
+	["zs_allow_map_npcs"] = 0,
+	["zs_npcs_count_as_kills"] = 0,
+	["zs_allow_redeeming"] = 1,
+	["zs_autoredeem"] = 1,
+	["zs_redeem_kills"] = 3,
+	["zs_ammo_regenerate_rate"] = 75,
+	["zs_roundtime"] = 720,
+	["zs_intermission_time"] = 35,
+	["zs_human_deadline"] = 1,
+	["zs_destroy_doors"] = 1,
+	["zs_destroy_prop_doors"] = 0,
+	["zs_anti_vent_camp"] = 1,
+	["zs_allow_shove"] = 1,
+	["zs_allow_admin_noclip"] = 1,
+	["zs_rewards_1"] = 2,
+	["zs_rewards_2"] = 4,
+	["zs_rewards_3"] = 6,
+	["zs_rewards_4"] = 8,
+	["zs_rewards_5"] = 10,
+	["zs_rewards_6"] = 12,
+	["zs_rewards_7"] = 14
+}
+
+local neededToFixCvars = false
+
+for cvarName, cvarDefault in pairs(ZSPlzFixCvars) do
+	if not GetConVar(cvarName) then
+		CreateConVar(cvarName, cvarDefault, { FCVAR_ARCHIVE, FCVAR_REPLICATED })
+		neededToFixCvars = true
+	end
+end
+
+net.Receive("FixClCvars", function()
+	if not neededToFixCvars then return end
+
+	local cvarTab = net.ReadTable()
+
+	for cvarName, cvarValue in pairs(ZSPlzFixCvars) do
+		RunConsoleCommand(cvarName, cvarValue)
+	end
+end)
+
+--- --------------------------------------------------------------
+
 include("obj_player_extend.lua")
 include("obj_weapon_extend.lua")
 include("zs_options.lua")

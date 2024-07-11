@@ -11,6 +11,7 @@ util.AddNetworkString("PlayerKilled")
 util.AddNetworkString("PlayerRedeemed")
 util.AddNetworkString("PlayerKilledNPC")
 util.AddNetworkString("NPCKilledNPC")
+util.AddNetworkString("FixClCvars")
 
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
@@ -90,6 +91,19 @@ local NextAmmoDropOff = cvar_zs_ammo_regenerate_rate:GetInt()
 
 if file.Exists("gamemodes/zombiesurvival/gamemode/maps/"..game.GetMap()..".lua", "GAME") then
 	include("maps/"..game.GetMap()..".lua")
+end
+
+-- HACK: force init the cvars when the gamemode is not installed in the client befored he joined the server
+local function FixCLCvars(ply)
+	local cvarTab = {}
+
+	for cvarName, cvarDefault in pairs(ZSPlzFixCvars) do
+		cvarTab[cvarName] = GetConVar(cvarName):GetInt()
+	end
+
+	net.Start("FixClCvars")
+		net.WriteTable(cvarTab)
+	net.Send(ply)
 end
 
 BroadcastLua = BroadcastLua or function(lua)
@@ -701,6 +715,7 @@ function GM:StartCommand(ply, cmd)
 		loadqueue[ply] = nil
 		-- Reliable place to send net messages to new players spawning for the first time
 		ply:SetZombieClass(1)
+		FixCLCvars(ply)
 	end
 end
 
