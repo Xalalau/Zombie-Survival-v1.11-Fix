@@ -817,6 +817,9 @@ function GM:PlayerDeathThink(ply)
 end
 
 function GM:PlayerHurt(victim, attacker, healthRemaining, damageTaken)
+	if not damageTaken then return end
+	if not attacker:IsPlayer() and victim:IsPlayer() then return end
+
 	if victim:Team() == TEAM_HUMAN then
 		for i=1, math.ceil(math.min(3, damageTaken * 0.05)) do
 			local effectdata = EffectData()
@@ -825,18 +828,16 @@ function GM:PlayerHurt(victim, attacker, healthRemaining, damageTaken)
 			util.Effect("bloodstream", effectdata, true, true)
 		end
 	end
+
+	local victimteam = victim:Team()
+	if attacker:Team() ~= victimteam then
+		local myteam = attacker:Team()
+		attacker.DamageDealt[myteam] = attacker.DamageDealt[myteam] + damageTaken
+	end
 end
 
 function GM:EntityTakeDamage(ent, attacker, inflictor, damage)
 	if not damage then return end
-
-	if ent.SendLua then
-		local entteam = ent:Team()
-		if attacker.SendLua and attacker:Team() ~= entteam then
-			local myteam = attacker:Team()
-			attacker.DamageDealt[myteam] = attacker.DamageDealt[myteam] + damage
-		end
-	end
 
 	local entclass = ent:GetClass()
 	if entclass == "func_physbox" then

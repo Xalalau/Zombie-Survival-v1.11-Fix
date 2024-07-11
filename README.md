@@ -50,6 +50,7 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 ```
 Changes from v1.11 Fix 4 -> v1.11 Fix 5
     * Fixed (critical2) gamemode was still failing to get cvar values
+    * Fixed the leaderboard not showing damage information
 
 Changes from v1.11 Fix 3 -> v1.11 Fix 4
     * Added workshop wsid to the gamemode config file
