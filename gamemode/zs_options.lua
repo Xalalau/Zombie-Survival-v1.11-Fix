@@ -11,7 +11,7 @@
 ]]
 
 -- Don't change this. If you change this then you're an IDIOT.
-GM.Version  = "v1.11 Fix 6"
+GM.Version  = "v1.11 Fix 5"
 -- Change this if you're not going to use the default install and/or settings. If you edit this file then it will automatically set it to Unofficial.
 GM.SubVersion = "Unofficial"
 

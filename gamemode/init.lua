@@ -737,7 +737,7 @@ function GM:PlayerInitialSpawn(ply)
 	if DeadSteamIDs[ply:SteamID()] then
 		ply:SetTeam(TEAM_UNDEAD)
 	elseif team.NumPlayers(TEAM_UNDEAD) < 1 and team.NumPlayers(TEAM_HUMAN) >= 3 then
-		local plays = player.GetHumans()
+		local plays = player.GetAll()
 		local newply = plays[math.random(1, #plays)]
 		newply:SetTeam(TEAM_UNDEAD)
 		DeadSteamIDs[newply:SteamID()] = true
