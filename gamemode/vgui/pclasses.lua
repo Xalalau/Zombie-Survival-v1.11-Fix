@@ -10,9 +10,11 @@ function MakepClasses()
 		pClasses = nil
 	end
 
+	local UIScalingW, UIScalingH, smoothingFactor = GetUIScale()
+
 	local Window = vgui.Create("DFrame")
-	local wide = 500 -- w * 0.5
-	local tall = 650 -- h * 0.95
+	local wide = 500 * UIScalingW
+	local tall = 650 * UIScalingH
 
 	Window:SetSize(wide, tall)
 	Window:CenterVertical()
@@ -29,7 +31,7 @@ function MakepClasses()
 	surface.SetFont("HUDFontAA")
 	local tw, th = surface.GetTextSize("Choose a class...")
 	local label = vgui.Create("DLabel", Window)
-	label:SetY(25)
+	label:SetY(25 * UIScalingH)
 	label:SetSize(tw, th)
 	label:CenterHorizontal()
 
@@ -37,13 +39,13 @@ function MakepClasses()
 	label:SetText("Choose a class...")
 	label:SetTextColor(color_white)
 
-	local y = 95
+	local y = 95 * UIScalingH
 
 	for i, class in ipairs(ZombieClasses) do
 		if not class.Hidden then
 			local button = vgui.Create("SpawnIcon", Window)
-			button:SetPos(41, y)
-			button:SetSize(48, 48)
+			button:SetPos(41 * UIScalingW, y)
+			button:SetSize(48 * UIScalingW, 48 * UIScalingH)
 			button:SetModel(class.Model)
 			button.Class = class
 			button.OnMousePressed = SwitchClass
@@ -51,7 +53,7 @@ function MakepClasses()
 			surface.SetFont("HUDFontSmallAA")
 			local tw, th = surface.GetTextSize(class.Name)
 			local label = vgui.Create("DLabel", Window)
-			label:SetPos(button:GetWide() + 49, y + 2)
+			label:SetPos(button:GetWide() + 49 * UIScalingW, y + 2 * UIScalingH)
 			label:SetSize(tw, th)
 			label:SetFont("HUDFontSmallAA")
 			label:SetText(class.Name)
@@ -61,20 +63,20 @@ function MakepClasses()
 				label:SetTextColor(COLOR_RED)
 			end
 
-			local yy = y + 2 + th
+			local yy = y + 2 * UIScalingH + th
 			for i, line in ipairs(string.Explode("@", class.Description)) do
-				surface.SetFont("Default")
+				surface.SetFont("DefaultScaled")
 				local tw, th = surface.GetTextSize(line)
 				local label = vgui.Create("DLabel", Window)
-				label:SetPos(button:GetWide() + 52, yy)
+				label:SetPos(button:GetWide() + 52 * UIScalingW, yy)
 				label:SetSize(tw, th)
-				label:SetFont("Default")
+				label:SetFont("DefaultScaled")
 				label:SetText(line)
 				label:SetTextColor(COLOR_GRAY)
-				yy = yy + th + 1
+				yy = yy + th + 1 * UIScalingH
 			end
 
-			y = y + button:GetTall() + 16
+			y = y + button:GetTall() + 16 * UIScalingH
 		end
 	end
 end

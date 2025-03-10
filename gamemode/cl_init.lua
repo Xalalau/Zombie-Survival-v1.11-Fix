@@ -79,127 +79,156 @@ function GetZombieFocus2(mypos, range, multiplier, maxper)
 	return math.min(zombies, 1)
 end
 
+function GetUIScale()
+	local UIScalingW = 1
+	local UIScalingH = 1
+	local smoothinFactor = 1
+
+	if w > 1366 and h > 768 then
+		local baseWidth = 1366
+		local baseHeight = 768
+
+		smoothinFactor = 0.9
+		UIScalingW = (w / baseWidth) * smoothinFactor
+		UIScalingH = (h / baseHeight) * smoothinFactor
+	end
+
+	return UIScalingW, UIScalingH, smoothinFactor
+end
+
 function GM:Initialize()
 	self.ShowScoreboard = false
 
+	local UIScalingW, UIScalingH = GetUIScale()
+
 	surface.CreateFont("ScoreboardHead", { 
 		font = "Coolvetica",
-		size = 48,
+		size = 48 * UIScalingH,
 		weight = 500,
 		shadow = true
 	})
 	surface.CreateFont("ScoreboardSub", { 
 		font = "Coolvetica",
-		size = 24,
+		size = 24 * UIScalingH,
 		weight = 500,
 		shadow = true
 	})
 	surface.CreateFont("ScoreboardText", { 
 		font = "Tahoma",
-		size = 16,
+		size = 16 * UIScalingH,
 		weight = 1000,
 		shadow = true
 	})
 	surface.CreateFont("Signs", { 
 		font = "csd",
-		size = 42,
+		size = 42 * UIScalingH,
 		weight = 500,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontTiny", { 
 		font = "anthem",
-		size = 16,
+		size = 16 * UIScalingH,
 		weight = 250,
 		antialias = false,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontSmall", { 
 		font = "anthem",
-		size = 28,
+		size = 28 * UIScalingH,
 		weight = 400,
 		antialias = false,
 		shadow = true
 	})
 	surface.CreateFont("HUDFont", { 
 		font = "anthem",
-		size = 42,
+		size = 42 * UIScalingH,
 		weight = 400,
 		antialias = false,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontBig", { 
 		font = "anthem",
-		size = 72,
+		size = 72 * UIScalingH,
 		weight = 400,
 		antialias = false,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontTinyAA", { 
 		font = "anthem",
-		size = 16,
+		size = 16 * UIScalingH,
 		weight = 250,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontSmallAA", { 
 		font = "anthem",
-		size = 28,
+		size = 28 * UIScalingH,
 		weight = 400,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontAA", { 
 		font = "anthem",
-		size = 42,
+		size = 42 * UIScalingH,
 		weight = 400,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontBigAA", { 
 		font = "anthem",
-		size = 72,
+		size = 72 * UIScalingH,
 		weight = 400,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontTiny2", { 
 		font = "AkbarPlain",
-		size = 16,
+		size = 16 * UIScalingH,
 		weight = 250,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontSmall2", { 
 		font = "AkbarPlain",
-		size = 28,
+		size = 28 * UIScalingH,
 		weight = 500,
 		shadow = true
 	})
 	surface.CreateFont("HUDFont2", { 
 		font = "AkbarPlain",
-		size = 42,
+		size = 42 * UIScalingH,
 		weight = 500,
 		shadow = true
 	})
 	surface.CreateFont("HUDFontBig2", { 
 		font = "AkbarPlain",
-		size = 72,
+		size = 72 * UIScalingH,
 		weight = 500,
 		shadow = true
 	})
 	surface.CreateFont("noxnetbig", { 
 		font = "Frosty",
-		size = 32,
+		size = 32 * UIScalingH,
 		weight = 200,
 		antialias = false,
 		shadow = true
 	})
 	surface.CreateFont("noxnetnormal", { 
 		font = "AkbarPlain",
-		size = 22,
-		weight = 500,
-		shadow = true
+		size = 22 * UIScalingH,
+		weight = 500
 	})
 	surface.CreateFont("DefaultBold", { 
 		font = "anthem",
-		size = 20,
+		size = 20 * UIScalingH,
 		weight = 400,
 		shadow = true
+	})
+	surface.CreateFont("DefaultScaled", { 
+		font = "Default",
+		size = 14 * UIScalingH,
+		weight = 700,
+		antialias = true,
+	})
+	surface.CreateFont("DefaultSmallScaled", { 
+		font = "DefaultSmall",
+		size = 14 * UIScalingH,
+		weight = 0,
 	})
 
 	if FORCE_NORMAL_GAMMA then
@@ -332,9 +361,11 @@ function GM:HUDPaint()
 	h = ScrH()
 	w = ScrW()
 
+	local UIScalingW, UIScalingH, smoothingFactor = GetUIScale()
+
 	surface.SetDrawColor(255, 255, 255, 180)
 	surface.SetTexture(matUIBottomLeft)
-	surface.DrawTexturedRect(0, h - 72, 256, 64)
+	surface.DrawTexturedRect(0, h - 72 * UIScalingH, 256 * UIScalingW, 64 * UIScalingH)
 
 	local myteam = ply:Team()
 
@@ -353,23 +384,24 @@ function GM:HUDPaint()
 	end
 
 	local hunit = 84 --h*0.11
-	local windowwidth = hunit*3.1
+	local windowwidth = hunit * 3.1 * UIScalingH
 
-	draw.RoundedBox(16, 0, 0, windowwidth, hunit, color_black_alpha90)
+	draw.RoundedBox(16, 0, 0, windowwidth, hunit * UIScalingH, color_black_alpha90)
 	local w05 = hunit/2.2
-	local h05 = w05
+	local w05Scaled = w05 * UIScalingH
+	local h05Scaled = w05Scaled
 	surface.SetDrawColor(235, 235, 235, 255)
 	surface.SetTexture(matZomboHeadID)
-	surface.DrawTexturedRect(0, 4, w05, h05)
+	surface.DrawTexturedRect(0, 4, w05Scaled, h05Scaled)
 	surface.SetTexture(matHumanHeadID)
-	surface.DrawTexturedRect(0, h05 + 4, w05, h05)
-	draw.DrawText(zombies, "HUDFontAA", w05, 0, COLOR_DARKGREEN, TEXT_ALIGN_LEFT)
-	draw.DrawText(zombies, "HUDFontAA", w05, 0, COLOR_DARKGREEN, TEXT_ALIGN_LEFT)
-	draw.DrawText(humans, "HUDFontAA", w05, h05, COLOR_DARKBLUE, TEXT_ALIGN_LEFT)
-	draw.DrawText(humans, "HUDFontAA", w05, h05, COLOR_DARKBLUE, TEXT_ALIGN_LEFT)
+	surface.DrawTexturedRect(0, h05Scaled + 4, w05Scaled, h05Scaled)
+	draw.DrawText(zombies, "HUDFontAA", w05Scaled, 0, COLOR_DARKGREEN, TEXT_ALIGN_LEFT)
+	draw.DrawText(zombies, "HUDFontAA", w05Scaled, 0, COLOR_DARKGREEN, TEXT_ALIGN_LEFT)
+	draw.DrawText(humans, "HUDFontAA", w05Scaled, h05Scaled, COLOR_DARKBLUE, TEXT_ALIGN_LEFT)
+	draw.DrawText(humans, "HUDFontAA", w05Scaled, h05Scaled, COLOR_DARKBLUE, TEXT_ALIGN_LEFT)
 
 	-- Death Notice
-	self:DrawDeathNotice(0.8, 0.04)
+	self:DrawDeathNotice(0.8 * UIScalingW, 0.04 * UIScalingH)
 
 	local actionposx = w05 * 2.4
 	local actionposy = hunit/2 - draw.GetFontHeight("HUDFontSmallAA")
@@ -385,11 +417,11 @@ function GM:HUDPaint()
 			self:HumanHUD(ply, killedposx, killedposy)
 		end
 		
-		draw.DrawText("Survive: "..ToMinutesSeconds(cvar_zs_roundtime:GetInt() - CurTime()), "HUDFontSmallAA", actionposx, actionposy, COLOR_GRAY, TEXT_ALIGN_LEFT)
+		draw.DrawText("Survive: "..ToMinutesSeconds(cvar_zs_roundtime:GetInt() - CurTime()), "HUDFontSmallAA", actionposx * UIScalingW, actionposy * UIScalingH, COLOR_GRAY, TEXT_ALIGN_LEFT)
 	end
 
 	-- Infliction
-	draw.DrawText("Infliction: " .. math.floor(INFLICTION * 100) .. "%", "HUDFontSmallAA", 8, h - 112, COLOR_INFLICTION, TEXT_ALIGN_LEFT)
+	draw.DrawText("Infliction: " .. math.floor(INFLICTION * 100) .. "%", "HUDFontSmallAA", 8 * UIScalingW, h - 112 * UIScalingH, COLOR_INFLICTION, TEXT_ALIGN_LEFT)
 end
 
 util.PrecacheSound("npc/stalker/breathing3.wav")

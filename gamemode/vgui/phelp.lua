@@ -5,54 +5,71 @@ function MakepHelp()
 		return
 	end
 
-	local Window = vgui.Create("DFrame")
-	local tall = 720 --h * 0.95 -- Limit the height -- Xala
-	Window:SetSize(640, tall)
-	local wide = (w - 640) * 0.5
-	local tall = (h - tall) * 0.5
-	Window:SetPos(wide, tall)
-	Window:SetTitle(" ")
-	Window:SetVisible(true)
-	Window:SetDraggable(false)
-	Window:MakePopup()
-	Window:SetDeleteOnClose(false)
-	Window:SetCursor("pointer")
-	pHelp = Window
+	local window = vgui.Create("DFrame")
 
-	local label = vgui.Create("DLabel", Window)
+	local UIScalingW, UIScalingH, smoothingFactor = GetUIScale()
+
+	local scaleWidth = 0.49 * smoothingFactor
+	local scaleHeight = 0.95 * smoothingFactor
+	local width = w * scaleWidth
+	local height = h * scaleHeight
+
+	window:SetSize(width, height)
+	local x = (w - width) * 0.5
+	local y = (h - height) * 0.5
+	window:SetPos(x, y)
+	window:SetTitle(" ")
+	window:SetVisible(true)
+	window:SetDraggable(false)
+	window:MakePopup()
+	window:SetDeleteOnClose(false)
+	window:SetCursor("pointer")
+	pHelp = window
+
+	local scrollPanel = vgui.Create("DScrollPanel", window)
+	scrollPanel:Dock(FILL)
+
+	surface.SetFont("noxnetnormal")
+	texw, texh = surface.GetTextSize("A")
+
+	local headerBackground = vgui.Create("DPanel", scrollPanel)
+	headerBackground:SetBackgroundColor(COLOR_TEAM_BLUE)
+	headerBackground:SetSize(width, texh * 1.25)
+
+	local label = vgui.Create("DLabel", headerBackground)
+	local text = "F1: Help"
 	label:SetTextColor(COLOR_RED)
 	label:SetFont("noxnetnormal")
-	label:SetText("F1: Help")
-	label:SetPos(16, 21)
-	surface.SetFont("noxnetnormal")
-	local texw, texh = surface.GetTextSize("F1: Help")
+	label:SetText(text)
+	label:SetPos(16 * UIScalingW, 5 * UIScalingH)
+	local texw, texh = surface.GetTextSize(text)
 	label:SetSize(texw, texh)
 
-	local label = vgui.Create("DLabel", Window)
+	label = vgui.Create("DLabel", headerBackground)
+	text = "F2: Manual Redeem"
 	label:SetTextColor(COLOR_RED)
 	label:SetFont("noxnetnormal")
-	label:SetText("F2: Manual Redeem")
-	surface.SetFont("noxnetnormal")
-	local texw, texh = surface.GetTextSize("F2: Manual Redeem")
-	label:SetPos(190 - texw * 0.5, 21)
+	label:SetText(text)
+	texw, texh = surface.GetTextSize(text)
+	label:SetPos(195 * UIScalingW - texw * 0.5, 5 * UIScalingH)
 	label:SetSize(texw, texh)
 
-	local label = vgui.Create("DLabel", Window)
+	label = vgui.Create("DLabel", headerBackground)
+	text = "F3: Change Zombie Class"
 	label:SetTextColor(COLOR_RED)
 	label:SetFont("noxnetnormal")
-	label:SetText("F3: Change Zombie Class")
-	surface.SetFont("noxnetnormal")
-	local texw, texh = surface.GetTextSize("F3: Change Zombie Class")
-	label:SetPos(400 - texw * 0.5, 21)
+	label:SetText(text)
+	texw, texh = surface.GetTextSize(text)
+	label:SetPos(405 * UIScalingW - texw * 0.5, 5 * UIScalingH)
 	label:SetSize(texw, texh)
 
-	local label = vgui.Create("DLabel", Window)
+	label = vgui.Create("DLabel", headerBackground)
+	text = "F4: Options"
 	label:SetTextColor(COLOR_RED)
 	label:SetFont("noxnetnormal")
-	label:SetText("F4: Options")
-	surface.SetFont("noxnetnormal")
-	local texw, texh = surface.GetTextSize("F4: Options")
-	label:SetPos(640 - texw - 16, 21)
+	label:SetText(text)
+	texw, texh = surface.GetTextSize(text)
+	label:SetPos(650 * UIScalingW - texw - 16 * UIScalingW, 5 * UIScalingH)
 	label:SetSize(texw, texh)
 
 	surface.SetFont("Default")
@@ -62,12 +79,12 @@ function MakepHelp()
 	if SURVIVALMODE then
 		touse = HELP_TEXT_SURVIVALMODE
 	end
-	local y = 64
+	local y = 25 * UIScalingH
 	for i, text in ipairs(touse) do
 		if string.len(text) <= 1 then
 			y = y + defh
 		else
-			local label = vgui.Create("DLabel", Window)
+			local label = vgui.Create("DLabel", scrollPanel)
 			local pretext = string.sub(text, 1, 2)
 			if pretext == "^r" then
 				label:SetTextColor(COLOR_READABLERED)
@@ -87,18 +104,12 @@ function MakepHelp()
 			if i == 1 then
 				label:SetFont("HUDFontSmallAA")
 			else
-				label:SetFont("DefaultSmall")
+				label:SetFont("DefaultSmallScaled")
 			end
 			label:SetText(text)
-			label:SetPos(16, y)
-			label:SetSize(640, 64)
+			label:SetPos(16 * UIScalingW, y * UIScalingH)
+			label:SetSize(640 * UIScalingW, 64 * UIScalingH)
 			y = y + defh
 		end
 	end
-
-	local button = vgui.Create("DButton", Window)
-	button:SetPos(240, Window:GetTall() - 64)
-	button:SetSize(160, 32)
-	button:SetText("Close")
-	button.DoClick = function(btn) btn:GetParent():SetVisible(false) end
 end

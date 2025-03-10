@@ -205,29 +205,22 @@ if CLIENT then
 	local weapon_table_text = ""
 	for i=1, table.maxn(GM.Rewards) do
 		if GM.Rewards[i] then
-			if #GM.Rewards[i] > 1 then
-				local printnames = {}
-				for _, wep in ipairs(GM.Rewards[i]) do
-					if string.sub(wep, 1, 1) ~= "_" then
-						if weapons.GetStored(wep) then
-							table.insert(printnames, weapons.GetStored(wep).PrintName)
-						else
-							table.insert(printnames, wep)
-						end
-					else
-						table.insert(printnames, wep)
-					end
-				end
-				weapon_table_text = weapon_table_text..[[^r  ]]..i..[[ kills: Chance of ]]..table.concat(printnames, " or ")..[[@]]
-			elseif string.sub(GM.Rewards[i][1], 1, 1) ~= "_" then
-				if weapons.GetStored(GM.Rewards[i][1]) then
-					weapon_table_text = weapon_table_text..[[^r  ]]..i..[[ kills: ]]..(weapons.GetStored(GM.Rewards[i][1]).PrintName or GM.Rewards[i][1])..[[@]]
-				else
-					weapon_table_text = weapon_table_text..[[^r  ]]..i..[[ kills: ]]..GM.Rewards[i][1]..[[@]]
-				end
-			else
-				weapon_table_text = weapon_table_text..[[^r  ]]..i..[[ kills: ]]..string.sub(GM.Rewards[i][1], 2)..[[@]]
+			local print_names = {}
+			local total_weapons = 0
+			for _, wep in ipairs(GM.Rewards[i]) do
+				total_weapons = total_weapons + 1
+				local wepname = weapons.GetStored(wep) and weapons.GetStored(wep).PrintName or wep
+				local count = print_names[wepname] and print_names[wepname] + 1 or 1
+				print_names[wepname] = count
 			end
+			weapon_table_text = weapon_table_text..[[^r  ]]..i..[[ kills: @]]
+			local count_printed = total_weapons
+			for name, quantity in pairs(print_names) do
+				count_printed = count_printed - quantity
+				local chance = math.Round((quantity / total_weapons) * 100, 0)
+				weapon_table_text = weapon_table_text.." - ("..chance.."%) "..name..(count_printed > 0 and "@" or "")
+			end
+			weapon_table_text = weapon_table_text.."@"
 		end
 	end
 
@@ -236,7 +229,7 @@ if CLIENT then
 	-- Use ^r ^g ^b ^y  when the line starts to change color of the line
 
 	HELP_TEXT =
-		[[^gWelcome to Zombie Survival v1.11 Fix @^gBy JetBoom (2008). Adapted to GMod March 2024 Update+ by Xalalau.@ @^b          -- HUMANS --@^bSurvive for ]] ..
+		[[^gWelcome to Zombie Survival v1.11 Fix @^gBy JetBoom (2008). Ported to GMod March 2024 Update+ by Xalalau.@ @^bHUMANS@^b———————————————————————————————@^bSurvive for ]] ..
 		ToMinutesSeconds(GetConVar("zs_roundtime"):GetInt()) ..
 		[[ to win the match.@If you get killed by a zombie, you become one! ]] ..
 		shit .. 
@@ -246,9 +239,9 @@ if CLIENT then
 		[[bar means that zombies are right near you, and in mass numbers!@ @If you lose enough health, your ]] ..
 		[[vision will start to blur to signify your upcoming death.@Killing zombies will grant you more weapons ]] ..
 		[[but your main objective is to survive!@If you stay together and defend your entrances then you are sure ]] ..
-		[[to win.@If you seperate or don't push back the zombies then you're sure to join them.@ @^rRewards for killing zombies:@ @]] ..
+		[[to win.@If you seperate or don't push back the zombies then you're sure to join them.@ @^rRewards for killing zombies (randomly selected):@ @]] ..
 		weapon_table_text ..
-		[[ @ @^g          -- ZOMBIES --@You can change your class as a zombie by pressing F3.@Classes in red mean ]] .. 
+		[[ @ @^gZOMBIES@^g———————————————————————————————@You can change your class as a zombie by pressing F3.@Classes in red mean ]] .. 
 		[[that more humans need to be killed to get that class unlocked.@ @^rYou lose the match if all humans die ]] ..
 		[[or you're a zombie at the end of the round.@If redeeming is allowed then you can kill a certain amount of ]] .. 
 		[[humans to ressurect yourself.@ @^yVisit https://github.com/Xalalau/Zombie-Survival-v1.11-Fix for updates to the game!]]

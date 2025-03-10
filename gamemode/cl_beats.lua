@@ -265,6 +265,8 @@ end
 function GM:HumanHUD(ply, killedposx, killedposy)
 	local rounded = math.Round(NearZombies)
 
+	local UIScalingW, UIScalingH, smoothingFactor = GetUIScale()
+
 	// Health
 	local entityhealth = math.max(ply:Health(), 0)
 	local colortouse
@@ -279,7 +281,7 @@ function GM:HumanHUD(ply, killedposx, killedposy)
 		colortouse = COLOR_HUD_CRITICAL
 	end
 
-	draw.SimpleText("HP", "HUDFontSmallAA", 16, h - 56, colortouse, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	draw.SimpleText("HP", "HUDFontSmallAA", 16 * UIScalingW, h - 56 * UIScalingH, colortouse, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	//draw.SimpleText(entityhealth, "DefaultBold", 16, h - 56, colortouse, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 	if 30 < entityhealth then
@@ -289,21 +291,21 @@ function GM:HumanHUD(ply, killedposx, killedposy)
 	end
 
 	surface.SetTexture(matHealthBar)
-	surface.DrawTexturedRect(35, h - 62, (entityhealth / 100) * 213, 14)
+	surface.DrawTexturedRect(35 * UIScalingW, h - 62 * UIScalingH, (entityhealth / 100) * 213 * UIScalingW, 14 * UIScalingH)
 
 	local col = BeatColors[rounded]
 	surface.SetDrawColor(col.r, col.g, col.b, 180)
 	surface.SetTexture(matHealthBar)
-	surface.DrawTexturedRect(10, h - 36, NearZombies * 23.6, 24)
+	surface.DrawTexturedRect(10 * UIScalingW, h - 36 * UIScalingH, NearZombies * 23.6 * UIScalingW, 24 * UIScalingH)
 	//draw.SimpleText(BeatText[rounded], "HUDFontSmallAA", 128, h - 24, COLOR_GRAY_HUD, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-	draw.SimpleText(BeatText[rounded], "HUDFontTinyAA", 128, h - 42, COLOR_GRAY_HUD, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	draw.SimpleText(BeatText[rounded], "HUDFontTinyAA", 128 * UIScalingW, h - 42 * UIScalingH, COLOR_GRAY_HUD, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 	// Kill display
-	draw.DrawText("Kills: "..ply:Frags(), "HUDFontSmall", killedposx, killedposy, COLOR_DARKRED_HUD, TEXT_ALIGN_LEFT)
+	draw.DrawText("Kills: "..ply:Frags(), "HUDFontSmall", killedposx * UIScalingW, killedposy * UIScalingH, COLOR_DARKRED_HUD, TEXT_ALIGN_LEFT)
 
 	if not ENDROUND then
 		if SURVIVALMODE then
-			draw.DrawText("Survival Mode", "DefaultSmall", 248, h - 90, COLOR_GRAY, TEXT_ALIGN_LEFT)
+			draw.DrawText("Survival Mode", "DefaultSmall", 248 * UIScalingW, h - 90 * UIScalingH, COLOR_GRAY, TEXT_ALIGN_LEFT)
 		else
 			local curtime = CurTime()
 			local TimeLeft = NextAmmoDropOff - curtime
@@ -311,7 +313,7 @@ function GM:HumanHUD(ply, killedposx, killedposy)
 			if TimeLeft < 0 then
 				NextAmmoDropOff = GetNextAmmoRegenerate()
 			end
-			draw.DrawText("Ammo Regeneration: "..ToMinutesSeconds(TimeLeft), "HUDFontTinyAA", 8, h - 90, COLOR_GRAY, TEXT_ALIGN_LEFT)
+			draw.DrawText("Ammo Regeneration: "..ToMinutesSeconds(TimeLeft), "HUDFontTinyAA", 8 * UIScalingW, h - 90 * UIScalingH, COLOR_GRAY, TEXT_ALIGN_LEFT)
 		end
 
 		if 2 < ply:WaterLevel() then
@@ -323,11 +325,11 @@ function GM:HumanHUD(ply, killedposx, killedposy)
 				ColorModify["$pp_colour_addb"] = math.Approach(ColorModify["$pp_colour_addb"], 0.45, FrameTime() * 0.2)
 				//ColorModify["$pp_colour_colour"] = math.Approach(ColorModify["$pp_colour_colour"], 0, FrameTime() * 0.25)
 			end
-			draw.DrawText("Air", "DefaultBold", w*0.5, h*0.3, COLOR_WHITE, TEXT_ALIGN_CENTER)
+			draw.DrawText("Air", "DefaultBold", w * 0.5 * UIScalingW, h * 0.3 * UIScalingH, COLOR_WHITE, TEXT_ALIGN_CENTER)
 			surface.SetDrawColor(255, 0, 0, 255)
-			surface.DrawLine(w*0.5, h*0.33, w*0.75, h*0.33)
+			surface.DrawLine(w * 0.5 * UIScalingW, h * 0.33 * UIScalingH, w * 0.75 * UIScalingW, h * 0.33 * UIScalingH)
 			surface.SetDrawColor(40, 40, 255, 255)
-			surface.DrawLine(w*0.5, h*0.33, w*0.5 + w*0.25 * (WATER_DROWNTIME / 30), h*0.33)
+			surface.DrawLine(w * 0.5 * UIScalingW, h * 0.33 * UIScalingH, w * 0.5 * UIScalingW + w * 0.25 * (WATER_DROWNTIME / 30) * UIScalingW, h * 0.33 * UIScalingH)
 		elseif 0 < WATER_DROWNTIME then
 			WATER_DROWNTIME = math.max(WATER_DROWNTIME - FrameTime() * 3, 0)
 			if WATER_DROWNTIME <= 0 then
@@ -337,19 +339,19 @@ function GM:HumanHUD(ply, killedposx, killedposy)
 				ColorModify["$pp_colour_addb"] = math.Approach(ColorModify["$pp_colour_addb"], 0, FrameTime() * 0.3)
 				//ColorModify["$pp_colour_colour"] = math.Approach(ColorModify["$pp_colour_colour"], 1, FrameTime())
 			end
-			draw.DrawText("Air", "DefaultBold", w*0.6, h*0.3, COLOR_WHITE, TEXT_ALIGN_CENTER)
+			draw.DrawText("Air", "DefaultBold", w * 0.6 * UIScalingW, h * 0.3 * UIScalingH, COLOR_WHITE, TEXT_ALIGN_CENTER)
 			surface.SetDrawColor(255, 0, 0, 255)
-			surface.DrawLine(w*0.6, h*0.33, w*0.85, h*0.33)
+			surface.DrawLine(w * 0.6 * UIScalingW, h * 0.33 * UIScalingH, w * 0.85 * UIScalingW, h * 0.33 * UIScalingH)
 			surface.SetDrawColor(40, 40, 255, 255)
-			surface.DrawLine(w*0.6, h*0.33, w*0.6 + w*0.25 * (WATER_DROWNTIME / 30), h*0.33)
+			surface.DrawLine(w * 0.6 * UIScalingW, h * 0.33 * UIScalingH, w * 0.6 * UIScalingW + w * 0.25 * (WATER_DROWNTIME / 30) * UIScalingW, h * 0.33 * UIScalingH)
 		end
 
 		if 20 < CRAMP_METER_TIME then
-			draw.DrawText("BUTT CRAMPS!", "DefaultBold", w*0.6, h*0.4, COLOR_RED, TEXT_ALIGN_CENTER)
+			draw.DrawText("BUTT CRAMPS!", "DefaultBold", w * 0.6 * UIScalingW, h * 0.4 * UIScalingH, COLOR_RED, TEXT_ALIGN_CENTER)
 			surface.SetDrawColor(255, 0, 0, 255)
-			surface.DrawLine(w*0.6, h*0.43, w*0.85, h*0.43)
+			surface.DrawLine(w * 0.6 * UIScalingW, h * 0.43 * UIScalingH, w * 0.85 * UIScalingW, h * 0.43 * UIScalingH)
 			surface.SetDrawColor(40, 40, 255, 255)
-			surface.DrawLine(w*0.6, h*0.43, w*0.6 + w*0.25 * (CRAMP_METER_TIME / 60), h*0.43)
+			surface.DrawLine(w * 0.6 * UIScalingW, h * 0.43 * UIScalingH, w * 0.6 * UIScalingW + w * 0.25 * (CRAMP_METER_TIME / 60) * UIScalingW, h * 0.43 * UIScalingH)
 		end
 	end
 end
@@ -358,6 +360,8 @@ local NextAura = 0
 
 function GM:ZombieHUD(ply, actionposx, actionposy, killedposx, killedposy)
 	if not ply.Class then return end
+
+	local UIScalingW, UIScalingH, smoothingFactor = GetUIScale()
 
 	local entityhealth = math.max(ply:Health(), 0)
 	local maxhealth = ZombieClasses[ply.Class].Health
@@ -375,7 +379,7 @@ function GM:ZombieHUD(ply, actionposx, actionposy, killedposx, killedposy)
 		colortouse = COLOR_HUD_CRITICAL
 	end
 
-	draw.SimpleText(entityhealth, "HUDFontSmall", 16, h - 56, colortouse, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	draw.SimpleText(entityhealth, "HUDFontSmall", 16 * UIScalingW, h - 56 * UIScalingH, colortouse, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 	local realtime = RealTime()
 
@@ -386,19 +390,25 @@ function GM:ZombieHUD(ply, actionposx, actionposy, killedposx, killedposy)
 	end
 
 	surface.SetTexture(matHealthBar)
-	surface.DrawTexturedRect(35, h - 62, (entityhealth / maxhealth) * 213, 14)
+	surface.DrawTexturedRect(35 * UIScalingW, h - 62 * UIScalingH, (entityhealth / maxhealth) * 213 * UIScalingW, 14 * UIScalingH)
 
 	local rounded = math.Round(DisplayHorde)
 	local col = ZombieHordeColors[rounded]
 	surface.SetDrawColor(col.r, col.g, col.b, 255)
 	surface.SetTexture(matHealthBar)
-	surface.DrawTexturedRect(10, h - 36, DisplayHorde * 23.6, 24)
-	draw.SimpleText(ZombieHordeText[rounded], "HUDFontTinyAA", 128, h - 42, COLOR_GRAY, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	surface.DrawTexturedRect(10 * UIScalingW, h - 36 * UIScalingH, DisplayHorde * 23.6 * UIScalingW, 24 * UIScalingH)
+	draw.SimpleText(ZombieHordeText[rounded], "HUDFontTinyAA", 128 * UIScalingW, h - 42 * UIScalingH, COLOR_GRAY, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 	local killz = ply:Frags()
 	local allow_redeeming = cvar_zs_allow_redeeming:GetBool()
 	local redeem_kills = cvar_zs_redeem_kills:GetInt()
 	local autoredeem = cvar_zs_autoredeem:GetBool()
+
+	actionposx = actionposx * UIScalingW
+	actionposy = actionposy * UIScalingH
+	killedposx = killedposx * UIScalingW
+	killedposy = killedposy * UIScalingH
+
 	if SMALL_HUD then
 		draw.DrawText("Feed: "..ToMinutesSeconds(cvar_zs_roundtime:GetInt() - CurTime()), "HUDFontSmall", actionposx, actionposy, COLOR_DARKRED, TEXT_ALIGN_LEFT)
 

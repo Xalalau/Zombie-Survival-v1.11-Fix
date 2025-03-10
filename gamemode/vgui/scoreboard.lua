@@ -22,26 +22,28 @@ local function TruncateText(text, maxLength)
 end
 
 function PANEL:Paint()
+	local UIScalingW, UIScalingH, smoothingFactor = GetUIScale()
+
 	local tall, wide = self:GetTall(), self:GetWide()
 	local posx, posy = self:GetPos()
 
 	draw.RoundedBox(16, 0, 0, wide, tall, colBackground)
 
 	surface.SetDrawColor(0, 0, 0, 255)
-	surface.DrawRect(32, 138, 256, tall - 300)
-	surface.DrawRect(wide - 288, 138, 256, tall - 300)
+	surface.DrawRect(32 * UIScalingW, 138 * UIScalingH, 256 * UIScalingW, tall - 300 * UIScalingH)
+	surface.DrawRect(wide - 288 * UIScalingW, 138 * UIScalingH, 256 * UIScalingW, tall - 300 * UIScalingH)
 
 	surface.SetDrawColor(0, 50, 255, 255)
-	surface.DrawOutlinedRect(32, 138, 256, tall - 300)
+	surface.DrawOutlinedRect(32 * UIScalingW, 138 * UIScalingH, 256 * UIScalingW, tall - 300 * UIScalingH)
 
 	surface.SetDrawColor(0, 255, 0, 255)
-	surface.DrawOutlinedRect(wide - 288, 138, 256, tall - 300)
+	surface.DrawOutlinedRect(wide - 288 * UIScalingW, 138 * UIScalingH, 256 * UIScalingW, tall - 300 * UIScalingH)
 
 	draw.DrawText("Zombie Survival", "HUDFontBig", wide * 0.5, 0, COLOR_LIMEGREEN, TEXT_ALIGN_CENTER)
 	surface.SetFont("HUDFontBig")
 	local gmw, gmh = surface.GetTextSize("Zombie Survival")
-	draw.DrawText("("..GAMEMODE.Version.." "..GAMEMODE.SubVersion..")", "DefaultSmall", gmw, gmh - 10, COLOR_GRAY, TEXT_ALIGN_LEFT)
-	draw.DrawText(TruncateText(GetGlobalString("servername"), 36), "HUDFont2", wide * 0.5, gmh + 10, COLOR_GRAY, TEXT_ALIGN_CENTER)
+	draw.DrawText("("..GAMEMODE.Version.." "..GAMEMODE.SubVersion..")", "DefaultSmallScaled", gmw, gmh - 10 * UIScalingH, COLOR_GRAY, TEXT_ALIGN_LEFT)
+	draw.DrawText(TruncateText(GetGlobalString("servername"), 36), "HUDFont2", wide * 0.5, gmh + 10 * UIScalingH, COLOR_GRAY, TEXT_ALIGN_CENTER)
 
 	local colHuman = team.GetColor(TEAM_HUMAN)
 	local colUndead = team.GetColor(TEAM_UNDEAD)
@@ -52,61 +54,63 @@ function PANEL:Paint()
 	table.sort(HumanPlayers, SortFunc)
 	table.sort(UndeadPlayers, SortFunc)
 
-	local y = 142
-	local x = wide - 288
+	local y = 142 * UIScalingH
+	local x = wide - 288 * UIScalingW
 
-	draw.DrawText("Survivor", "Default", 34, 126, color_white, TEXT_ALIGN_LEFT)
-	draw.DrawText("Kills", "Default", 192, 126, color_white, TEXT_ALIGN_RIGHT)
-	draw.DrawText("Ping", "Default", 284, 126, color_white, TEXT_ALIGN_RIGHT)
+	draw.DrawText("Survivor", "DefaultScaled", 34 * UIScalingW, 126 * UIScalingH, color_white, TEXT_ALIGN_LEFT)
+	draw.DrawText("Kills", "DefaultScaled", 192 * UIScalingW, 126 * UIScalingH, color_white, TEXT_ALIGN_RIGHT)
+	draw.DrawText("Ping", "DefaultScaled", 284 * UIScalingW, 126 * UIScalingH, color_white, TEXT_ALIGN_RIGHT)
 
-	draw.DrawText("Zombie", "Default", x + 2, 126, color_white, TEXT_ALIGN_LEFT)
-	draw.DrawText("Brains Eaten", "Default", x + 192, 126, color_white, TEXT_ALIGN_RIGHT)
-	draw.DrawText("Ping", "Default", x + 254, 126, color_white, TEXT_ALIGN_RIGHT)
+	draw.DrawText("Zombie", "DefaultScaled", x + 2 * UIScalingW, 126 * UIScalingH, color_white, TEXT_ALIGN_LEFT)
+	draw.DrawText("Brains Eaten", "DefaultScaled", x + 192 * UIScalingW, 126 * UIScalingH, color_white, TEXT_ALIGN_RIGHT)
+	draw.DrawText("Ping", "DefaultScaled", x + 254 * UIScalingW, 126 * UIScalingH, color_white, TEXT_ALIGN_RIGHT)
 
-	surface.SetFont("Default")
+	surface.SetFont("DefaultScaled")
 	local width, height = surface.GetTextSize("Q")
 
 	for i, ply in ipairs(HumanPlayers) do
-		if y >= tall - 285 then
-			draw.DrawText("...", "Default", 34, y, colHuman, TEXT_ALIGN_LEFT)
+		if y >= tall - 285 * UIScalingH then
+			draw.DrawText("...", "DefaultScaled", 34 * UIScalingW, y, colHuman, TEXT_ALIGN_LEFT)
 			break
 		else
-			draw.DrawText(ply:Name(), "Default", 34, y, colHuman, TEXT_ALIGN_LEFT)
-			draw.DrawText(ply:Frags(), "Default", 192, y, colHuman, TEXT_ALIGN_CENTER)
-			draw.DrawText(ply:Ping(), "Default", 286, y, colHuman, TEXT_ALIGN_RIGHT)
+			draw.DrawText(ply:Name(), "DefaultScaled", 34 * UIScalingW, y, colHuman, TEXT_ALIGN_LEFT)
+			draw.DrawText(ply:Frags(), "DefaultScaled", 192 * UIScalingW, y, colHuman, TEXT_ALIGN_CENTER)
+			draw.DrawText(ply:Ping(), "DefaultScaled", 286 * UIScalingW, y, colHuman, TEXT_ALIGN_RIGHT)
 			y = y + height
 		end
 	end
 
-	y = 142
+	y = 142 * UIScalingH
 
 	for i, ply in ipairs(UndeadPlayers) do
-		if y >= tall - 285 then
-			draw.DrawText("...", "Default", x + 2, y, colUndead, TEXT_ALIGN_LEFT)
+		if y >= tall - 285 * UIScalingH then
+			draw.DrawText("...", "DefaultScaled", x + 2 * UIScalingW, y, colUndead, TEXT_ALIGN_LEFT)
 			break
 		else
-			draw.DrawText(ply:Name(), "Default", x + 2, y, colUndead, TEXT_ALIGN_LEFT)
-			draw.DrawText(ply:Frags(), "Default", x + 192, y, colUndead, TEXT_ALIGN_CENTER)
-			draw.DrawText(ply:Ping(), "Default", x + 254, y, colUndead, TEXT_ALIGN_RIGHT)
+			draw.DrawText(ply:Name(), "DefaultScaled", x + 2 * UIScalingW, y, colUndead, TEXT_ALIGN_LEFT)
+			draw.DrawText(ply:Frags(), "DefaultScaled", x + 192 * UIScalingW, y, colUndead, TEXT_ALIGN_CENTER)
+			draw.DrawText(ply:Ping(), "DefaultScaled", x + 254 * UIScalingW, y, colUndead, TEXT_ALIGN_RIGHT)
 			y = y + height
 		end
 	end
 
-	local y = tall - 155
-	draw.DrawText("F1:  Help", "HUDFontSmallAA", 28, y, COLOR_RED, TEXT_ALIGN_LEFT)
+	local y = tall - 155 * UIScalingH
+	draw.DrawText("F1:  Help", "HUDFontSmallAA", 28 * UIScalingW, y, COLOR_RED, TEXT_ALIGN_LEFT)
 	local tw, th = surface.GetTextSize("F1:  Help")
-	y = y + th + 5
-	draw.DrawText("F2: Manual redeem", "HUDFontSmallAA", 32, y, COLOR_GRAY, TEXT_ALIGN_LEFT)
-	y = y + th + 5
-	draw.DrawText("F3: Change Zombie class", "HUDFontSmallAA", 32, y, COLOR_GRAY, TEXT_ALIGN_LEFT)
-	y = y + th + 5
-	draw.DrawText("F4: Options", "HUDFontSmallAA", 32, y, COLOR_GRAY, TEXT_ALIGN_LEFT)
+	y = y + th + 5 * UIScalingH
+	draw.DrawText("F2: Manual redeem", "HUDFontSmallAA", 32 * UIScalingW, y, COLOR_GRAY, TEXT_ALIGN_LEFT)
+	y = y + th + 5 * UIScalingH
+	draw.DrawText("F3: Change Zombie class", "HUDFontSmallAA", 32 * UIScalingW, y, COLOR_GRAY, TEXT_ALIGN_LEFT)
+	y = y + th + 5 * UIScalingH
+	draw.DrawText("F4: Options", "HUDFontSmallAA", 32 * UIScalingW, y, COLOR_GRAY, TEXT_ALIGN_LEFT)
 
 	return true
 end
 
 function PANEL:PerformLayout()
-	self:SetSize(640, h * 0.95)
+	local UIScalingW, UIScalingH, smoothingFactor = GetUIScale()
+	
+	self:SetSize(640 * UIScalingW, h * 0.95 * smoothingFactor)
 
 	self:SetPos((w - self:GetWide()) * 0.5, (h - self:GetTall()) * 0.5)
 end
