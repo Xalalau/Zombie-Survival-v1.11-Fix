@@ -645,6 +645,8 @@ function GM:EndRound(winner)
 	timer.Simple(cvar_zs_intermission_time:GetInt() * 0.3, function() hook.Run("LoadNextMap") end)
 	local nextmap = game.GetMapNext()
 
+	DeadSteamIDs = {}
+
 	timer.Simple(1, function()
 		GAMEMODE:SendTopTimes()
 		GAMEMODE:SendTopZombies()
@@ -694,9 +696,29 @@ function GM:EndRound(winner)
 end
 
 function GM:PlayerReady(ply)
-	if ply:IsValid() then
-		ply:SendLua("LocalPlayer().Class="..ply.Class.." SURVIVALMODE="..tostring(SURVIVALMODE))
-		GAMEMODE:SendInflictionInit(ply)
+	-- Reliable place to send net messages to new players spawning for the first time
+	if not ply:IsValid() then return end
+
+	ply:SendLua("LocalPlayer().Class="..ply.Class.." SURVIVALMODE="..tostring(SURVIVALMODE))
+	GAMEMODE:SendInflictionInit(ply)
+
+	FixCLCvars(ply)
+
+	for SteamID64, zombiePly in pairs(DeadSteamIDs) do
+		if not IsValid(zombiePly) then
+			zombiePly = player.GetBySteamID64(SteamID64)
+
+			if not IsValid(zombiePly) then
+				continue
+			end
+
+			DeadSteamIDs[SteamID64] = zombiePly
+		end
+
+		local index = zombiePly:EntIndex()
+		local cl = zombiePly.Class
+
+		ply:SendLua("ents.GetByIndex(" .. index .. ").Class="..cl)
 	end
 end
 
@@ -708,21 +730,11 @@ concommand.Add("PostPlayerInitialSpawn", function(sender, command, arguments)
 	end
 end)
 
-local loadqueue = {}
-
-function GM:StartCommand(ply, cmd)
-	if loadqueue[ply] and not cmd:IsForced() then
-		loadqueue[ply] = nil
-		-- Reliable place to send net messages to new players spawning for the first time
-		ply:SetZombieClass(1)
-		FixCLCvars(ply)
-	end
-end
-
 function GM:PlayerInitialSpawn(ply)
-	loadqueue[ply] = true
-
+	-- This sets the player zombie class after the first death. 1 is the normal zombie.
+	ply.DeathClass = 1
 	ply:SetZombieClass(1)
+
 	ply.Gibbed = false
 	ply.BrainsEaten = 0
 	ply.NextShove = 0
@@ -740,7 +752,7 @@ function GM:PlayerInitialSpawn(ply)
 		local plays = player.GetAll()
 		local newply = plays[math.random(1, #plays)]
 		newply:SetTeam(TEAM_UNDEAD)
-		DeadSteamIDs[newply:SteamID64()] = true
+		DeadSteamIDs[newply:SteamID64()] = newply
 		newply:PrintMessage(4, "You've been randomly selected\nto lead the Undead army.")
 		newply:StripWeapons()
 		newply:Spawn()
@@ -749,7 +761,7 @@ function GM:PlayerInitialSpawn(ply)
 		end
 	elseif INFLICTION >= 0.5 or (CurTime() > cvar_zs_roundtime:GetInt()*0.5 and cvar_zs_human_deadline:GetBool()) or LASTHUMAN then
 		ply:SetTeam(TEAM_UNDEAD)
-		DeadSteamIDs[ply:SteamID64()] = true
+		DeadSteamIDs[ply:SteamID64()] = ply
 	else
 		ply:SetTeam(TEAM_HUMAN)
 		ply.SpawnedTime = CurTime()
@@ -792,7 +804,7 @@ function GM:OnPhysgunReload(weapon, ply)
 end
 
 function GM:PlayerDisconnected(ply)
-	DeadSteamIDs[ply:SteamID64()] = true
+	DeadSteamIDs[ply:SteamID64()] = ply
 	timer.Simple(2, function()
 		if IsValid(self) then
 			self:CalculateInfliction()
@@ -1134,7 +1146,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			ply:PrintMessage(HUD_PRINTTALK, "There are not enough people playing for you to change to the Undead. Set zs_warmup_mode in zs_options.lua to false to change this.")
 		else
 			ply:SetTeam(TEAM_UNDEAD)
-			DeadSteamIDs[ply:SteamID64()] = true
+			DeadSteamIDs[ply:SteamID64()] = ply
 		end
 		ply:SendLua("Died()")
 		ply:SetFrags(0)
@@ -1389,7 +1401,6 @@ concommand.Add("zs_class", function(sender, command, arguments)
 					sender:Kill()
 				end
 				sender.DeathClass = i
-				sender:SetZombieClass(i)
 			end
 		    return
 		end

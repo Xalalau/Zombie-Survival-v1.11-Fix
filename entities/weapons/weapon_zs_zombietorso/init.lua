@@ -12,7 +12,6 @@ function SWEP:Deploy()
 	net.Start("RcHCScale")
 		net.WriteEntity(owner)
 	net.Send(owner)
-	owner.DeathClass = 1
 end
 
 function SWEP:Think()

@@ -174,7 +174,7 @@ function meta:Redeem()
 	self:DrawWorldModel(true)
 	self:SetFrags(0)
 	self:SetDeaths(0)
-	self.DeathClass = nil
+	self.DeathClass = 1
 	self.LastAttacker = nil
 	self.Class = 1
 	self.SpawnedTime = CurTime()
