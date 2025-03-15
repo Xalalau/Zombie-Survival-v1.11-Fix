@@ -253,10 +253,12 @@ local function DelayedLH()
 	if not ENDROUND then
 		local ply = LocalPlayer()
 
-		if ply:Team() == TEAM_UNDEAD or not ply:Alive() then
-			GAMEMODE:SplitMessage(h * 0.7, "<color=red><font=HUDFontAA>Kill the Last Human!</font></color>")
-		else
-			GAMEMODE:SplitMessage(h * 0.7, "<color=ltred><font=HUDFontAA>You are the Last Human!</font></color>", "<color=red><font=HUDFontAA>RUN!</font></color>")
+		if IsValid(ply) then
+			if ply:Team() == TEAM_UNDEAD or not ply:Alive() then
+				GAMEMODE:SplitMessage(h * 0.7, "<color=red><font=HUDFontAA>Kill the Last Human!</font></color>")
+			else
+				GAMEMODE:SplitMessage(h * 0.7, "<color=ltred><font=HUDFontAA>You are the Last Human!</font></color>", "<color=red><font=HUDFontAA>RUN!</font></color>")
+			end
 		end
 	end
 end
