@@ -387,3 +387,62 @@ function meta:DoZombieAttackAnim(data)
 	end
 end
 
+-- A 'good enough' script to unstuck players from bad start ents of from other players
+function meta:Unstuck()
+	if CLIENT then return end
+
+	-- Check if the player is inside another player (colliding with another player)
+	for _, otherPlayer in ipairs(player.GetAll()) do
+		if otherPlayer != self and self:GetPos():DistToSqr(otherPlayer:GetPos()) < 500^2 then -- Arbitrary distance check
+			-- Move the player a little bit away from the other player
+			local moveAway = (self:GetPos() - otherPlayer:GetPos()):GetNormalized() * 20 -- 20 units away
+			self:SetPos(self:GetPos() + moveAway) -- Teleport player to a safe position
+		end
+	end
+
+	for k=1, 6, 1 do
+		for i=1, 10, 1 do
+			local pos = self:GetPos()
+			
+			local trace = util.TraceHull({
+				start = pos,
+				endpos = pos,
+				mins = Vector(-16, -16, 0),
+				maxs = Vector(16, 16, 71),
+				filter = self
+			})
+
+			local vec
+			if i == 1 then
+				vec = Vector(0, 0, 50 * k)
+			elseif i == 2 then
+				vec = Vector(0, 50 * k, 0)
+			elseif i == 3 then
+				vec = Vector(0, -100 * k, 0)
+			elseif i == 4 then
+				vec = Vector(50 * k, 50 * k, 0)
+			elseif i == 5 then
+				vec = Vector(-100 * k, 0, 0)
+			elseif i == 6 then
+				vec = Vector(-25 * k, -75 * k, 0)
+			elseif i == 7 then
+				vec = Vector(0, 150 * k, 0)
+			elseif i == 8 then
+				vec = Vector(75 * k, 0, 0)
+			elseif i == 9 then
+				vec = Vector(0, -150 * k, 0)
+			elseif i == 10 then
+				vec = Vector(0, 75 * k, 0)
+			end
+
+			-- If the trace hits something solid, like a brush (e.g., ground or object), we need to reposition
+			if trace.Hit then
+				-- Find a safe position to move the player
+				local safePos = self:GetPos() + vec -- Move upwards if stuck inside ground
+				self:SetPos(safePos) -- Teleport the player to the new safe position
+			else
+				return
+			end
+		end
+	end
+end

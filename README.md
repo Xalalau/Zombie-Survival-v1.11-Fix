@@ -45,6 +45,7 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 ```
 Changes from v1.11 Fix 5 -> v1.11 Fix 6
     * Added UI rescaling (proper 1080p and maybe 4k support)
+    * Added simple anti-stuck script (some maps have bad spawns and sometimes players could spawn inside each other)
     * Changed all SteamID() calls to SteamID64(), as recommended by GMod wiki
     * Fixed bots always joining as zombies after one of them was killed
     * Fixed last human warning failing on new player

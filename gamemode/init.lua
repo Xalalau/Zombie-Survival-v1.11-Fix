@@ -767,6 +767,7 @@ function GM:PlayerInitialSpawn(ply)
 		ply.SpawnedTime = CurTime()
 	end
 	self:CalculateInfliction()
+	ply:Unstuck()
 end
 
 function GM:CheckPlayerScore(ply)
@@ -1266,6 +1267,7 @@ function GM:PlayerSpawn(ply)
 	timer.Remove(ply:UserID().."SpawnProtection")
 
 	ply:ShouldDropWeapon(plyteam == TEAM_HUMAN)
+	ply:Unstuck()
 
 	if plyteam == TEAM_UNDEAD then	
 		if ply.DeathClass then
