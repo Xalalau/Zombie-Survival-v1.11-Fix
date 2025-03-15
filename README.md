@@ -46,6 +46,7 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 Changes from v1.11 Fix 6 -> v1.11 Fix 6 '
     * Added UI rescaling (proper 1080p and maybe 4k support)
     * Changed all SteamID() calls to SteamID64(), as recommended by GMod wiki
+    * Fixed bots always joining as zombies after one of them was killed
 
 Changes from v1.11 Fix 4 -> v1.11 Fix 5
     * Changed most player.GetHumans() back to player.GetAll() to improve bots support
