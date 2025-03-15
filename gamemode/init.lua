@@ -734,13 +734,13 @@ function GM:PlayerInitialSpawn(ply)
 	ply.DamageDealt[TEAM_UNDEAD] = 0
 	ply.DamageDealt[TEAM_HUMAN] = 0
 
-	if DeadSteamIDs[ply:SteamID()] then
+	if DeadSteamIDs[ply:SteamID64()] then
 		ply:SetTeam(TEAM_UNDEAD)
 	elseif team.NumPlayers(TEAM_UNDEAD) < 1 and team.NumPlayers(TEAM_HUMAN) >= 3 then
 		local plays = player.GetAll()
 		local newply = plays[math.random(1, #plays)]
 		newply:SetTeam(TEAM_UNDEAD)
-		DeadSteamIDs[newply:SteamID()] = true
+		DeadSteamIDs[newply:SteamID64()] = true
 		newply:PrintMessage(4, "You've been randomly selected\nto lead the Undead army.")
 		newply:StripWeapons()
 		newply:Spawn()
@@ -749,7 +749,7 @@ function GM:PlayerInitialSpawn(ply)
 		end
 	elseif INFLICTION >= 0.5 or (CurTime() > cvar_zs_roundtime:GetInt()*0.5 and cvar_zs_human_deadline:GetBool()) or LASTHUMAN then
 		ply:SetTeam(TEAM_UNDEAD)
-		DeadSteamIDs[ply:SteamID()] = true
+		DeadSteamIDs[ply:SteamID64()] = true
 	else
 		ply:SetTeam(TEAM_HUMAN)
 		ply.SpawnedTime = CurTime()
@@ -792,7 +792,7 @@ function GM:OnPhysgunReload(weapon, ply)
 end
 
 function GM:PlayerDisconnected(ply)
-	DeadSteamIDs[ply:SteamID()] = true
+	DeadSteamIDs[ply:SteamID64()] = true
 	timer.Simple(2, function()
 		if IsValid(self) then
 			self:CalculateInfliction()
@@ -984,7 +984,7 @@ end
 
 local function BanIdiot(ply)
 	if ply:IsValid() then
-		game.KickID(ply:SteamID(), "Attempt to use spectate exploit.")
+		game.KickID(ply:SteamID64(), "Attempt to use spectate exploit.")
 	end
 end
 
@@ -1134,7 +1134,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			ply:PrintMessage(HUD_PRINTTALK, "There are not enough people playing for you to change to the Undead. Set zs_warmup_mode in zs_options.lua to false to change this.")
 		else
 			ply:SetTeam(TEAM_UNDEAD)
-			DeadSteamIDs[ply:SteamID()] = true
+			DeadSteamIDs[ply:SteamID64()] = true
 		end
 		ply:SendLua("Died()")
 		ply:SetFrags(0)
