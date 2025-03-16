@@ -72,6 +72,7 @@ local cvar_zs_ammo_regenerate_rate = GetConVar("zs_ammo_regenerate_rate")
 local cvar_zs_difficulty = GetConVar("zs_difficulty")
 local cvar_zs_roundtime = GetConVar("zs_roundtime")
 local cvar_zs_allow_map_npcs = GetConVar("zs_allow_map_npcs")
+local cvar_zs_npcs_count_as_kills = GetConVar("zs_npcs_count_as_kills")
 local cvar_zs_destroy_doors = GetConVar("zs_destroy_doors")
 local cvar_zs_destroy_prop_doors = GetConVar("zs_destroy_prop_doors")
 local cvar_zs_allow_redeeming = GetConVar("zs_allow_redeeming")
@@ -83,6 +84,12 @@ local cvar_zs_allow_admin_noclip = GetConVar("zs_allow_admin_noclip")
 local cvar_zs_human_deadline = GetConVar("zs_human_deadline")
 local cvar_zs_intermission_time = GetConVar("zs_intermission_time")
 local cvar_zs_allow_shove = GetConVar("zs_allow_shove")
+
+-- Auto apply NPC configs if the player is in singleplayer mode
+if game.SinglePlayer() then
+	cvar_zs_allow_map_npcs:SetBool(true)
+	cvar_zs_npcs_count_as_kills:SetBool(true)
+end
 
 local LastHumanSpawnPoint = NULL
 local LastZombieSpawnPoint = NULL
@@ -274,6 +281,7 @@ function GM:InitPostEntity()
 	RunConsoleCommand("sk_zombie_dmg_both_slash", math.ceil(30 + cvar_zs_difficulty:GetInt() * 12))
 
 	local destroying = ents.FindByClass("prop_ragdoll") // These seem to cause server crashes if a zombie attacks them. They cause pointless lag, too.
+	print("aaaa", cvar_zs_allow_map_npcs:GetBool())
 	if not cvar_zs_allow_map_npcs:GetBool() then
 		destroying = table.Add(destroying, ents.FindByClass("npc_zombie"))
 		destroying = table.Add(destroying, ents.FindByClass("npc_maker"))

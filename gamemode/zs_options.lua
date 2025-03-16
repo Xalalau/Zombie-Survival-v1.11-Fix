@@ -85,19 +85,13 @@ GM.AmmoRegeneration["helicoptergun"] = 100
 
 local function InitConfigs()
 	-- If you like NPC's. NPC's will only spawn in maps that actually were built to have them in the first place. This gamemode won't create it's own.
-	-- 		zs_allow_map_npcs (def. false)
+	-- 		zs_allow_map_npcs (def. 0 on multiplayer and 1 in singleplayer)
 
 	-- Set this to true if you want people to get 'kills' from killing NPC's.
 	-- IT IS STRONGLY SUGGESTED THAT YOU EDIT THE REWARDS TABLE TO
 	-- MAKE THE REWARDS REQUIRE MORE KILLS AND/OR MAKE THE DIFFICULTY HIGHER IF YOU DO THIS!!!
 	-- Example, change Rewards[6] to Rewards[15]. The number represents the kills.
-	-- 		zs_npcs_count_as_kills (def. false)
-
-	-- Auto apply NPC configs if the player is in singleplayer mode
-	if game.SinglePlayer() then
-		RunConsoleCommand("zs_allow_map_npcs", true)
-		RunConsoleCommand("zs_npcs_count_as_kills", true)
-	end
+	-- 		zs_npcs_count_as_kills (def. 0 on multiplayer and 1 in singleplayer)
 
 	-- Good values are 1 to 3. 0.5 is about the same as the default HL2. 1 is about ZS difficulty. This is mainly for NPC healths and damages.
 	-- 		zs_difficulty (def. 1.5)
@@ -176,7 +170,7 @@ local function InitConfigs()
 	SURVIVALMODE = false
 
 	-- Do not allow players to suicide until 10% of the round time has passed - Xala
-	SUPPRESS_SUICIDE = true
+	SUPPRESS_SUICIDE = false
 end
 
 InitConfigs()

@@ -53,6 +53,7 @@ Changes from v1.11 Fix 5 -> v1.11 Fix 6
     * Fixed initial zombie animations being incorrecty set sometimes
     * Fixed zombies were able to grab props (Reported by Tony Engino Dosky)
     * Fixed zs_npcs_count_as_kills being ignored
+    * Fixed zs_allow_map_npcs and zs_npcs_count_as_kills not beign adapted to singleplayer
 
 Changes from v1.11 Fix 4 -> v1.11 Fix 5
     * Changed most player.GetHumans() back to player.GetAll() to improve bots support
