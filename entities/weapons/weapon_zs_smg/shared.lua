@@ -1,6 +1,5 @@
 if SERVER then
 	AddCSLuaFile("shared.lua")
-	SWEP.HoldType = "shotgun"
 end
 
 if CLIENT then
@@ -13,6 +12,7 @@ if CLIENT then
 end
 
 SWEP.Base = "weapon_zs_base"
+SWEP.HoldType = "shotgun"
 
 -- Support replacement weapons, so we don't require CSS - Xala
 if file.Exists("models/weapons/2_smg_mp5.mdl", "GAME") then
@@ -40,3 +40,7 @@ SWEP.ConeMoving = 0.11
 SWEP.ConeCrouching = 0.06
 
 SWEP.WalkSpeed = 170
+
+function SWEP:Initialize()
+	self:SetWeaponHoldType( self.HoldType )
+end

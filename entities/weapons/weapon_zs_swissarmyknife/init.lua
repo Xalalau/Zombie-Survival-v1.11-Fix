@@ -27,10 +27,6 @@ end
 function SWEP:Think()
 end
 
-function SWEP:Initialize()
-	self:SetWeaponHoldType(self.HoldType)
-end
-
 function SWEP:PrimaryAttack()
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	if CurTime() < self:GetNetworkedFloat("LastShootTime", -100) + self.Primary.Delay then return end

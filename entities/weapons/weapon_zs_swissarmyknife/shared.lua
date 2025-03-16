@@ -45,6 +45,10 @@ SWEP.MeleeHitDetection = {
 	midZaimDistance = 13
 }
 
+function SWEP:Initialize()
+	self:SetWeaponHoldType(self.HoldType)
+end
+
 function SWEP:Reload()
 	return false
 end

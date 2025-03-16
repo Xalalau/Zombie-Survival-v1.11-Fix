@@ -44,6 +44,11 @@ end
 function SWEP:Think()
 end
 
+function SWEP:PrimaryAttack()
+	local owner = self:GetOwner()
+	owner:SetAnimation(PLAYER_ATTACK1)
+end
+
 function SWEP:DrawWeaponSelection(x, y, wide, tall, alpha)
 	draw.SimpleText(self.PrintName, "HUDFontSmallAA", x + wide * 0.5, y + tall * 0.5, COLOR_RED, TEXT_ALIGN_CENTER)
 	draw.SimpleText(self.PrintName, "HUDFontSmallAA", XNameBlur2 + x + wide * 0.5, YNameBlur + y + tall * 0.5, color_blur1, TEXT_ALIGN_CENTER)
