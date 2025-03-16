@@ -491,7 +491,7 @@ function GM:CalculateInfliction()
 end
 
 function GM:OnNPCKilled(ent, attacker, inflictor)
-	if NPCS_COUNT_AS_KILLS and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
+	if cvar_zs_npcs_count_as_kills:GetBool() and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
 		attacker:AddFrags(1)
 		self:CheckPlayerScore(attacker)
 	end
