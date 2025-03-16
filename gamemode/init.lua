@@ -1485,3 +1485,11 @@ function DoPoisoned(ent, owner, timername)
 		ent:TakeDamage(damage, owner)
 	end
 end
+
+function GM:AllowPlayerPickup(ply, ent)
+	if ply:Team() == TEAM_UNDEAD then
+		return false
+	end
+
+	return true
+end

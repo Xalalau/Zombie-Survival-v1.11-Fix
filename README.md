@@ -51,6 +51,7 @@ Changes from v1.11 Fix 5 -> v1.11 Fix 6
     * Fixed bots always joining as zombies after one of them was killed
     * Fixed last human warning sometimes failing on news players
     * Fixed initial zombie animations being incorrecty set sometimes
+    * Fixed zombies were able to grab props (Reported by Tony Engino Dosky)
 
 Changes from v1.11 Fix 4 -> v1.11 Fix 5
     * Changed most player.GetHumans() back to player.GetAll() to improve bots support
