@@ -22,7 +22,7 @@ Extra downloads (for a complete experience):
 - [ZS v1.11 Map Pack](https://steamcommunity.com/workshop/filedetails/?id=3278214930)
 - [ZS v1.11 Mapvote](https://steamcommunity.com/workshop/filedetails/?id=3285251001)
 - [ZS v1.11 Gamemode Content](https://steamcommunity.com/workshop/filedetails/?id=3285258150)
-- [ZS v1.11 LeadBots](https://steamcommunity.com/sharedfiles/filedetails/?id=3286664671)
+- [ZS v1.11 LeadBots](https://steamcommunity.com/sharedfiles/filedetails/?id=3286664671) ([GitHub repository](https://github.com/TonyDoskEnginooy/Gmod-ZS-Leadbots-For-ZS-V1.11-Fix))
 
 # Original files and gameplay
 
