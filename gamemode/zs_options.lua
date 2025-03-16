@@ -103,7 +103,7 @@ local function InitConfigs()
 	-- 		zs_difficulty (def. 1.5)
 
 	-- Use Zombie Survival's custom footstep sounds? I'm not sure how bad it might lag considering you're potentially sending a lot of data on heavily packed servers.
-	CUSTOM_FOOTSTEPS = true -- It's not even connected anywhere? - Xala
+	CUSTOM_FOOTSTEPS = false -- This feature was unfinished in this version, this var does nothing - Xala
 
 	-- In seconds, repeatatively, the gamemode gives all humans get a box of whatever ammo of the weapon they use.
 	-- if you set this number to something stupid like 0, you'll have some lag issues.
