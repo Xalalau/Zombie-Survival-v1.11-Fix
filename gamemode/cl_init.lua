@@ -529,7 +529,7 @@ end
 function GM:RenderScene()
 end
 
-function Intermission(nextmap, winner)
+function Intermission(winner)
 	ENDROUND = true
 	hook.Remove("RenderScreenspaceEffects", "PostProcess")
 	ENDTIME = CurTime()

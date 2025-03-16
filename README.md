@@ -47,6 +47,7 @@ Changes from v1.11 Fix 5 -> v1.11 Fix 6
     * Added UI rescaling (proper 1080p and maybe 4k support)
     * Added simple anti-stuck script (some maps have bad spawns and sometimes players could spawn inside each other)
     * Changed all SteamID() calls to SteamID64(), as recommended by GMod wiki
+    * Changed how the mapvote addon is managed so it's nicer to use
     * Fixed bots always joining as zombies after one of them was killed
     * Fixed last human warning sometimes failing on news players
     * Fixed initial zombie animations being incorrecty set sometimes

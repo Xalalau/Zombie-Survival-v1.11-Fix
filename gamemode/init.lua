@@ -638,12 +638,22 @@ function GM:SendTopZombieDamages(to)
 	end
 end
 
+hook.Add("MapVoteChange", "OverrideNextMap", function(overrideNextMap)
+	RunConsoleCommand("nextlevel", overrideNextMap)
+
+	net.Start("RAM_MapVoteCancel")
+	net.Broadcast()
+
+	timer.Destroy("RAM_MapVote")
+
+	return false
+end)
+
 function GM:EndRound(winner)
 	if ENDROUND then return end
 	ENDROUND = true
 	timer.Simple(cvar_zs_intermission_time:GetInt(), game.LoadNextMap)
 	timer.Simple(cvar_zs_intermission_time:GetInt() * 0.3, function() hook.Run("LoadNextMap") end)
-	local nextmap = game.GetMapNext()
 
 	DeadSteamIDs = {}
 
@@ -655,7 +665,7 @@ function GM:EndRound(winner)
 	end)
 
 	hook.Add("PlayerReady", "LateJoin", function(ply)
-		ply:SendLua("Intermission('"..game.GetMapNext().."', "..ROUNDWINNER..")")
+		ply:SendLua("Intermission("..ROUNDWINNER..")")
 		GAMEMODE:SendTopTimes(ply)
 		GAMEMODE:SendTopZombies(ply)
 		GAMEMODE:SendTopHumanDamages(ply)
@@ -664,7 +674,7 @@ function GM:EndRound(winner)
 	hook.Add("PlayerSpawn", "LateJoin2", function(ply)
 		ply:Lock()
 	end)
-	BroadcastLua("Intermission('"..nextmap.."', "..winner..")")
+	BroadcastLua("Intermission("..winner..")")
 
 	function self:PlayerDeathThink(ply)
 	end
