@@ -53,7 +53,7 @@ Changes from v1.11 Fix 5 -> v1.11 Fix 6
     * Fixed initial zombie animations being incorrecty set sometimes
     * Fixed zombies were able to grab props (Reported by Tony Engino Dosky)
     * Fixed zs_npcs_count_as_kills being ignored
-    * Fixed zs_allow_map_npcs and zs_npcs_count_as_kills not beign adapted to singleplayer
+    * Fixed zs_allow_map_npcs and zs_npcs_count_as_kills not being adapted to singleplayer
     * Fixed some weapon animations (Ported from Zombie-Survival-v1.11-Fix-Negative-One-Squared by Tony Engino Dosky)
 
 Changes from v1.11 Fix 4 -> v1.11 Fix 5
