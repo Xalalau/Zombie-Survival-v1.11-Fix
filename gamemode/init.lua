@@ -281,7 +281,6 @@ function GM:InitPostEntity()
 	RunConsoleCommand("sk_zombie_dmg_both_slash", math.ceil(30 + cvar_zs_difficulty:GetInt() * 12))
 
 	local destroying = ents.FindByClass("prop_ragdoll") // These seem to cause server crashes if a zombie attacks them. They cause pointless lag, too.
-	print("aaaa", cvar_zs_allow_map_npcs:GetBool())
 	if not cvar_zs_allow_map_npcs:GetBool() then
 		destroying = table.Add(destroying, ents.FindByClass("npc_zombie"))
 		destroying = table.Add(destroying, ents.FindByClass("npc_maker"))
