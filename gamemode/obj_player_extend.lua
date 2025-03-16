@@ -391,15 +391,6 @@ end
 function meta:Unstuck()
 	if CLIENT then return end
 
-	-- Check if the player is inside another player (colliding with another player)
-	for _, otherPlayer in ipairs(player.GetAll()) do
-		if otherPlayer != self and self:GetPos():DistToSqr(otherPlayer:GetPos()) < 500^2 then -- Arbitrary distance check
-			-- Move the player a little bit away from the other player
-			local moveAway = (self:GetPos() - otherPlayer:GetPos()):GetNormalized() * 20 -- 20 units away
-			self:SetPos(self:GetPos() + moveAway) -- Teleport player to a safe position
-		end
-	end
-
 	for k=1, 6, 1 do
 		for i=1, 10, 1 do
 			local pos = self:GetPos()
