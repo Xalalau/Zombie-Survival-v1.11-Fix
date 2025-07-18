@@ -37,14 +37,22 @@ GM.STARTLOADOUTS = {
 -- See powerups.lua for examples and stuff.
 -- Changing these means you're most likely an idiot.
 
-GM.Rewards = {} -- Leave this.
-GM.Rewards[GetConVar("zs_rewards_1", 2):GetInt()] = {"weapon_zs_deagle", "weapon_zs_deagle", "weapon_zs_glock3", "weapon_zs_glock3", "weapon_zs_magnum"}
-GM.Rewards[GetConVar("zs_rewards_2", 4):GetInt()] = {"_Heal", "_Heal", "_Shell"}
-GM.Rewards[GetConVar("zs_rewards_3", 6):GetInt()] = {"weapon_zs_uzi", "weapon_zs_uzi", "weapon_zs_crossbow", "weapon_zs_smg"}
-GM.Rewards[GetConVar("zs_rewards_4", 8):GetInt()] = {"weapon_zs_sweepershotgun", "weapon_zs_slugrifle"}
-GM.Rewards[GetConVar("zs_rewards_5", 10):GetInt()] = {"weapon_zs_barricadekit"}
-GM.Rewards[GetConVar("zs_rewards_6", 12):GetInt()] = {"_Regeneration", "_Heal"}
-GM.Rewards[GetConVar("zs_rewards_7", 14):GetInt()] = {"weapon_slam"}
+zs_rewards_1 = string.Explode(",", string.gsub(GetConVar("zs_rewards_1", "weapon_zs_deagle, weapon_zs_deagle, weapon_zs_glock3, weapon_zs_glock3, weapon_zs_magnum"):GetString(), "%s+", ""))
+zs_rewards_2 = string.Explode(",", string.gsub(GetConVar("zs_rewards_2", "_Heal, _Heal, _Shell"):GetString(), "%s+", ""))
+zs_rewards_3 = string.Explode(",", string.gsub(GetConVar("zs_rewards_3", "weapon_zs_uzi, weapon_zs_uzi, weapon_zs_crossbow, weapon_zs_smg"):GetString(), "%s+", ""))
+zs_rewards_4 = string.Explode(",", string.gsub(GetConVar("zs_rewards_4", "weapon_zs_sweepershotgun, weapon_zs_slugrifle"):GetString(), "%s+", ""))
+zs_rewards_5 = string.Explode(",", string.gsub(GetConVar("zs_rewards_5", "weapon_zs_barricadekit"):GetString(), "%s+", ""))
+zs_rewards_6 = string.Explode(",", string.gsub(GetConVar("zs_rewards_6", "_Regeneration, _Heal"):GetString(), "%s+", ""))
+zs_rewards_7 = string.Explode(",", string.gsub(GetConVar("zs_rewards_7", "weapon_slam"):GetString(), "%s+", ""))
+
+GM.Rewards = {}
+GM.Rewards[GetConVar("zs_rewards_1_threshold", 2):GetInt()] = zs_rewards_1
+GM.Rewards[GetConVar("zs_rewards_2_threshold", 4):GetInt()] = zs_rewards_2
+GM.Rewards[GetConVar("zs_rewards_3_threshold", 6):GetInt()] = zs_rewards_3
+GM.Rewards[GetConVar("zs_rewards_4_threshold", 8):GetInt()] = zs_rewards_4
+GM.Rewards[GetConVar("zs_rewards_5_threshold", 10):GetInt()] = zs_rewards_5
+GM.Rewards[GetConVar("zs_rewards_6_threshold", 12):GetInt()] = zs_rewards_6
+GM.Rewards[GetConVar("zs_rewards_7_threshold", 14):GetInt()] = zs_rewards_7
 
 ----------------------------------
 --		AMMO REGENERATION		--

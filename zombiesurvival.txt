@@ -176,7 +176,7 @@
 
 		18
 		{
-			"name"		"zs_rewards_1"
+			"name"		"zs_rewards_1_threshold"
 			"text"		"Kills to get a level 1 reward"
 			"help"		"How many zombies the player needs to kill in order to get a level 1 reward"
 			"type"		"Numeric"
@@ -186,7 +186,17 @@
 
 		19
 		{
-			"name"		"zs_rewards_2"
+			"name"		"zs_rewards_1"
+			"text"		"Level 1 rewards"
+			"help"		"Weapon or item class names, separated by commas"
+			"type"		"Text"
+			"default"	"weapon_zs_deagle, weapon_zs_deagle, weapon_zs_glock3, weapon_zs_glock3, weapon_zs_magnum"
+			"singleplayer" "1"
+		}
+
+		20
+		{
+			"name"		"zs_rewards_2_threshold"
 			"text"		"Kills to get a level 2 reward"
 			"help"		"How many zombies the player needs to kill in order to get a level 2 reward"
 			"type"		"Numeric"
@@ -194,9 +204,19 @@
 			"singleplayer" "1"
 		}
 
-		20
+		21
 		{
-			"name"		"zs_rewards_3"
+			"name"		"zs_rewards_2"
+			"text"		"Level 2 rewards"
+			"help"		"Weapon or item class names, separated by commas"
+			"type"		"Text"
+			"default"	"_Heal, _Heal, _Shell"
+			"singleplayer" "1"
+		}
+
+		22
+		{
+			"name"		"zs_rewards_3_threshold"
 			"text"		"Kills to get a level 3 reward"
 			"help"		"How many zombies the player needs to kill in order to get a level 3 reward"
 			"type"		"Numeric"
@@ -204,9 +224,19 @@
 			"singleplayer" "1"
 		}
 
-		21
+		23
 		{
-			"name"		"zs_rewards_4"
+			"name"		"zs_rewards_3"
+			"text"		"Level 3 rewards"
+			"help"		"Weapon or item class names, separated by commas"
+			"type"		"Text"
+			"default"	"weapon_zs_uzi, weapon_zs_uzi, weapon_zs_crossbow, weapon_zs_smg"
+			"singleplayer" "1"
+		}
+
+		24
+		{
+			"name"		"zs_rewards_4_threshold"
 			"text"		"Kills to get a level 4 reward"
 			"help"		"How many zombies the player needs to kill in order to get a level 4 reward"
 			"type"		"Numeric"
@@ -214,9 +244,19 @@
 			"singleplayer" "1"
 		}
 
-		22
+		25
 		{
-			"name"		"zs_rewards_5"
+			"name"		"zs_rewards_4"
+			"text"		"Level 4 rewards"
+			"help"		"Weapon or item class names, separated by commas"
+			"type"		"Text"
+			"default"	"weapon_zs_sweepershotgun, weapon_zs_slugrifle"
+			"singleplayer" "1"
+		}
+
+		26
+		{
+			"name"		"zs_rewards_5_threshold"
 			"text"		"Kills to get a level 5 reward"
 			"help"		"How many zombies the player needs to kill in order to get a level 5 reward"
 			"type"		"Numeric"
@@ -224,9 +264,19 @@
 			"singleplayer" "1"
 		}
 
-		23
+		27
 		{
-			"name"		"zs_rewards_6"
+			"name"		"zs_rewards_5"
+			"text"		"Level 5 rewards"
+			"help"		"Weapon or item class names, separated by commas"
+			"type"		"Text"
+			"default"	"weapon_zs_barricadekit"
+			"singleplayer" "1"
+		}
+
+		28
+		{
+			"name"		"zs_rewards_6_threshold"
 			"text"		"Kills to get a level 6 reward"
 			"help"		"How many zombies the player needs to kill in order to get a level 6 reward"
 			"type"		"Numeric"
@@ -234,13 +284,33 @@
 			"singleplayer" "1"
 		}
 
-		24
+		29
 		{
-			"name"		"zs_rewards_7"
+			"name"		"zs_rewards_6"
+			"text"		"Level 6 rewards"
+			"help"		"Weapon or item class names, separated by commas"
+			"type"		"Text"
+			"default"	"_Regeneration, _Heal"
+			"singleplayer" "1"
+		}
+
+		30
+		{
+			"name"		"zs_rewards_7_threshold"
 			"text"		"Kills to get a level 7 reward"
 			"help"		"How many zombies the player needs to kill in order to get a level 7 reward"
 			"type"		"Numeric"
 			"default"	"14"
+			"singleplayer" "1"
+		}
+
+		31
+		{
+			"name"		"zs_rewards_7"
+			"text"		"Level 7 rewards"
+			"help"		"Weapon or item class names, separated by commas"
+			"type"		"Text"
+			"default"	"weapon_slam"
 			"singleplayer" "1"
 		}
 	}
