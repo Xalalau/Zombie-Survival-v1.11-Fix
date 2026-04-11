@@ -1102,7 +1102,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 							revive = true
 							ply:SetZombieClass(9)
 							ply:LegsGib()
-							timer.Simple(0.0001, function()
+							timer.Create(ply:UniqueID().."secondwind", 0.0001, 1, function()
 								if IsValid(ply) then
 									SecondWind(ply)
 								end
