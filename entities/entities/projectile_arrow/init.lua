@@ -7,11 +7,33 @@ function ENT:Initialize()
 	self.DieTime = CurTime() + 7
 
 	local ply = self.Entity:GetOwner()
-	local aimvec = ply:GetAimVector()
+
+	local eyePos = ply:GetShootPos()
+	local eyeDir = ply:GetAimVector()
+
+	-- Trace from the player's view so the bolt still converges on the crosshair.
+	local tr = util.TraceLine({
+		start = eyePos,
+		endpos = eyePos + eyeDir * 8192,
+		filter = ply
+	})
+
+	local spawnPos = eyePos + eyeDir * 8
+	local attachID = self:LookupAttachment("muzzle")
+
+	if attachID and attachID > 0 then
+		local attach = self:GetAttachment(attachID)
+		if attach and attach.Pos then
+			spawnPos = attach.Pos
+		end
+	end
+
+	local fireDir = (tr.HitPos - spawnPos):GetNormalized()
+
 	ply:DeleteOnRemove(self.Entity)
 	self.Entity.Team = ply:Team()
-	self.Entity:SetPos(ply:GetShootPos() + ply:GetAimVector() * 30)
-	self.Entity:SetAngles(ply:GetAimVector():Angle())
+	self.Entity:SetPos(spawnPos)
+	self.Entity:SetAngles(fireDir:Angle())
 	self.Entity:SetModel("models/Items/CrossbowRounds.mdl")
 	self.Entity:PhysicsInit(SOLID_VPHYSICS)
 	self.Entity:SetCollisionGroup(COLLISION_GROUP_WEAPON)
@@ -20,7 +42,7 @@ function ENT:Initialize()
 	if phys:IsValid() then
 		phys:EnableDrag(false)
 		phys:Wake()
-		phys:ApplyForceCenter(aimvec * 20000)
+		phys:ApplyForceCenter(fireDir * 20000)
 		phys:SetMass(4)
 	end
 	self.Touched = {}

@@ -47,7 +47,6 @@ function SWEP:PrimaryAttack()
 		local ent = ents.Create("projectile_arrow")
 		if ent:IsValid() then
 			ent:SetOwner(ply)
-			ent:SetPos(ply:GetShootPos() + ply:GetAimVector() * 40)
 			ent:Spawn()
 		end
 		self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
