@@ -1073,14 +1073,14 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		ply:Gib(dmginfo)
 		ply.Gibbed = true
 		if LASTHUMAN then
-			timer.Simple(0, function()
+			timer.Simple(0.0001, function()
 				if IsValid(ply) then
 					ChemBomb(ply, false)
 				end
 			end)
 		else
 			ply:AddFrags(-100)
-			timer.Simple(0, function()
+			timer.Simple(0.0001, function()
 				if IsValid(ply) then
 					ChemBomb(ply, true)
 				end
@@ -1102,7 +1102,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 							revive = true
 							ply:SetZombieClass(9)
 							ply:LegsGib()
-							timer.Simple(0, function()
+							timer.Simple(0.0001, function()
 								if IsValid(ply) then
 									SecondWind(ply)
 								end
