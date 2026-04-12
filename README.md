@@ -43,8 +43,15 @@ Note: click [here](https://github.com/Xalalau/Zombie-Survival-v1.11-Fix/wiki/Som
 # v1.11 Fix by Xalalau & collaborators changelog
 
 ```
+Changes from v1.11 Fix 7 -> v1.11 Fix 8
+    * Added logo
+    * Added backgrounds
+    * Changed timer ID (compatibility with bots)
+    * Fixed timers for the next GMod update (timer.simple(0) will break)
+    * Fixed crossbow shot origin 
+
 Changes from v1.11 Fix 6 -> v1.11 Fix 7
-    # Added weapon settings to the GMod gamemode configuration
+    * Added weapon settings to the GMod gamemode configuration
 
 Changes from v1.11 Fix 5 -> v1.11 Fix 6
     * Added UI scaling (proper 1080p and maybe 4k support)
